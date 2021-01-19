@@ -1,0 +1,42 @@
+<!-- show a problem belonging to any user  -->
+{% extends "teach/base.html" %}
+{% block content %}
+
+<head>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'teach/bulma-0.8.0/css/stylesChuck.css' %}"/>
+</head>
+
+<meta http-equiv="refresh" content="1;{% url 'location:publish_image' location.id %}" />
+
+<div class="has-text-centered tile is-ancestor">
+  <div style="margin: auto" class="tile is-8 is-parent">
+    <div class="tile is-child box front-background">
+
+      {% if error %}
+        <h3 class="title is-3" style="color: red">{{ error }}</h3>
+      {% endif %}
+
+        <h2 class="title is-2">
+          <span style="color:blue">
+            {{ user.username }}
+          </span>
+          <br>you chose {{location.sport}}
+        </h2>
+
+    </div>
+  </div>
+</div>
+
+<center>
+  {% if location.sport == 'basketball' %}
+    <img src="{% static 'teach/images/basketball.PNG' %}" class="shake" alt=" icon" width="200" height="300">
+  {% endif %}
+  {% if location.sport == 'tennis' %}
+    <img src="{% static 'teach/images/tennis_racquet.PNG' %}" class="shake" alt=" icon" width="200" height="300">
+  {% endif %}
+  {% if location.sport == 'baseball' %}
+    <img src="{% static 'teach/images/mit.PNG' %}" class="shake" alt=" icon" width="200" height="300">
+  {% endif %}
+</center>
+{% endblock content %}
