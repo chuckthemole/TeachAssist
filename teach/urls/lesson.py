@@ -1,5 +1,5 @@
 from django.urls import path, include
-from teach.views import location
+from teach.views import lesson
 app_name = 'teach'
 
 urlpatterns = [
