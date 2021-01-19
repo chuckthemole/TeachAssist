@@ -13,17 +13,16 @@ def index(request):
     if request.method == "GET":
         if request.user.is_authenticated:
             user = request.user
-            all_locations = Location.objects.all()   # all_problems is a list object [   ]
+            all_lessons = Lesson.objects.all()   # all_lessons is a list object [   ]
 
-            coordinates = []
-            for location in all_locations:
-                coordinates.append([location.latitude, location.longitude])
+            #coordinates = []
+            #for location in all_locations:
+            #    coordinates.append([location.latitude, location.longitude])
 
-            if len(all_locations) != 0:
-                return render(request, "teach/index.html", {"user":user, "all_locations": all_locations,
-                    "coordinates": coordinates, "location": all_locations[0]})
+            if len(all_lessons) != 0:
+                return render(request, "teach/index.html", {"user":user, "all_lessons": all_lessons})
             else:
-                return render(request, "teach/index.html", {"user":user, "all_locations": all_locations})
+                return render(request, "teach/index.html", {"user":user, "all_lessons": all_lessons})
         else:
             #return render(request, "teach/login.html", {"login_dash":login_dash})
             return redirect("collections:login")
@@ -52,7 +51,7 @@ def dashboard(request):
             return redirect("collections:login")
         else:
             try:
-                my_locations = Location.objects.filter(teacher=user.teacher.id)
+                my_lessons = Lesson.objects.filter(teacher=user.teacher.id)
             except:
                 return redirect("collections:login")
 
@@ -61,7 +60,7 @@ def dashboard(request):
             #print('my_scripts:', my_scripts)
             print('*******************************************************')
 
-            return render(request, "teach/dashboard.html", {"user":user, "my_locations":my_locations})
+            return render(request, "teach/dashboard.html", {"user":user, "my_lessons":my_lessons})
 
 def create(request):
     if request.method == "POST":

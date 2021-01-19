@@ -77,17 +77,15 @@ def create_lesson(request):
         form = Sport_Location_Form()
         return render(request, "teach/index.html", {"user":user, "all_lessons": all_lessons, "error":"Can't create!"})
 
-def show_location(request, location_id):
+def show_lesson(request, lesson_id):
     if request.method == "GET":
         user = request.user
         if not user.is_authenticated:
             return redirect("teach:login")
         else:
             # make sure to import the fucntion get_object_or_404 from  django.shortcuts
-            location = get_object_or_404(Location, pk=location_id)
-            destinations = Destination.objects.filter(location=location_id)
-
-            return render(request, "teach/location/show_location.html", {"user":user, "location":location, "destinations":destinations})
+            lesson = get_object_or_404(Lesson, pk=lesson_id)
+            return render(request, "teach/lesson/show_lesson.html", {"user":user, "lesson":lesson})
 
 def publish_image(request, location_id):
     if request.method == "GET":
@@ -95,72 +93,72 @@ def publish_image(request, location_id):
         if not user.is_authenticated:
             return redirect("teach:login")
         else:
-            location = get_object_or_404(Location, pk=location_id)
+            location = get_object_or_404(Lesson, pk=lesson_id)
             form = Sport_Location_Form()
-            return render(request, "teach/location/show_map.html", {"user":user, "location":location, "form":form} )
+            return render(request, "teach/lesson/show_map.html", {"user":user, "lesson":lesson, "form":form} )
 
-def create_image(request, location_id):
+def create_image(request, lesson_id):
     if request.method == "POST":
         user = request.user
         if not user.is_authenticated:
             return redirect("teach:login")
         else:
             try:
-                location = get_object_or_404(Location, pk=location_id)
-                form = Sport_Location_Form(request.POST, request.FILES, instance=location)
+                lesson = get_object_or_404(Lesson, pk=lesson_id)
+                form = Sport_Location_Form(request.POST, request.FILES, instance=lesson)
             except:
-                return render(request, "teach/location/show_map.html", {"error":"Error"})
+                return render(request, "teach/lesson/show_map.html", {"error":"Error"})
             if form.is_valid():
                 #form.save()
                 #upload = Upload(file=location.sport_location_img)
                 #upload.save()
                 #location.img_url = str(upload.file.url)
-                location.save()
-                return render(request, "teach/location/show_location.html", {"user":user, "location":location} )
+                lesson.save()
+                return render(request, "teach/lesson/show_lesson.html", {"user":user, "lesson":lesson} )
             else:
                 form = Sport_Location_Form()
-                return render(request, "teach/location/show_map.html", {"error":"Error"})
+                return render(request, "teach/lesson/show_map.html", {"error":"Error"})
     else:
         if request.user.is_authenticated:
             user = request.user
-            location = get_object_or_404(Location, pk=location_id)
-            return render(request, "teach/location/show_location.html", {"user":user, "location":location})
+            lesson = get_object_or_404(Lesson, pk=lesson_id)
+            return render(request, "teach/lesson/show_lesson.html", {"user":user, "lesson":lesson})
         else:
             return redirect("teach:login")
 
-def show_image(request, location_id):
+def show_image(request, lesson_id):
     if request.method == "GET":
         user = request.user
         if not user.is_authenticated:
             return redirect("teach:login")
         else:
-            location = get_object_or_404(Location, pk=location_id)
-            return render(request, "teach/location/show_image.html", {"user":user, "location":location})
+            lesson = get_object_or_404(Lesson, pk=lesson_id)
+            return render(request, "teach/lesson/show_image.html", {"user":user, "lesson":lesson})
 
-def edit_location(request, location_id):
+def edit_lesson(request, lesson_id):
    if request.method == "GET":
         user = request.user
         if not user.is_authenticated:
             return redirect("share:login")
 
-        location = get_object_or_404(Location, pk=location_id)
+        lesson = get_object_or_404(Lesson, pk=lesson_id)
         form = Sport_Location_Form()
 
         # destinations = Destination.objects.filter(location=location_id)
 
-        if location.teacher.user.id == location.teacher.user.id:
-            return render(request, "teach/location/edit_location.html", {"location":location, "form":form})
+        if lesson.teacher.user.id == lesson.teacher.user.id:
+            return render(request, "teach/lesson/edit_lesson.html", {"lesson":lesson, "form":form})
         else:
             return render(request, "teach/index.html",
-            {"error":"You are not the author of the location that you tried to edit."})
+            {"error":"You are not the author of the lesson that you tried to edit."})
 
-def update_location(request, location_id):
+def update_lesson(request, lesson_id):
     if request.method == "POST":
         user = request.user
         if not user.is_authenticated:
             return HttpResponse(status=500)
 
-        location = get_object_or_404(Location, pk=location_id)
+        lesson = get_object_or_404(Lesson, pk=lesson_id)
         # destinations = Destination.objects.filter(location=location_id)
 
         if 'address' in request.POST and 'zip' in request.POST:
@@ -176,62 +174,62 @@ def update_location(request, location_id):
                 longitude = float(loc['location'][1])
             except:
                 # If address is blank or not found
-                return render(request, "teach/location/edit_location.html", {"error":"Error finding address"})
-            if location.teacher.user.id == user.id:
-                Location.objects.filter(pk=location_id).update(address=address, zip=zip, latitude=latitude, longitude=longitude)
+                return render(request, "teach/lesson/edit_lesson.html", {"error":"Error finding address"})
+            if lesson.teacher.user.id == user.id:
+                Lesson.objects.filter(pk=lesson_id).update(address=address, zip=zip, latitude=latitude, longitude=longitude)
                 return redirect("collections:dashboard")
             else:
-                return render(request, "teach/location/edit_location.html",{"location":location, "error":"Can't update!"})
+                return render(request, "teach/lesson/edit_lesson.html",{"lesson":lesson, "error":"Can't update!"})
         elif 'sports' in request.POST:
             sport = request.POST["sports"]
-            if location.teacher.user.id == user.id:
-                Location.objects.filter(pk=location_id).update(sport=sport)
+            if lesson.teacher.user.id == user.id:
+                Lesson.objects.filter(pk=lesson_id).update(sport=sport)
 
                 if sport == "basketball":
-                    Location.objects.filter(pk=location_id).update(is_basketball=True)
-                    Location.objects.filter(pk=location_id).update(is_tennis=False)
-                    Location.objects.filter(pk=location_id).update(is_baseball=False)
+                    Lesson.objects.filter(pk=lesson_id).update(is_basketball=True)
+                    Lesson.objects.filter(pk=lesson_id).update(is_tennis=False)
+                    Lesson.objects.filter(pk=lesson_id).update(is_baseball=False)
                 elif sport == "tennis":
-                    Location.objects.filter(pk=location_id).update(is_basketball=False)
-                    Location.objects.filter(pk=location_id).update(is_tennis=True)
-                    Location.objects.filter(pk=location_id).update(is_baseball=False)
+                    Lesson.objects.filter(pk=lesson_id).update(is_basketball=False)
+                    Lesson.objects.filter(pk=lesson_id).update(is_tennis=True)
+                    Lesson.objects.filter(pk=lesson_id).update(is_baseball=False)
                 elif sport == "baseball":
-                    Location.objects.filter(pk=location_id).update(is_basketball=False)
-                    Location.objects.filter(pk=location_id).update(is_tennis=False)
-                    Location.objects.filter(pk=location_id).update(is_baseball=True)
+                    Lesson.objects.filter(pk=lesson_id).update(is_basketball=False)
+                    Lesson.objects.filter(pk=lesson_id).update(is_tennis=False)
+                    Lesson.objects.filter(pk=lesson_id).update(is_baseball=True)
                 else:
                     print("no choice")
 
                 return redirect("collections:dashboard")
             else:
-                return render(request, "teach/location/edit_location.html",{"location":location, "error":"Can't update!"})
+                return render(request, "teach/lesson/edit_lesson.html",{"lesson":lesson, "error":"Can't update!"})
 
         else:
-            return render(request, "teach/location/edit_location.html", {"location":location,
+            return render(request, "teach/lesson/edit_lesson.html", {"lesson":lesson,
             "error":"One of the required fields was empty"})
 
     else:
         # the user enteing    http://127.0.0.1:8000/problem/8/update
         user = request.user
-        all_locations = Location.objects.all()
-        return render(request, "teach/index.html", {"user":user, "all_locations": all_locations, "error":"Can't update!"})
+        all_lessons = Lesson.objects.all()
+        return render(request, "teach/index.html", {"user":user, "all_lessons": all_lessons, "error":"Can't update!"})
 
-def delete_location(request, location_id):
+def delete_lesson(request, lesson_id):
     if request.method == "POST":
         user = request.user
         if not user.is_authenticated:
             return HttpResponse(status=500)
 
-        location = get_object_or_404(Location, pk=location_id)
+        lesson = get_object_or_404(Lesson, pk=lesson_id)
         # destinations = Destination.objects.filter(location=location_id)
 
-        if location.teacher.user.id == user.id:
-            location.sport_location_img.delete(save=False)  # Deletes the file from AWS S3
-            Location.objects.get(pk=location_id).delete()   # Deletes Location instance
+        if lesson.teacher.user.id == user.id:
+            lesson.img.delete(save=False)  # Deletes the file from AWS S3
+            Lesson.objects.get(pk=lesson_id).delete()   # Deletes Location instance
             return redirect("collections:dashboard")
         else:
-            all_locations = Location.objects.all()
-            return render(request, "teach/index.html", {"user":user, "all_locations": all_locations, "error":"Can't delete!"})
+            all_lessons = Lesson.objects.all()
+            return render(request, "teach/index.html", {"user":user, "all_lessons": all_lessons, "error":"Can't delete!"})
 
     else:
         return HttpResponse(status=500)
