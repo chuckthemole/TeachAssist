@@ -1,0 +1,105 @@
+<!-- show a problem belonging to any user  -->
+{% extends "teach/base.html" %}
+{% block content %}
+
+<head>
+    {% load static %}
+    <script type='text/javascript' src="{% static 'teach/js/google_map.js' %}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'teach/bulma-0.8.0/css/stylesChuck.css' %}"/>
+</head>
+
+<div class="no-scroll">
+
+<br><br><br>
+  <div style="margin: auto;">
+    <center>
+      <div class="box front-background tile is-8 is-vertical">
+        <div class="tile is-ancestor">
+          <div class="tile is-vertical has-text-centered alt-front-backgroud">
+            <h1 class="title is-2">
+              <span style="color:white;">
+                Location added by:
+              </span>
+              <span style="color:#1496ed">
+                {{ location.teacher.user.username }}
+              </span>
+            </h1>
+            <h2>
+              <span style="color:white;">
+                {% if location.sport == 'basketball' %}
+                  Basketball court at
+                {% elif location.sport == 'tennis' %}
+                  Tennis court at
+                {% elif location.sport == 'baseball' %}
+                  Baseball field at
+                {% endif %}
+              </span>
+              <span style="color:#1496ed">
+                <u> {{location.address}} {{location.zip}}</u>
+              </span>
+            </h2>
+          </div>
+        </div>
+        <br><br><br><br>
+      </div>
+    </center>
+  </div>
+
+<br>
+
+  <div class="columns">
+    <div class="column">
+      <div class="parent main-background" style='width: 100%; height: 100%;'>
+
+        <div class='child inline-block-child' id='map' style='width: 70%; height: 550px;'></div>
+
+        <script>
+          //load_map({{location.latitude}}, {{location.longitude}}, {{location.id}});
+
+          if ('{{location.sport}}'.localeCompare("basketball") == 0) {
+            load_map_basketball({{location.latitude}}, {{location.longitude}});
+          }
+          else if ('{{location.sport}}'.localeCompare("baseball") == 0) {
+            load_map_baseball({{location.latitude}}, {{location.longitude}});
+          }
+          else if ('{{location.sport}}'.localeCompare("tennis") == 0) {
+            load_map_tennis({{location.latitude}}, {{location.longitude}});
+          }
+          else {}
+
+        </script>
+
+        <div class="scrollable child inline-block-child main-background" style='width: 28%; height: 550px;'>
+            <article>
+              {% if location.sport_location_img %}
+                <a href="{% url 'location:show_location' location.id %}">
+                  <div class="container-img">
+                    <!--Image of Location-->
+                    <img src="{{ location.sport_location_img.url }}" alt="Image not found"
+                      onerror="this.onerror=null;this.src='{% static 'teach/images/no_image_available.PNG' %}';"
+                      width="100%" height="100%" style="padding:0; margin:0;" class="box main-background">
+                      {% if location.sport == 'basketball' %}
+                        <img class="icon" src="https://img.icons8.com/doodle/48/000000/basketball--v1.png">
+                      {% elif location.sport == 'baseball' %}
+                        <img class="icon" src='https://img.icons8.com/dusk/64/000000/baseball.png'>
+                      {% elif location.sport == 'tennis' %}
+                        <img class="icon" src='https://img.icons8.com/dusk/64/000000/tennis.png'>
+                      {% endif %}
+                  </div>
+                </a>
+              {% endif %}
+            </article><br>
+        </div>
+        {% if user.id == location.teacher.user.id %}
+          <a class="button is-primary is-medium" href="{% url 'location:edit_location' location.id %}">
+            Make changes ...
+          </a>
+          {% endif %}
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+{% endblock content %}
