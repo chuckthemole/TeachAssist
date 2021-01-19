@@ -14,4 +14,3 @@ and comment on the various locations.
 * Create, edit, and share lesson plans.
 
 ### Thanks for checking out TeachAssist!
->>>>>>> master
