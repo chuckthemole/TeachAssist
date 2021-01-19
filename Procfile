@@ -1,1 +1,1 @@
-web: gunicorn theRock.wsgi
+web: gunicorn TeachAssist.wsgi
