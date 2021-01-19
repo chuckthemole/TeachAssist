@@ -37,6 +37,23 @@ class Upload(models.Model):
     uploaded_at = models.DateTimeField(auto_now_add=True)
     file = models.FileField()
 
+class Lesson(models.Model):
+	def __str__(self):
+		return (self.subject + " \n" + self.description)
+
+	# FK
+	teacher = models.ForeignKey(teacher, on_delete=models.CASCADE, null=True)
+
+	subject = models.TextField(max_length=30, null=False, blank=False, unique=False, default="")
+	description = models.TextField(max_length=30, null=False, blank=False, unique=False, default="")
+
+	# Image of location
+	img = models.ImageField(upload_to='images/', blank=True, default="static/teach/images/no_image_available.PNG")
+	img_url = models.TextField(max_length=100, null=False, blank=True, unique=False, default="")
+
+	created = models.DateField(auto_now=True)
+	updated = models.DateField(auto_now=True)
+
 class Location(models.Model):
 	def __str__(self):
 		return (self.address + " " + self.zip)
