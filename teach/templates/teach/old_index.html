@@ -5,8 +5,8 @@
 {% block content %}
 
 <head>
-    {% load static %}
-    <script type='text/javascript' src="{% static 'teach/js/google_map.js' %}"></script>
+  {% load static %}
+  <script type='text/javascript' src="{% static 'teach/js/google_map.js' %}"></script>
 </head>
 
 <div class="has-text-centered tile is-ancestor">
@@ -33,64 +33,68 @@
       <!-- List all locations -->
       {% for location in all_locations %}
 
-        <script>
-          load_map_array({{all_locations}});
-        </script>
+      <script>
+        load_map_array({
+          {
+            all_locations
+          }
+        });
+      </script>
 
 
-        <div>index: {{location.id}}</div>
-        <div>latitude: {{location.latitude}}</div>
-        <div>longitude: {{location.longitude}}</div>
+      <div>index: {{location.id}}</div>
+      <div>latitude: {{location.latitude}}</div>
+      <div>longitude: {{location.longitude}}</div>
 
-        <div class="has-text-centered tile is-ancestor">
-          <div style="margin: auto" class="tile is-8 is-parent">
-            <div class="tile is-child box front-background">
-              <div class="has-text-centered tile is-ancestor">
-                <div style="margin: auto" class="tile is-8 is-parent">
-                  <div class="tile is-child box alt-front-background">
-                    {% if location.sport == 'basketball' %}
-                      The location of the basketball court is
-                    {% elif location.sport == 'tennis' %}
-                      The location of the tennis court is
-                    {% elif location.sport == 'baseball' %}
-                      The location of the baseball field is
-                    {% endif %}
-                    <u>{{location.address}} {{location.zip}}</u>
+      <div class="has-text-centered tile is-ancestor">
+        <div style="margin: auto" class="tile is-8 is-parent">
+          <div class="tile is-child box front-background">
+            <div class="has-text-centered tile is-ancestor">
+              <div style="margin: auto" class="tile is-8 is-parent">
+                <div class="tile is-child box alt-front-background">
+                  {% if location.sport == 'basketball' %}
+                  The location of the basketball court is
+                  {% elif location.sport == 'tennis' %}
+                  The location of the tennis court is
+                  {% elif location.sport == 'baseball' %}
+                  The location of the baseball field is
+                  {% endif %}
+                  <u>{{location.address}} {{location.zip}}</u>
+                </div>
+              </div>
+            </div>
+
+            <!--location template with image and map-->
+            <div class="columns front-background">
+
+              <div class="column is-half front-background">
+                <div class="has-text-centered tile is-ancestor">
+                  <div style="margin: auto" class="tile is-8 is-parent">
+                    <div class="tile is-child box alt-front-background">
+                      {% if location.sport_location_img %}
+                      <!--Image of Location-->
+                      <img src="{{ location.sport_location_img.url }}" alt=" icon" width="100%" height="100%">
+                      {% endif %}
+                    </div>
                   </div>
                 </div>
               </div>
 
-              <!--location template with image and map-->
-              <div class="columns front-background">
-
-                <div class="column is-half front-background">
-                  <div class="has-text-centered tile is-ancestor">
-                    <div style="margin: auto" class="tile is-8 is-parent">
-                      <div class="tile is-child box alt-front-background">
-                        {% if location.sport_location_img %}
-                        <!--Image of Location-->
-                        <img src="{{ location.sport_location_img.url }}" alt=" icon" width="100%" height="100%">
-                        {% endif %}
-                      </div>
+              <div class="column is-half front-background">
+                <div class="has-text-centered tile is-ancestor">
+                  <div style="margin: auto" class="tile is-8 is-parent">
+                    <div class="tile is-child box alt-front-background">
+                      <div id='{{location.id}}' style='width: 100%; height: 150px;'></div>
                     </div>
                   </div>
                 </div>
-
-                <div class="column is-half front-background">
-                  <div class="has-text-centered tile is-ancestor">
-                    <div style="margin: auto" class="tile is-8 is-parent">
-                      <div class="tile is-child box alt-front-background">
-                        <div id='{{location.id}}' style='width: 100%; height: 150px;'></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
               </div>
 
             </div>
+
           </div>
         </div>
+      </div>
       {% endfor %}
 
     </div>
