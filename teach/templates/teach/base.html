@@ -1,88 +1,91 @@
 <!DOCTYPE html>
 <html lang="en" class="main-background">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>teacher</title>
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'teach/bulma-0.8.0/css/bulma.css' %}"/>
-    <link rel="stylesheet" type="text/css" href="{% static 'teach/bulma-0.8.0/css/stylesChuck.css' %}"/>
-    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="{% static 'teach/main.css' %}"/>
-    <script type='text/javascript' src="{% static 'teach/js/google_map.js' %}"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>teacher</title>
+  {% load static %}
+  <link rel="stylesheet" type="text/css" href="{% static 'teach/bulma-0.8.0/css/bulma.css' %}" />
+  <link rel="stylesheet" type="text/css" href="{% static 'teach/bulma-0.8.0/css/stylesChuck.css' %}" />
+  <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="{% static 'teach/main.css' %}" />
+  <script type='text/javascript' src="{% static 'teach/js/google_map.js' %}"></script>
 </head>
 
 <body class="main-background">
 
-<!--   https://bulma.io/documentation/components/navbar/  for responsive sites-->
-<nav class="navbar is-transparent alt-front-background" role="navigation" aria-label="main navigation" style="height: 50px; width:100%;">
+  <!--   https://bulma.io/documentation/components/navbar/  for responsive sites-->
+  <nav class="navbar is-transparent alt-front-background" role="navigation" aria-label="main navigation" style="height: 50px; width:100%;">
 
-  <!-- brand is basketball -->
-  <div class="navbar-brand">
-    <a class="navbar-item" href="{% url 'collections:index' %}">
-      <img src="https://img.icons8.com/doodle/48/000000/basketball--v1.png"
-      alt="{% static 'teach/images/basketball.PNG' %}" width="30" height="60">
-    </a>
+    <!-- brand is basketball -->
+    <div class="navbar-brand">
+      <a class="navbar-item" href="{% url 'collections:index' %}">
+        <img src="https://img.icons8.com/doodle/48/000000/basketball--v1.png" alt="{% static 'teach/images/basketball.PNG' %}" width="30" height="60">
+      </a>
 
-    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarData">
-     <span aria-hidden="true"></span>
-     <span aria-hidden="true"></span>
-     <span aria-hidden="true"></span>
-    </a>
-  </div>
+      <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarData">
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+        <span aria-hidden="true"></span>
+      </a>
+    </div>
 
-  {% if is_base_visible != False %}
-  <div id="navbarData" class="navbar-menu is-active" ><!-- navbar-menu hidden in mobile devices --><!-- is-actice makes id show in mobile devices -->
-     <div class="navbar-start">
-       <div class="navbar-item">
-         <a class="button is-primary" href="{% url 'collections:dashboard' %}">
-           My Dashboard
-         </a>
-       </div>
+    {% if is_base_visible != False %}
+    <div id="navbarData" class="navbar-menu is-active">
+      <!-- navbar-menu hidden in mobile devices -->
+      <!-- is-actice makes id show in mobile devices -->
+      <div class="navbar-start">
+        <div class="navbar-item">
+          <a class="button is-primary" href="{% url 'collections:dashboard' %}">
+            My Dashboard
+          </a>
+        </div>
 
-       <!-- **************need to fix this dropdown *******************-->
-       <div class="navbar-link">
-         <div class="navbar-item has-dropdown">
-           <a class="button is-primary">
-             More
-           </a>
-         </div>
-         <div class="navbar-dropdown">
+        <!-- **************need to fix this dropdown *******************-->
+        <div class="navbar-link">
+          <div class="navbar-item has-dropdown">
+            <a class="button is-primary">
+              More
+            </a>
+          </div>
+          <div class="navbar-dropdown">
             <a>More items later</a>
             <a> More items later</a>
-         </div>
-       </div>
-     </div>
+          </div>
+        </div>
+      </div>
 
-   </div>
-   {% endif %}
+    </div>
+    {% endif %}
 
-   <div class="navbar-end">
-     <div class="navbar-item">
-       <div class="buttons">
-         {% if request.path == "/login" or request.path == "/loguser" %}
-           <a class="button is-primary" href="{% url 'collections:signup' %}">
-             Signup
-           </a>
-         {% elif request.path == "/signup"  %}
-           <a class="button is-primary" href="{% url 'collections:login' %}">
-             Login
-           </a>
-         {% else   %}
-           <a class="button is-primary" href="{% url 'collections:logout' %}">
-             Logout
-           </a>
-         {% endif %}
-       </div>
+    <div class="navbar-end">
+      <div class="navbar-item">
+        <div class="buttons">
+          {% if request.path == "/login" or request.path == "/loguser" %}
+          <a class="button is-primary" href="{% url 'collections:signup' %}">
+            Signup
+          </a>
+          {% elif request.path == "/signup"  %}
+          <a class="button is-primary" href="{% url 'collections:login' %}">
+            Login
+          </a>
+          {% else   %}
+          <a class="button is-primary" href="{% url 'collections:logout' %}">
+            Logout
+          </a>
+          {% endif %}
+        </div>
       </div>
     </div>
-</nav>
+  </nav>
 
-<section class="section" style="background-color:#9AE1EF">
+  <section class="section" style="background-color:#9AE1EF">
     <div class="container">
-        {% block content %}{% endblock content %}
+      {% block content %}{% endblock content %}
     </div>
-</section>
+  </section>
 
 </body>
+
 </html>

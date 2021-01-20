@@ -1,5 +1,7 @@
 # TeachAssist
+
 # Application for helping teachers
+
 ## Written by Charles Thomas
 
 ![No image available!](https://img.icons8.com/doodle/48/000000/basketball--v1.png "This is a sample image.")
@@ -11,6 +13,7 @@ lesson plans. Teachers can communicate with others
 and comment on the various locations.
 
 ### Features
-* Create, edit, and share lesson plans.
+
+-   Create, edit, and share lesson plans.
 
 ### Thanks for checking out TeachAssist!

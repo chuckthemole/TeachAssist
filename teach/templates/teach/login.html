@@ -3,9 +3,9 @@
 {% block content %}
 
 <head>
-    {% load static %}
-    <script type='text/javascript' src="{% static 'teach/js/google_map.js' %}"></script>
-    <link rel="stylesheet" type="text/css" href="{% static 'teach/bulma-0.8.0/css/stylesChuck.css' %}"/>
+  {% load static %}
+  <script type='text/javascript' src="{% static 'teach/js/google_map.js' %}"></script>
+  <link rel="stylesheet" type="text/css" href="{% static 'teach/bulma-0.8.0/css/stylesChuck.css' %}" />
 </head>
 
 <div class="columns">
@@ -18,7 +18,7 @@
               Hello, welcome to teacher!
             </span>
             <span style="color:#1496ed">
-            {{ user.username }}
+              {{ user.username }}
             </span>
           </h1>
           <h2 class="title is-3">
@@ -27,7 +27,7 @@
             </span>
           </h2>
         </div>
-     </div>
+      </div>
     </div>
   </div>
 </div>
@@ -40,10 +40,10 @@
 
       <p class="panel-heading alt-front-background" style="text-align:center">
         <span><strong>
-          <span style="color:white;">
-            Login
-          </span>
-        </strong></span>
+            <span style="color:white;">
+              Login
+            </span>
+          </strong></span>
       </p>
 
       <div class="panel-block">
@@ -55,20 +55,20 @@
             </span>
           </div>
           <div class="field">
-              <label class="label">
-                <span style="color:white;">
-                  Username
-                </span>
-              </label>
-                <div class="control has-icons-left has-icons-right">
-                  <input class="input is-success" type="text" placeholder="Username" name="username">
-                  <span class="icon is-small is-left">
-                    <i class="fas fa-user"></i>
-                  </span>
-                  <span class="icon is-small is-right">
-                    <i class="fas fa-check"></i>
-                  </span>
-                </div>
+            <label class="label">
+              <span style="color:white;">
+                Username
+              </span>
+            </label>
+            <div class="control has-icons-left has-icons-right">
+              <input class="input is-success" type="text" placeholder="Username" name="username">
+              <span class="icon is-small is-left">
+                <i class="fas fa-user"></i>
+              </span>
+              <span class="icon is-small is-right">
+                <i class="fas fa-check"></i>
+              </span>
+            </div>
           </div>
 
           <div class="field">
@@ -77,12 +77,12 @@
                 Password
               </span>
             </label>
-              <div class="control has-icons-left">
-                <input class="input" name="password" placeholder="Password" type="password">
-                <span class="icon is-small is-left">
-                  <i class="fas fa-lock"></i>
-                </span>
-              </div>
+            <div class="control has-icons-left">
+              <input class="input" name="password" placeholder="Password" type="password">
+              <span class="icon is-small is-left">
+                <i class="fas fa-lock"></i>
+              </span>
+            </div>
           </div>
 
           <div class="field">
@@ -101,24 +101,24 @@
 
 <!-- Show locations and map of locations -->
 <br><br><br>
-  <div style="margin: auto;">
-    <center>
-      <div class="box front-background tile is-8 is-vertical">
-        <div class="tile is-ancestor">
-          <div class="tile is-vertical has-text-centered alt-front-backgroud">
-            <h1><br></h1>
-            <h2 class="title is-4" style="color:#1496ed">
-              <span style="color:white;">
-                Take a look at the list of destinations created by teacher users
-              </span>
-            </h2>
-            <br>
-          </div>
+<div style="margin: auto;">
+  <center>
+    <div class="box front-background tile is-8 is-vertical">
+      <div class="tile is-ancestor">
+        <div class="tile is-vertical has-text-centered alt-front-backgroud">
+          <h1><br></h1>
+          <h2 class="title is-4" style="color:#1496ed">
+            <span style="color:white;">
+              Take a look at the list of destinations created by teacher users
+            </span>
+          </h2>
+          <br>
         </div>
-        <br><br><br>
       </div>
-    </center>
-  </div>
+      <br><br><br>
+    </div>
+  </center>
+</div>
 
 <div class="margin: auto">
   <div class="tile is-ancestor">
@@ -130,34 +130,37 @@
           var sports = [];
           var i = 0;
         </script>
-          {% for l in all_locations %}
-          <script>
-            sports[i] = '{{l.sport}}';
-            i++;
-          </script>
-          {% endfor %}
+        {% for l in all_locations %}
         <script>
-          load_map_multiple_markers({{coordinates}}, sports);
+          sports[i] = '{{l.sport}}';
+          i++;
+        </script>
+        {% endfor %}
+        <script>
+          load_map_multiple_markers({
+            {
+              coordinates
+            }
+          }, sports);
         </script>
         <div class='child inline-block-child' id='map' style='width: 70%; height: 550px;'></div>
 
         <div class="scrollable child inline-block-child main-background border" style='width: 29%; height: 550px;'>
           {% for l in all_locations %}
-            <article>
-              <div class="container-img">
-                <!--Image of Location-->
-                <img src="{{ l.sport_location_img.url }}" alt="Image not found"
-                  onerror="this.onerror=null;this.src='{% static 'teach/images/no_image_available.PNG' %}';"
-                  width="100%" height="100%" style="padding:0; margin:0;" class="box main-background">
-                {% if l.sport == 'basketball' %}
-                  <img class="icon" src="https://img.icons8.com/doodle/48/000000/basketball--v1.png">
-                {% elif l.sport == 'baseball' %}
-                  <img class="icon" src='https://img.icons8.com/dusk/64/000000/baseball.png'>
-                {% elif l.sport == 'tennis' %}
-                  <img class="icon" src='https://img.icons8.com/dusk/64/000000/tennis.png'>
-                {% endif %}
-              </div>
-            </article><br>
+          <article>
+            <div class="container-img">
+              <!--Image of Location-->
+              <img src="{{ l.sport_location_img.url }}" alt="Image not found" onerror="this.onerror=null;this.src='{% static 'teach/images/no_image_available.PNG' %}';" width="100%" height="100%" style="padding:0; margin:0;"
+                class="box main-background">
+              {% if l.sport == 'basketball' %}
+              <img class="icon" src="https://img.icons8.com/doodle/48/000000/basketball--v1.png">
+              {% elif l.sport == 'baseball' %}
+              <img class="icon" src='https://img.icons8.com/dusk/64/000000/baseball.png'>
+              {% elif l.sport == 'tennis' %}
+              <img class="icon" src='https://img.icons8.com/dusk/64/000000/tennis.png'>
+              {% endif %}
+            </div>
+          </article><br>
           {% endfor %}
         </div>
       </div>
