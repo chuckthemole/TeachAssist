@@ -4,11 +4,6 @@
 
 {% block content %}
 
-<head>
-  {% load static %}
-  <script type='text/javascript' src="{% static 'teach/js/select_dynamic_options.js' %}"></script>
-</head>
-
 <div class="columns is-centered">
   <div class="publish-form columns main-background panel-block">
     <div class="column box front-background">
@@ -101,6 +96,11 @@
         </div>
 
       </form>
+
+      {% load static %}
+      <script type='text/javascript' src="{% static 'teach/js/select_dynamic_options.js' %}">
+        $(document).ready(fireWhenReady);
+      </script>
 
     </div>
   </div>
