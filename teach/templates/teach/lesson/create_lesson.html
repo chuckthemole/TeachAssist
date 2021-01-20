@@ -3,60 +3,80 @@
 {% extends "teach/base.html" %}
 
 {% block content %}
-  <div class="columns is-centered">
-    <div class="publish-form columns main-background panel-block">
-      <div class="column box front-background">
-        <h1 class="title is-2">
-          <span style="color:#1496ed">
-            {{ user.username }}
-            <br>
+
+<head>
+  {% load static %}
+  <script type='text/javascript' src="{% static 'teach/js/select_dynamic_options.js' %}"></script>
+</head>
+
+<div class="columns is-centered">
+  <div class="publish-form columns main-background panel-block">
+    <div class="column box front-background">
+      <h1 class="title is-2">
+        <span style="color:#1496ed">
+          {{ user.username }}
+          <br>
+          <span style="color:white;">
+            What subject?
+          </span>
+        </span>
+      </h1>
+      <h4 class="title is-5">
+        <span style="color:white;">
+          What lesson?
+        </span>
+      </h4>
+      {% if error %}
+      <h3 style="color: red">{{ error }}</h3>
+      {% endif %}
+
+      <form id="create_lesson" action="{% url 'lesson:create_lesson' %}" method="post">
+        {% csrf_token %}
+
+        <fieldset>
+          <legend>
             <span style="color:white;">
-              What subject?
+              <label>Choose a subject:</label>
             </span>
-          </span>
-        </h1>
-        <h4 class="title is-5">
-          <span style="color:white;">
-            Where is the teach located?
-          </span>
-        </h4>
-        {% if error %}
-          <h3 style="color: red">{{ error }}</h3>
-        {% endif %}
-
-        <form action="{% url 'location:create_location' %}" method="post">
-          {% csrf_token %}
-
-          <span style="color:white;">
-            <label>Choose a sport:</label>
-          </span>
-          <select name="sports">
-            <option value="basketball">basketball</option>
-            <option value="baseball">baseball</option>
-            <option value="tennis">tennis</option>
+          </legend>
+          <select name="subject">
+            <option value="math">Math</option>
+            <option value="science">Science</option>
+            <option value="english">English</option>
+            <option value="history">History</option>
           </select>
-          <br><br>
 
-            <div class="field">
-              <div class="control">
-                <label class="label">
-                  <span style="color:red;">*</span><span style="color:white;">Address</span>
-                </label>
-                <input class="input is-primary" placeholder="123 Cool Court Drive" type="text" name="address">
-              </div>
-            </div>
+          <select name="choices" id="choices">
+            <!-- populated using JavaScript -->
+          </select>
+        </fieldset>
 
-            <div class="field">
-              <div class="control">
-                <label class="label">
-                  <span style="color:red;">*</span><span style="color:white;">Zip</span>
-                </label>
-                <input class="input is-primary" placeholder="42069" name="zip">
-                </input>
-              </div>
-            </div>
+        <br><br>
 
-            <!--
+        <div class="field">
+          <div class="control">
+            <label class="label">
+              <span style="color:red;">*</span><span style="color:white;">
+                Topic
+              </span>
+            </label>
+            <input class="input is-primary" placeholder="123 Cool Court Drive" type="text" name="address">
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="control">
+            <label class="label">
+              <span style="color:red;">*</span><span style="color:white;">
+                Zip
+              </span>
+            </label>
+            <input class="input is-primary" placeholder="42069" name="zip">
+            </input>
+          </div>
+        </div>
+
+        <!--
             <label class="checkbox">
               <br>
               Is this where you live?
@@ -70,19 +90,19 @@
             </label>
             -->
 
-            <br><br><br>
+        <br><br><br>
 
-            <div class="field">
-              <div class="control">
-                <button class="button is-success is-fullwidth" type="submit" value="Publish">
-                  Publish
-                </button>&nbsp;
-              </div>
-            </div>
+        <div class="field">
+          <div class="control">
+            <button class="button is-success is-fullwidth" type="submit" value="Publish">
+              Publish
+            </button>&nbsp;
+          </div>
+        </div>
 
-        </form>
+      </form>
 
-      </div>
     </div>
   </div>
+</div>
 {% endblock content %}
