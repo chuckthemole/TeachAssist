@@ -122,15 +122,15 @@ def login_view(request):
     else:
         is_base_visible = False
 
-        all_locations = Location.objects.all()   # all_problems is a list object [   ]
+        all_lessons = Lesson.objects.all()   # all_problems is a list object [   ]
         coordinates = []
-        for location in all_locations:
-            coordinates.append([location.latitude, location.longitude])
-        if len(all_locations) != 0:
-            return render(request, "teach/login.html", {"all_locations": all_locations,
-                "coordinates": coordinates, 'is_base_visible':is_base_visible, "location": all_locations[0]})
+        #for location in all_locations:
+        #    coordinates.append([location.latitude, location.longitude])
+        if len(all_lessons) != 0:
+            return render(request, "teach/login.html", {"all_lessons": all_lessons,
+            'is_base_visible':is_base_visible, "lesson": all_lessons[0]})
         else:
-            return render(request, "teach/login.html", {"all_locations": all_locations, 'is_base_visible':is_base_visible})
+            return render(request, "teach/login.html", {"all_lessons": all_lessons, 'is_base_visible':is_base_visible})
 
         return render(request, 'teach/login.html', {'is_base_visible':is_base_visible})
 
