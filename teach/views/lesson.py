@@ -83,7 +83,6 @@ def show_lesson(request, lesson_id):
         if not user.is_authenticated:
             return redirect("teach:login")
         else:
-            # make sure to import the fucntion get_object_or_404 from  django.shortcuts
             lesson = get_object_or_404(Lesson, pk=lesson_id)
             return render(request, "teach/lesson/show_lesson.html", {"user":user, "lesson":lesson})
 
