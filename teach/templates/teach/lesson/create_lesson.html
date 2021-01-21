@@ -40,12 +40,13 @@
               <option value="history">History</option>
             </select>
           </div>
+
           <div class="field has-addons is-small">
             <div class="control">
               <input class="input is-rounded is-small" type="text" placeholder="Add Subject">
             </div>
             <div class="control">
-              <button class="button is-info is-rounded is-small" onclick="addSubject()">
+              <button class="button is-info is-rounded is-small" onclick="addSubject(); return false;">
                 Add Subject
               </button>
             </div>
@@ -61,12 +62,13 @@
               <!-- populated using JavaScript -->
             </select>
           </div>
+
           <div class="field has-addons is-small">
             <div class="control">
-              <input class="input is-rounded is-small" type="text" placeholder="Add Subject">
+              <input class="input is-rounded is-small" id="add_class" type="text" placeholder="Add Class">
             </div>
             <div class="control">
-              <button class="button is-info is-rounded is-small" onclick="addClass()">
+              <button class="button is-info is-rounded is-small" onclick="addClass(); return false;">
                 Add Class
               </button>
             </div>
