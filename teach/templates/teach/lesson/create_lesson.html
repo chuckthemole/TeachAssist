@@ -34,16 +34,21 @@
               <label>Choose a subject:</label>
             </span>
           </legend>
-          <select name="subject">
-            <option value="math">Math</option>
-            <option value="science">Science</option>
-            <option value="english">English</option>
-            <option value="history">History</option>
-          </select>
 
-          <select name="choices" id="choices">
-            <!-- populated using JavaScript -->
-          </select>
+          <div class="select is-rounded is-small is-focused is-info">
+            <select name="subject">
+              <option value="math">Math</option>
+              <option value="science">Science</option>
+              <option value="english">English</option>
+              <option value="history">History</option>
+            </select>
+          </div>
+          <div class="select is-rounded is-small is-hovered is-info">
+            <select name="choices" id="choices">
+              <!-- populated using JavaScript -->
+            </select>
+          </div>
+
         </fieldset>
 
         <br><br>
@@ -52,10 +57,10 @@
           <div class="control">
             <label class="label">
               <span style="color:red;">*</span><span style="color:white;">
-                Topic
+                Lesson Name
               </span>
             </label>
-            <input class="input is-primary" placeholder="123 Cool Court Drive" type="text" name="address">
+            <input class="input is-primary is-rounded" placeholder="The name of your lesson..." type="text" name="name">
           </div>
         </div>
 
@@ -63,11 +68,10 @@
           <div class="control">
             <label class="label">
               <span style="color:red;">*</span><span style="color:white;">
-                Zip
+                Lesson description
               </span>
             </label>
-            <input class="input is-primary" placeholder="42069" name="zip">
-            </input>
+            <input class="input is-primary is-large is-rounded" placeholder="A short description..." type="text" name="description">
           </div>
         </div>
 
@@ -89,7 +93,7 @@
 
         <div class="field">
           <div class="control">
-            <button class="button is-success is-fullwidth" type="submit" value="Publish">
+            <button class="button is-success is-rounded is-fullwidth" type="submit" value="Publish">
               Publish
             </button>&nbsp;
           </div>
