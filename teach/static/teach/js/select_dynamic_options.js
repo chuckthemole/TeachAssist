@@ -87,12 +87,31 @@ function appendDataToSelect(sel, obj) {
 }
 
 function addClass() {
+  var relName = 'choices';
+  //var relList = this.form.elements[relName];
+  var add_class = document.getElementById("add_class").value;
+  var subject = document.getElementById("subject").value;
+  alert(Select_List_Data[relName][subject].text);
+  try {
+    Select_List_Data[relName][subject].text.push(add_class);
+    Select_List_Data[relName][subject].value.push(add_class);
+    reset(subject);
+    alert("Created new class!");
+  } catch (err) {
+    alert("Not able to create new class!");
+    //document.getElementById("add_class").innerHTML = err.message;
+  }
+  //Select_List_Data[relName][subject].text.value.push(add_class);
+  //Select_List_Data.relName.subject.value.value.push(add_class);
+
+/*
   var select = document.getElementById('choices');
   var opt = document.createElement('option');
-  add_class = document.getElementById("add_class").value;
+  var add_class = document.getElementById("add_class").value;
   opt.value = add_class;
   opt.innerHTML = add_class;
   select.appendChild(opt);
+  */
 }
 
 function addSubject() {
@@ -140,3 +159,25 @@ document.forms['create_lesson'].elements['subject'].onchange = function(e) {
   appendDataToSelect(rel, data);
 
 }());
+
+function reset(subject) {
+
+  var form = document.forms['create_lesson'];
+
+  // name of associated select box
+  var relName = 'choices';
+
+  // reference to associated select box
+  var rel = form.elements[relName];
+
+  // get data for associated select box passing its name
+  // and value of selected in controlling select box
+  var data = Select_List_Data[relName][subject];
+
+  // remove current option elements
+  var relList = document.forms['create_lesson'].elements['subject'].form.elements[relName];
+  removeAllOptions(relList, true);
+
+  // add options to associated select box
+  appendDataToSelect(rel, data);
+}
