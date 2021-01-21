@@ -5,20 +5,20 @@ var Select_List_Data = {
 
         // names match option values in controlling select box
         math: {
-            text: ['Scrolling Divs', 'Tooltips', 'Rotate Images', 'Scrollers', 'Banner Rotator'],
-            value: ['scroll', 'tooltips', 'rotate', 'scrollers', 'banner']
+            text: ['Algebra', 'Geometry', 'Statistics', 'Calculus', 'Trigonometry'],
+            value: ['algebra', 'geometry', 'statistics', 'calculus', 'trigonometry']
         },
         science: {
-            text: ['Random Image', 'Form Class', 'Table Class', 'Order Form'],
-            value: ['random', 'form', 'table', 'order']
+            text: ['Biology', 'Chemistry', 'Physics', 'Astronomy'],
+            value: ['biology', 'chemistry', 'physics', 'astronomy']
         },
         english: {
-            // example without values
-            text: ['Iframes', 'PHP to JS', 'Object Literals', 'Initializing JS']
+            text: ['American Literature', 'World Literature', 'Creative Writing', 'Journalism'],
+            value: ['biology', 'chemistry', 'physics', 'astronomy']
         },
         history: {
-            // example without values
-            text: ['Iframes', 'PHP to JS', 'Object Literals', 'Initializing JS']
+            text: ['Government', 'Geography', 'Ethnic Studies', 'Economics'],
+            value: ['government', 'geography', 'ethnic studies', 'economics']
         }
 
     }
