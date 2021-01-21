@@ -44,8 +44,10 @@ class Lesson(models.Model):
 	# FK
 	teacher = models.ForeignKey(teacher, on_delete=models.CASCADE, null=True)
 
+	lesson_name = models.TextField(max_length=30, null=False, blank=False, unique=False, default="")
 	subject = models.TextField(max_length=30, null=False, blank=False, unique=False, default="")
-	description = models.TextField(max_length=30, null=False, blank=False, unique=False, default="")
+	topic = models.TextField(max_length=30, null=False, blank=False, unique=False, default="")
+	description = models.TextField(max_length=100, null=False, blank=False, unique=False, default="")
 
 	# Image of location
 	img = models.ImageField(upload_to='images/', blank=True, default="static/teach/images/no_image_available.PNG")
