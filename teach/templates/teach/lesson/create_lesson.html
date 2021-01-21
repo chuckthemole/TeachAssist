@@ -7,18 +7,15 @@
 <div class="columns is-centered">
   <div class="publish-form columns main-background panel-block">
     <div class="column box front-background">
-      <h1 class="title is-2">
+      <h1 class="title is-3 has-text-centered">
         <span style="color:#1496ed">
           {{ user.username }}
           <br>
-          <span style="color:white;">
-            What subject?
-          </span>
         </span>
       </h1>
-      <h4 class="title is-5">
+      <h4 class="title is-5 has-text-centered">
         <span style="color:white;">
-          What lesson?
+          What subject? What lesson?
         </span>
       </h4>
       {% if error %}
@@ -29,12 +26,12 @@
         {% csrf_token %}
 
         <fieldset>
+
           <legend>
             <span style="color:white;">
               <label>Choose a subject:</label>
             </span>
           </legend>
-
           <div class="select is-rounded is-small is-focused is-info">
             <select name="subject">
               <option value="math">Math</option>
@@ -43,13 +40,41 @@
               <option value="history">History</option>
             </select>
           </div>
+          <div class="field has-addons is-small">
+            <div class="control">
+              <input class="input is-rounded is-small" type="text" placeholder="Add Subject">
+            </div>
+            <div class="control">
+              <button class="button is-info is-rounded is-small" onclick="addSubject()">
+                Add Subject
+              </button>
+            </div>
+          </div>
+
+          <legend>
+            <span style="color:white;">
+              <label>Choose a classs:</label>
+            </span>
+          </legend>
           <div class="select is-rounded is-small is-hovered is-info">
             <select name="choices" id="choices">
               <!-- populated using JavaScript -->
             </select>
           </div>
+          <div class="field has-addons is-small">
+            <div class="control">
+              <input class="input is-rounded is-small" type="text" placeholder="Add Subject">
+            </div>
+            <div class="control">
+              <button class="button is-info is-rounded is-small" onclick="addClass()">
+                Add Class
+              </button>
+            </div>
+          </div>
 
         </fieldset>
+        <br>
+
 
         <br><br>
 
