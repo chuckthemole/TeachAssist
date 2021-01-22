@@ -1,4 +1,27 @@
-import { Select_List_Data } from './select_list_data.js';
+var Select_List_Data = {
+
+  'choices': { // name of associated select box
+
+    // names match option values in controlling select box
+    math: {
+      text: ['Algebra', 'Geometry', 'Statistics', 'Calculus', 'Trigonometry'],
+      value: ['algebra', 'geometry', 'statistics', 'calculus', 'trigonometry']
+    },
+    science: {
+      text: ['Biology', 'Chemistry', 'Physics', 'Astronomy'],
+      value: ['biology', 'chemistry', 'physics', 'astronomy']
+    },
+    english: {
+      text: ['American Literature', 'World Literature', 'Creative Writing', 'Journalism'],
+      value: ['biology', 'chemistry', 'physics', 'astronomy']
+    },
+    history: {
+      text: ['Government', 'Geography', 'Ethnic Studies', 'Economics'],
+      value: ['government', 'geography', 'ethnic studies', 'economics']
+    }
+
+  }
+};
 
 // removes all option elements in select box
 // removeGrp (optional) boolean to remove optgroups
@@ -23,7 +46,12 @@ function appendDataToSelect(sel, obj) {
   var f = document.createDocumentFragment();
   var labels = [],
     group, opts;
-
+  /*
+    var dropdown = document.createElement('option');
+    dropdown.appendChild(document.createTextNode('Select an option'));
+    dropdown.value = 'select_option';
+    f.appendChild(dropdown);
+  */
   function addOptions(obj) {
     var f = document.createDocumentFragment();
     var o;
@@ -80,14 +108,14 @@ function addClass() {
   //Select_List_Data[relName][subject].text.value.push(add_class);
   //Select_List_Data.relName.subject.value.value.push(add_class);
 
-/*
-  var select = document.getElementById('choices');
-  var opt = document.createElement('option');
-  var add_class = document.getElementById("add_class").value;
-  opt.value = add_class;
-  opt.innerHTML = add_class;
-  select.appendChild(opt);
-  */
+  /*
+    var select = document.getElementById('choices');
+    var opt = document.createElement('option');
+    var add_class = document.getElementById("add_class").value;
+    opt.value = add_class;
+    opt.innerHTML = add_class;
+    select.appendChild(opt);
+    */
 }
 
 function addSubject() {
