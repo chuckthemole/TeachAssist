@@ -128,9 +128,14 @@
 
       </form>
 
+      <div id="json"></div>
+
       {% load static %}
       <script type='text/javascript' src="{% static 'teach/js/select_dynamic_options.js' %}">
         $(document).ready(fireWhenReady);
+      </script>
+      {% load static %}
+      <script type='text/javascript' src="{% static 'teach/js/demo.js' %}">
       </script>
 
     </div>
