@@ -50,7 +50,7 @@ def create_lesson(request):
             lesson = Lesson.objects.create(
                 teacher = teacher,
                 subject = subject,
-                subject_class = "subject_class",
+                subject_class = subject_class,
                 lesson_name = lesson_name,
                 description = lesson_description,
                 topic = 'this'

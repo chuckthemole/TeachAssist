@@ -30,7 +30,7 @@
       </span>
     </h4>
     <a class="button is-info is-medium" href="{% url 'lesson:publish_lesson' %}">
-      Make a new lesson.
+      Make a new lesson
     </a>
     <br><br>
 
@@ -43,21 +43,19 @@
             <div class="container-img">
               <img src="{{ lesson.img.url }}" alt="Image not found" onerror="this.onerror=null;this.src='{% static 'teach/images/no_image_available.PNG' %}';" width="100%" height="100%" style="padding:0; margin:0;" class="box front-background">
 
-              <!--
-                {% if lesson.sport == 'basketball' %}
-                  <img class="icon" src="https://img.icons8.com/doodle/48/000000/basketball--v1.png">
-                {% elif location.sport == 'baseball' %}
-                  <img class="icon" src='https://img.icons8.com/dusk/64/000000/baseball.png'>
-                {% elif location.sport == 'tennis' %}
-                  <img class="icon" src='https://img.icons8.com/dusk/64/000000/tennis.png'>
-                {% endif %}
-                -->
+              {% if lesson.subject == 'math' %}
+              <img class="icon" src="https://img.icons8.com/doodle/48/000000/basketball--v1.png">
+              {% elif lesson.subject == 'science' %}
+              <img class="icon" src='https://img.icons8.com/dusk/64/000000/baseball.png'>
+              {% elif lesson.subject == 'history' %}
+              <img class="icon" src='https://img.icons8.com/dusk/64/000000/tennis.png'>
+              {% endif %}
 
             </div>
 
           </a>
           <a class="child inline-block-child button is-success is-medium" href="{% url 'lesson:show_lesson' lesson.id %}">
-            {{ lesson }}
+            {{ lesson.lesson_name }}
           </a>
         </div>
       </div>
