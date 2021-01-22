@@ -1,5 +1,5 @@
 {
-  "choices": {
+  "subjects": {
 
     "math": {
       "text": ["Algebra", "Geometry", "Statistics", "Calculus", "Trigonometry"],
@@ -11,7 +11,7 @@
     },
     "english": {
       "text": ["American Literature", "World Literature", "Creative Writing", "Journalism"],
-      "value": ["biology", "chemistry", "physics", "astronomy"]
+      "value": ["american literature", "world literature", "creative writing", "journalism"]
     },
     "history": {
       "text": ["Government", "Geography", "Ethnic Studies", "Economics"],

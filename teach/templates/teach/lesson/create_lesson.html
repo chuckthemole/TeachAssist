@@ -4,6 +4,10 @@
 
 {% block content %}
 
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
 <div class="columns is-centered">
   <div class="publish-form columns main-background panel-block">
     <div class="column box front-background">
@@ -25,8 +29,10 @@
       <form id="create_lesson" action="{% url 'lesson:create_lesson' %}" method="post">
         {% csrf_token %}
 
+        <select id="locality-dropdown" name="locality">
+        </select>
+        <!--
         <fieldset>
-
           <legend>
             <span style="color:white;">
               <label>Choose a subject:</label>
@@ -59,7 +65,6 @@
           </legend>
           <div class="select is-rounded is-small is-hovered is-info">
             <select name="choices" id="choices">
-              <!-- populated using JavaScript -->
             </select>
           </div>
 
@@ -76,6 +81,7 @@
 
         </fieldset>
         <br>
+        -->
 
 
         <br><br>
@@ -129,9 +135,7 @@
       </form>
 
       {% load static %}
-      <script type='text/javascript' src="{% static 'teach/js/select_dynamic_options.js' %}">
-        $(document).ready(fireWhenReady);
-      </script>
+      <script type='text/javascript' src="{% static 'teach/js/subject_dropdown.js' %}"></script>
 
     </div>
   </div>
