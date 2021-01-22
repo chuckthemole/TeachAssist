@@ -1,0 +1,61 @@
+<!-- show a lesson belonging to any user  -->
+{% extends "teach/base.html" %}
+
+{% block content %}
+
+<div class="no-scroll">
+  <br><br><br>
+  <div style="margin: auto;">
+    <center>
+      <div class="box front-background tile is-8 is-vertical">
+        <div class="tile is-ancestor">
+          <div class="tile is-vertical has-text-centered alt-front-backgroud">
+            <h1 class="title is-2">
+              <span style="color:white;">
+                Lesson added by:
+              </span>
+              <span style="color:#1496ed">
+                {{ lesson.teacher.user.username }}
+              </span>
+            </h1>
+            <h2>
+              <span style="color:white;">
+                This is the lesson
+              </span>
+              <span style="color:#1496ed">
+                <u> {{lesson.subject_class}} {{lesson.description}}</u>
+              </span>
+            </h2>
+          </div>
+        </div>
+        <br><br><br><br>
+      </div>
+    </center>
+  </div>
+
+  <br>
+
+  <div class="columns">
+    <div class="column">
+      <div class="parent main-background" style='width: 100%; height: 100%;'>
+
+        {% if user.id == lesson.teacher.user.id %}
+        <a class="button is-primary is-medium" href="{% url 'lesson:edit_lesson' lesson.id %}">
+          Make changes ...
+        </a>
+        <form action="{% url 'lesson:delete_lesson' lesson.id %}" method="post">
+            {% csrf_token %}
+             <button class="button is-danger is-outlined is-fullwidth" type="submit" name="delete" value="Delete">
+               Delete
+             </button>&nbsp;
+        </form>
+        {% endif %}
+
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+{% endblock content %}

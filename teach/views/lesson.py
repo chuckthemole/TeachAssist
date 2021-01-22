@@ -16,50 +16,44 @@ def create_lesson(request):
             return redirect("teach:login")
 
         teacher = user.teacher
-        sport = request.POST["sports"]
+        subject = request.POST["subject"]
+        subject_class = request.POST["choices"]
+        lesson_name = request.POST["name"]
+        lesson_description = request.POST["description"]
 
-        # Choose sport
-        if sport == "basketball":
-            is_basketball=True
-            is_tennis=False
-            is_baseball=False
-        elif sport == "tennis":
-            is_basketball=False
-            is_tennis=True
-            is_baseball=False
-        elif sport == "baseball":
-            is_basketball=False
-            is_tennis=False
-            is_baseball=True
-        else:
-            print("no choice")
-
-        if not sport:
-            return render(request, "teach/lesson/create_lesson.html", {"error":"Please choose a subject!"})
+        if not subject or not subject_class:
+            return render(request, "teach/lesson/create_lesson.html", {"error":"Please choose a subject and class!"})
 
         # Geocoding an address
-        address = request.POST["address"]
-        zip = request.POST["zip"]
-        gmaps = googlemaps.Client(key='AIzaSyBLjXOk51pE-rRddkuHJeHIFVf_90rCYko')
-        geocode_result = gmaps.geocode(address + " " + zip)
-        df = DataFrame (geocode_result)
-        loc = DataFrame (df['geometry'][0])
+        #address = request.POST["address"]
+        #zip = request.POST["zip"]
+        #gmaps = googlemaps.Client(key='AIzaSyBLjXOk51pE-rRddkuHJeHIFVf_90rCYko')
+        #geocode_result = gmaps.geocode(address + " " + zip)
+        #df = DataFrame (geocode_result)
+        #loc = DataFrame (df['geometry'][0])
 
         # Sometimes the DF is missing values. Try first two if they exist
-        if str(loc['location'][0]) != 'nan' and str(loc['location'][1]) != 'nan':
-            latitude = float(loc['location'][0])
-            longitude = float(loc['location'][1])
-        else:
-            latitude = float(loc['location'][2])
-            longitude = float(loc['location'][3])
+        #if str(loc['location'][0]) != 'nan' and str(loc['location'][1]) != 'nan':
+        #    latitude = float(loc['location'][0])
+        #    longitude = float(loc['location'][1])
+        #else:
+        #    latitude = float(loc['location'][2])
+        #    longitude = float(loc['location'][3])
 
-        print("( LATITUDE: " + str(latitude) + ", LONGITUDE: " + str(longitude) + " )")
+        #print("( LATITUDE: " + str(latitude) + ", LONGITUDE: " + str(longitude) + " )")
+
         # Make more requirements for adress inputs
-        if address == "" or len(zip) < 5:
-            return render(request, "teach/lesson/create_lesson.html", {"error":"Enter a proper address"})
+        #if address == "" or len(zip) < 5:
+        #    return render(request, "teach/lesson/create_lesson.html", {"error":"Enter a proper address"})
 
         try:
             lesson = Lesson.objects.create(
+                teacher = teacher,
+                subject = subject,
+                subject_class = "subject_class",
+                lesson_name = lesson_name,
+                description = lesson_description,
+                topic = 'this'
                 #sport_location_img='images/no_image_available.PNG',
                 #latitude=latitude, longitude=longitude,
                 #teacher=teacher, address=address, zip=zip,
@@ -68,8 +62,9 @@ def create_lesson(request):
                 )
             lesson.save()
             lesson = get_object_or_404(Lesson, pk=lesson.id)
-            return render(request, "teach/lesson/show_subject.html", {"user":user, "lesson":lesson})
+            return render(request, "teach/lesson/show_lesson.html", {"user":user, "lesson":lesson})
         except:
+            print("*******Returning to create_lesson.html error*********")
             return render(request, "teach/lesson/create_lesson.html", {"error":"Can't create the lesson"})
     else:
         user = request.user
@@ -220,7 +215,6 @@ def delete_lesson(request, lesson_id):
             return HttpResponse(status=500)
 
         lesson = get_object_or_404(Lesson, pk=lesson_id)
-        # destinations = Destination.objects.filter(location=location_id)
 
         if lesson.teacher.user.id == user.id:
             lesson.img.delete(save=False)  # Deletes the file from AWS S3
