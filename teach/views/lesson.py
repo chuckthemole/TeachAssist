@@ -21,6 +21,7 @@ def create_lesson(request):
         subject_class = request.POST["choices"]
         lesson_name = request.POST["name"]
         lesson_description = request.POST["description"]
+        is_public = request.POST["is_public"]
 
         if not subject or not subject_class:
             return render(request, "teach/lesson/create_lesson.html", {"error":"Please choose a subject and class!"})
@@ -54,7 +55,8 @@ def create_lesson(request):
                 subject_class = subject_class,
                 lesson_name = lesson_name,
                 description = lesson_description,
-                topic = 'this'
+                topic = 'this',
+                is_public = is_public
                 #sport_location_img='images/no_image_available.PNG',
                 #latitude=latitude, longitude=longitude,
                 #teacher=teacher, address=address, zip=zip,
