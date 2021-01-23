@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from pandas import DataFrame
 from teach.models import * # Import all the models created so far
-from teach.forms import Sport_Location_Form
+from teach.forms import *
 from django import forms
 import googlemaps
 from datetime import datetime

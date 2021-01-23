@@ -7,7 +7,7 @@
 <div class="columns is-centered">
   <div class="publish-form columns main-background panel-block">
 
-    <form id="create_lesson" action="{% url 'lesson:create_lesson' %}" method="post">
+    <form id="create_lesson" action="{% url 'lesson:create_lesson' %}" method="post" enctype="multipart/form-data">
       {% csrf_token %}
 
       <div class="column box front-background">
@@ -120,13 +120,15 @@
             -->
 
         <br>
+
         <div class="columns is-centered">
           <div class="inline-child-block">
             <p><input type="file" accept="image/*" name="image" id="file" onchange="loadFile(event)" style="display: none;"></p>
             <p>
-              <label class="button is-small is-rounded" for="file" style="cursor: pointer;">
+              {{ form.as_p }}
+              <!--<label class="button is-small is-rounded" for="file" style="cursor: pointer;">
                 Upload Image
-              </label>
+              </label>-->
             </p>
           </div>
           <div class="inline-child-block">

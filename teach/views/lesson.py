@@ -7,7 +7,8 @@ def publish_lesson(request):
         if not user.is_authenticated:
             return redirect("teach:login")
         else:
-            return render(request, "teach/lesson/create_lesson.html", {"user":user} )
+            form = Lesson_Form()
+            return render(request, "teach/lesson/create_lesson.html", {"user":user, "form":form} )
 
 def create_lesson(request):
     if request.method == "POST":
@@ -53,7 +54,6 @@ def create_lesson(request):
                 subject_class = subject_class,
                 lesson_name = lesson_name,
                 description = lesson_description,
-                img = img,
                 topic = 'this'
                 #sport_location_img='images/no_image_available.PNG',
                 #latitude=latitude, longitude=longitude,
@@ -61,11 +61,14 @@ def create_lesson(request):
                 #sport=sport, is_basketball=is_basketball,
                 #is_tennis=is_tennis, is_baseball=is_baseball
                 )
-            lesson.save()
             lesson = get_object_or_404(Lesson, pk=lesson.id)
 
             form = Lesson_Form(request.POST, request.FILES, instance=lesson)
-            lesson.save()
+            if form.is_valid():
+                print("Form is valid.")
+                lesson.save()
+            else:
+                print("Form is not valid!")
 
             return render(request, "teach/lesson/show_lesson.html", {"user":user, "lesson":lesson})
         except:
