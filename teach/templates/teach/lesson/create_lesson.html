@@ -6,24 +6,27 @@
 
 <div class="columns is-centered">
   <div class="publish-form columns main-background panel-block">
-    <div class="column box front-background">
-      <h1 class="title is-3 has-text-centered">
-        <span style="color:#1496ed">
-          {{ user.username }}
-          <br>
-        </span>
-      </h1>
-      <h4 class="title is-5 has-text-centered">
-        <span style="color:white;">
-          What subject? What lesson?
-        </span>
-      </h4>
-      {% if error %}
-      <h3 style="color: red">{{ error }}</h3>
-      {% endif %}
 
-      <form id="create_lesson" action="{% url 'lesson:create_lesson' %}" method="post">
-        {% csrf_token %}
+    <form id="create_lesson" action="{% url 'lesson:create_lesson' %}" method="post">
+      {% csrf_token %}
+
+      <div class="column box front-background">
+        <h1 class="title is-3 has-text-centered">
+          <span style="color:#1496ed">
+            {{ user.username }}
+            <br>
+          </span>
+        </h1>
+        <h4 class="title is-5 has-text-centered">
+          <span style="color:white;">
+            What subject? What lesson?
+          </span>
+        </h4>
+        {% if error %}
+        <h3 style="color: red">{{ error }}</h3>
+        {% endif %}
+
+
 
         <fieldset>
 
@@ -116,7 +119,27 @@
             </label>
             -->
 
-        <br><br><br>
+        <br>
+        <div class="columns is-centered">
+          <div class="inline-child-block">
+            <p><input type="file" accept="image/*" name="image" id="file" onchange="loadFile(event)" style="display: none;"></p>
+            <p>
+              <label class="button is-small is-rounded" for="file" style="cursor: pointer;">
+                Upload Image
+              </label>
+            </p>
+          </div>
+          <div class="inline-child-block">
+            <img id="output" width="100" />
+          </div>
+        </div>
+
+        <script>
+          var loadFile = function(event) {
+            var image = document.getElementById('output');
+            image.src = URL.createObjectURL(event.target.files[0]);
+          };
+        </script>
 
         <div class="field">
           <div class="control">
@@ -126,12 +149,11 @@
           </div>
         </div>
 
-      </form>
+        {% load static %}
+        <script type='text/javascript' src="{% static 'teach/js/select_dynamic_options.js' %}"></script>
+      </div>
 
-      {% load static %}
-      <script type='text/javascript' src="{% static 'teach/js/select_dynamic_options.js' %}"></script>
-
-    </div>
+    </form>
   </div>
 </div>
 {% endblock content %}
