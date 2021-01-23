@@ -10,67 +10,78 @@
   <link rel="stylesheet" type="text/css" href="{% static 'teach/bulma-0.8.0/css/stylesChuck.css' %}" />
 </head>
 
-  <br><br><br>
-  <div style="margin: auto;">
-    <center>
-      <div class="box front-background tile is-8 is-vertical">
-        <div class="tile is-ancestor">
-          <div class="tile is-vertical has-text-centered alt-front-backgroud">
-            <h1><br></h1>
-            <h2 class="title is-3">
-              <span style="color:#1496ed">
-                {% if user %}
-                {{ user.username }},
-                {% endif %}
-              </span>
-              <span style="color:white;">
-                Welcome to TeachAssist.
-              </span>
-            </h2>
-            <h4 class="title is-5" style="color:#1496ed">
-              <span style="color:white;">
-                Take a look at the list of lessons created by TeachAssist users.
-              </span>
-            </h4>
-          </div>
-        </div>
-        <br><br><br>
-      </div>
-    </center>
-  </div>
-
-  <br><br>
-
-  <div style="margin: auto">
-    <center>
-      <div class="tile is-ancestor is-8">
-        <div class="tile is-vertical is-centered">
-          <div class="parent main-background is-centered" style='width: 100%; height: 100%;'>
-            <div class="scrollable child main-background border" style='width: 60%; height: 60%;'>
-
-              {% for l in all_lessons %}
-              <article>
-                <a href="{% url 'lesson:show_lesson' l.id %}">
-                  <div class="container-img">
-                    <!--Image of Location-->
-                    <img src="{{ l.img.url }}" alt="Image not found" onerror="this.onerror=null;this.src='{% static 'teach/images/no_image_available.PNG' %}';" width="100%" height="100%" style="padding:0; margin:0;" class="box main-background">
-                    {% if l.subject == 'math' %}
-                    <img class="icon" src="https://img.icons8.com/doodle/48/000000/basketball--v1.png">
-                    {% elif l.subject == 'science' %}
-                    <img class="icon" src='https://img.icons8.com/dusk/64/000000/baseball.png'>
-                    {% elif l.subject == 'history' %}
-                    <img class="icon" src='https://img.icons8.com/dusk/64/000000/tennis.png'>
-                    {% endif %}
-                  </div>
-                </a>
-              </article><br>
-              {% endfor %}
-
-            </div>
-          </div>
+<br><br><br>
+<div style="margin: auto;">
+  <center>
+    <div class="box front-background tile is-8 is-vertical">
+      <div class="tile is-ancestor">
+        <div class="tile is-vertical has-text-centered alt-front-backgroud">
+          <h1><br></h1>
+          <h2 class="title is-3">
+            <span style="color:#1496ed">
+              {% if user %}
+              {{ user.username }},
+              {% endif %}
+            </span>
+            <span style="color:white;">
+              Welcome to TeachAssist.
+            </span>
+          </h2>
+          <h4 class="title is-5" style="color:#1496ed">
+            <span style="color:white;">
+              Take a look at the list of lessons created by TeachAssist users.
+            </span>
+          </h4>
         </div>
       </div>
-    </center>
+      <br><br><br>
+    </div>
+  </center>
+</div>
+
+<br><br>
+
+<div class="columns is-centered">
+  <div class="column is-8">
+    <div class="tile box front-background is-ancestor is-8">
+        {% for l in all_lessons %}
+          <figure class="image is-square is-1by1 tile is-parent is-vertical">
+            <a href="{% url 'lesson:show_lesson' l.id %}">
+              <figure class="image is-square is-1by1">
+                <img src="{{ l.img.url }}" class="is-rounded" style="object-fit: cover;" alt="Image not found" onerror="this.onerror=null;this.src='{% static 'teach/images/no_image_available.PNG' %}';">
+              </figure>
+              <!--
+              {% if l.subject == 'math' %}
+              <img class="icon is-small" src="https://img.icons8.com/doodle/48/000000/basketball--v1.png">
+              {% elif l.subject == 'science' %}
+              <img class="icon is-small" src='https://img.icons8.com/dusk/64/000000/baseball.png'>
+              {% elif l.subject == 'history' %}
+              <img class="icon is-small" src='https://img.icons8.com/dusk/64/000000/tennis.png'>
+              {% endif %}-->
+            </a>
+          </figure>
+          <div></div>
+        {% endfor %}
+    </div>
   </div>
+</div>
 
 {% endblock content %}
+<!--{% for l in all_lessons %}
+  <article>
+    <figure class="image is-128x128">
+      <a href="{% url 'lesson:show_lesson' l.id %}">
+        <div class="container-img">
+          <img src="{{ l.img.url }}" alt="Image not found" onerror="this.onerror=null;this.src='{% static 'teach/images/no_image_available.PNG' %}';" style="padding:0; margin:0;" class="box main-background">
+          {% if l.subject == 'math' %}
+          <img class="icon is-small" src="https://img.icons8.com/doodle/48/000000/basketball--v1.png">
+          {% elif l.subject == 'science' %}
+          <img class="icon is-small" src='https://img.icons8.com/dusk/64/000000/baseball.png'>
+          {% elif l.subject == 'history' %}
+          <img class="icon is-small" src='https://img.icons8.com/dusk/64/000000/tennis.png'>
+          {% endif %}
+        </div>
+      </a>
+    </figure>
+  </article><br><br>
+  {% endfor %}-->
