@@ -104,23 +104,12 @@
             <input class="input is-primary is-large is-rounded" placeholder="A short description..." type="text" name="description">
           </div>
         </div>
-
-        <!--
-            <label class="checkbox">
-              <br>
-              Is this where you live?
-              <input type="checkbox"  id="my_location" name="my_location" />
-            </label>
-
-            <label class="checkbox">
-              <br>
-              Or are you visiting?
-              <input type="checkbox"  id="visiting" name="visiting" />
-            </label>
-            -->
-
+        <label class="checkbox">
+          <br>
+          Check box to make private
+          <input type="checkbox" id="is_public" name="is_public">
+        </label>
         <br>
-
         <div class="columns is-centered">
           <div class="inline-child-block">
             <p><input type="file" accept="image/*" name="image" id="file" onchange="loadFile(event)" style="display: none;"></p>
