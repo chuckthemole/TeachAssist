@@ -53,6 +53,7 @@ def create_lesson(request):
                 subject_class = subject_class,
                 lesson_name = lesson_name,
                 description = lesson_description,
+                img = img,
                 topic = 'this'
                 #sport_location_img='images/no_image_available.PNG',
                 #latitude=latitude, longitude=longitude,
@@ -62,6 +63,10 @@ def create_lesson(request):
                 )
             lesson.save()
             lesson = get_object_or_404(Lesson, pk=lesson.id)
+
+            form = Lesson_Form(request.POST, request.FILES, instance=lesson)
+            lesson.save()
+
             return render(request, "teach/lesson/show_lesson.html", {"user":user, "lesson":lesson})
         except:
             print("*******Returning to create_lesson.html error*********")
