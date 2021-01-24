@@ -14,7 +14,6 @@ def index(request):
         if request.user.is_authenticated:
             user = request.user
             all_lessons = Lesson.objects.all()   # all_lessons is a list object [   ]
-
             #coordinates = []
             #for location in all_locations:
             #    coordinates.append([location.latitude, location.longitude])
