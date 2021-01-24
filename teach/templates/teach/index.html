@@ -41,9 +41,8 @@
 
 <br><br>
 
-<div class="columns is-centered">
-  <div class="column is-8">
-    <div class="tile box front-background is-ancestor is-8">
+<div class="columns is-centered is-8">
+    <div class="tile box front-background is-ancestor is-8 is-centered is-8">
         {% for l in all_lessons %}
           <figure class="image is-square is-1by1 tile is-parent is-vertical">
             <a href="{% url 'lesson:show_lesson' l.id %}">
@@ -63,7 +62,6 @@
           <div></div>
         {% endfor %}
     </div>
-  </div>
 </div>
 
 {% endblock content %}
