@@ -21,8 +21,12 @@ def create_lesson(request):
         subject_class = request.POST["choices"]
         lesson_name = request.POST["name"]
         lesson_description = request.POST["description"]
-        is_public = request.POST["is_public"]
+        public_private = request.POST["is_public"]
 
+        if public_private == 'public':
+            is_public = True
+        else:
+            is_public = False
         if not subject or not subject_class:
             return render(request, "teach/lesson/create_lesson.html", {"error":"Please choose a subject and class!"})
 
@@ -63,8 +67,8 @@ def create_lesson(request):
                 #sport=sport, is_basketball=is_basketball,
                 #is_tennis=is_tennis, is_baseball=is_baseball
                 )
-            lesson = get_object_or_404(Lesson, pk=lesson.id)
 
+            lesson = get_object_or_404(Lesson, pk=lesson.id)
             form = Lesson_Form(request.POST, request.FILES, instance=lesson)
             if form.is_valid():
                 print("Form is valid.")
