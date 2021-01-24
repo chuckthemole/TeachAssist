@@ -1,6 +1,8 @@
 from django import forms
 from .models import *
 
+CHOICES=[('public','public'), ('private','private')]
+
 class Sport_Location_Form(forms.ModelForm):
     def as_p(self):
         "Returns this form rendered as HTML <p>s."
@@ -27,3 +29,6 @@ class Lesson_Form(forms.ModelForm):
     class Meta:
         model = Lesson
         fields = ["img"]
+
+class Public_Form(forms.Form):
+    Public=forms.CharField(label='public', widget=forms.RadioSelect(choices=CHOICES))
