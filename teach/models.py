@@ -54,6 +54,8 @@ class Lesson(models.Model):
 	img = models.ImageField(upload_to='images/', blank=True, default="static/teach/images/no_image_available.PNG")
 	img_url = models.TextField(max_length=100, null=False, blank=True, unique=False, default="")
 
+	is_public = models.BooleanField(default=True)
+
 	created = models.DateField(auto_now=True)
 	updated = models.DateField(auto_now=True)
 
