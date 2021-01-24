@@ -101,15 +101,23 @@
                 Lesson description
               </span>
             </label>
-            <input class="input is-primary is-large is-rounded" placeholder="A short description..." type="text" name="description">
+            <input class="input is-primary is-large is-rounded textarea" placeholder="A short description..." name="description">
           </div>
         </div>
-        <label class="checkbox">
-          <br>
-          Check box to make private
-          <input type="checkbox" id="is_public" name="is_public">
-        </label>
+
+        <div class="control">
+          <label class="radio">
+            <input type="radio" id="public" name="is_public" value="public" checked>
+            public
+          </label>
+          <label class="radio">
+            <input type="radio" id="private" name="is_public" value="private">
+            private
+          </label>
+        </div>
+
         <br>
+
         <div class="columns is-centered">
           <div class="inline-child-block">
             <p><input type="file" accept="image/*" name="image" id="file" onchange="loadFile(event)" style="display: none;"></p>
@@ -121,7 +129,7 @@
             </p>
           </div>
           <div class="inline-child-block">
-            <img id="output" width="100" />
+            <img id="output" width="100">
           </div>
         </div>
 
