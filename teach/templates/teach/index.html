@@ -42,19 +42,18 @@
 <br><br>
 
 <div class="columns box front-background is-centered is-10">
-  <div class="column is-8 is-centered">
+  <div class="column is-10 is-centered">
     <script type="text/javascript">
       var i = 0;
     </script>
     <div class="columns is-multiline is-mobile">
       {% for l in all_lessons %}
-      <div class="column is-one-quarter">
+      <div class="column is-one-fifth">
         <div class="box alt-front-background">
           <a href="{% url 'lesson:show_lesson' l.id %}">
             <figure class="image is-1by1">
-            <img src="{{ l.img.url }}" class="is-rounded" style="object-fit: cover;" alt="Image not found" onerror="this.onerror=null;this.src='{% static 'teach/images/no_image_available.PNG' %}';">
-          </figure>
-
+              <img src="{{ l.img.url }}" class="is-rounded" style="object-fit: cover;" alt="Image not found" onerror="this.onerror=null;this.src='{% static 'teach/images/no_image_available.PNG' %}';">
+            </figure>
             {% if l.subject == 'math' %}
             <img class="icon is-small" src="https://img.icons8.com/doodle/48/000000/basketball--v1.png">
             {% elif l.subject == 'science' %}
