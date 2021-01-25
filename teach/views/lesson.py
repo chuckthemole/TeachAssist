@@ -165,57 +165,30 @@ def update_lesson(request, lesson_id):
             return HttpResponse(status=500)
 
         lesson = get_object_or_404(Lesson, pk=lesson_id)
-        # destinations = Destination.objects.filter(location=location_id)
 
-        if 'address' in request.POST and 'zip' in request.POST:
+        if 'subject' in request.POST and 'subject_class' in request.POST:
             try:
-                # Geocoding an address
-                address = request.POST["address"]
-                zip = request.POST["zip"]
-                gmaps = googlemaps.Client(key='AIzaSyBLjXOk51pE-rRddkuHJeHIFVf_90rCYko')
-                geocode_result = gmaps.geocode(address + " " + zip)
-                df = DataFrame (geocode_result)
-                loc = DataFrame (df['geometry'][0])
-                latitude = float(loc['location'][0])
-                longitude = float(loc['location'][1])
-            except:
-                # If address is blank or not found
-                return render(request, "teach/lesson/edit_lesson.html", {"error":"Error finding address"})
-            if lesson.teacher.user.id == user.id:
-                Lesson.objects.filter(pk=lesson_id).update(address=address, zip=zip, latitude=latitude, longitude=longitude)
-                return redirect("collections:dashboard")
-            else:
-                return render(request, "teach/lesson/edit_lesson.html",{"lesson":lesson, "error":"Can't update!"})
-        elif 'sports' in request.POST:
-            sport = request.POST["sports"]
-            if lesson.teacher.user.id == user.id:
-                Lesson.objects.filter(pk=lesson_id).update(sport=sport)
+                subject = request.POST["subject"]
+                subject_class = request.POST["choices"]
+                lesson_name = request.POST["name"]
+                lesson_description = request.POST["description"]
+                public_private = request.POST["is_public"]
 
-                if sport == "basketball":
-                    Lesson.objects.filter(pk=lesson_id).update(is_basketball=True)
-                    Lesson.objects.filter(pk=lesson_id).update(is_tennis=False)
-                    Lesson.objects.filter(pk=lesson_id).update(is_baseball=False)
-                elif sport == "tennis":
-                    Lesson.objects.filter(pk=lesson_id).update(is_basketball=False)
-                    Lesson.objects.filter(pk=lesson_id).update(is_tennis=True)
-                    Lesson.objects.filter(pk=lesson_id).update(is_baseball=False)
-                elif sport == "baseball":
-                    Lesson.objects.filter(pk=lesson_id).update(is_basketball=False)
-                    Lesson.objects.filter(pk=lesson_id).update(is_tennis=False)
-                    Lesson.objects.filter(pk=lesson_id).update(is_baseball=True)
+                if public_private == 'public':
+                    is_public = True
                 else:
-                    print("no choice")
-
-                return redirect("collections:dashboard")
+                    is_public = False
+            except:
+                return render(request, "teach/lesson/edit_lesson.html", {"error":"Error updating lesson!"})
+            if lesson.teacher.user.id == user.id:
+                Lesson.objects.filter(pk=lesson_id).update(subject=subject, subject_class=subject_class, lesson_name=lesson_name,
+                    description=lesson_description, is_public=is_public)
+                return render('GET', "teach/lesson/show_lesson.html", {"user":user, "lesson":lesson})
             else:
                 return render(request, "teach/lesson/edit_lesson.html",{"lesson":lesson, "error":"Can't update!"})
-
         else:
-            return render(request, "teach/lesson/edit_lesson.html", {"lesson":lesson,
-            "error":"One of the required fields was empty"})
-
+            return render(request, "teach/lesson/edit_lesson.html", {"lesson":lesson, "error":"One of the required fields was empty"})
     else:
-        # the user enteing    http://127.0.0.1:8000/problem/8/update
         user = request.user
         all_lessons = Lesson.objects.all()
         return render(request, "teach/index.html", {"user":user, "all_lessons": all_lessons, "error":"Can't update!"})
