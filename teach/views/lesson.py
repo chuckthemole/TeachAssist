@@ -30,6 +30,17 @@ def create_lesson(request):
         if not subject or not subject_class:
             return render(request, "teach/lesson/create_lesson.html", {"error":"Please choose a subject and class!"})
 
+        if subject == 'math':
+            icon = 'https://img.icons8.com/dusk/64/000000/math.png'
+        elif subject == 'science':
+            icon = 'https://img.icons8.com/dusk/64/000000/bunsen-burner.png'
+        elif subject == 'history':
+            icon = 'https://img.icons8.com/dusk/64/000000/archeology.png'
+        elif subject == 'english':
+            icon = 'https://img.icons8.com/dusk/64/000000/class.png'
+        else:
+            icon = 'https://img.icons8.com/dusk/50/000000/book-and-pencil.png'
+
         # Geocoding an address
         #address = request.POST["address"]
         #zip = request.POST["zip"]
@@ -60,7 +71,8 @@ def create_lesson(request):
                 lesson_name = lesson_name,
                 description = lesson_description,
                 topic = 'this',
-                is_public = is_public
+                is_public = is_public,
+                icon = icon
                 #sport_location_img='images/no_image_available.PNG',
                 #latitude=latitude, longitude=longitude,
                 #teacher=teacher, address=address, zip=zip,
