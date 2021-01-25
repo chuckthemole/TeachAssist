@@ -51,6 +51,7 @@
       <div class="column is-one-fifth">
         <div class="box alt-front-background">
           <a href="{% url 'lesson:show_lesson' l.id %}">
+            <div class="container-img">
             <figure class="image is-1by1">
               <img src="{{ l.img.url }}" class="is-rounded" style="object-fit: cover;" alt="Image not found" onerror="this.onerror=null;this.src='{% static 'teach/images/no_image_available.PNG' %}';">
             </figure>
@@ -61,6 +62,7 @@
             {% elif l.subject == 'history' %}
             <img class="icon is-small" src='https://img.icons8.com/dusk/64/000000/tennis.png'>
             {% endif %}
+            </div>
           </a>
         </div>
       </div>
