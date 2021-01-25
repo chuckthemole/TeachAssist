@@ -1,8 +1,7 @@
 from django.contrib import admin
-from .models import teacher, Sport, Location, Destination, Review, Comment
+from .models import teacher, Lesson, Review, Comment
 
 admin.site.register(teacher)
-admin.site.register(Location)
-admin.site.register(Destination)
+admin.site.register(Lesson)
 admin.site.register(Review)
 admin.site.register(Comment)
