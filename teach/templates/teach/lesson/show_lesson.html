@@ -20,6 +20,9 @@
               {{ lesson.teacher.user.username }}
             </span>
           </h1>
+          {% if not lesson.is_public %}
+          <h3 style="color: red"><b>This lesson is private.<b></h3>
+          {% endif %}
           <h2>
             <span style="color:white;">
               <u>Subject</u>: <b class="is-capitalized">{{ lesson.subject }}</b>
@@ -81,7 +84,6 @@
             </div>
           </div>
         </div>
-
 
         <div class="columns">
           <div class="column">
