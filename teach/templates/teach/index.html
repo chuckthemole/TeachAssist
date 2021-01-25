@@ -52,27 +52,14 @@
         <div class="box alt-front-background">
           <a href="{% url 'lesson:show_lesson' l.id %}">
             <div class="container-img">
-            <figure class="image is-1by1">
-              <img src="{{ l.img.url }}" class="is-rounded" style="object-fit: cover;" alt="Image not found" onerror="this.onerror=null;this.src='{% static 'teach/images/no_image_available.PNG' %}';">
-            </figure>
-            {% if l.subject == 'math' %}
-            <img class="icon is-small" src="https://img.icons8.com/doodle/48/000000/basketball--v1.png">
-            {% elif l.subject == 'science' %}
-            <img class="icon is-small" src='https://img.icons8.com/dusk/64/000000/baseball.png'>
-            {% elif l.subject == 'history' %}
-            <img class="icon is-small" src='https://img.icons8.com/dusk/64/000000/tennis.png'>
-            {% endif %}
+              <figure class="image is-1by1">
+                <img src="{{ l.img.url }}" class="is-rounded" style="object-fit: cover;" alt="Image not found" onerror="this.onerror=null;this.src='{% static 'teach/images/no_image_available.PNG' %}';">
+              </figure>
+              <img class="icon is-small" src="{{ l.icon }}">
             </div>
           </a>
         </div>
       </div>
-
-      <script type="text/javascript">
-        var elem = document.getElementById("line");
-        elem.innerHTML = "hello";
-        var i++;
-      </script>
-
       {% endfor %}
     </div>
   </div>
