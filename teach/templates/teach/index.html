@@ -47,31 +47,32 @@
       var i = 0;
     </script>
     <div class="columns is-multiline is-mobile">
-    {% for l in all_lessons %}
-    <div class="column is-one-quarter">
-    <figure class="image is-1by1">
-      <a href="{% url 'lesson:show_lesson' l.id %}">
-          <img src="{{ l.img.url }}" class="is-rounded" style="object-fit: cover;" alt="Image not found" onerror="this.onerror=null;this.src='{% static 'teach/images/no_image_available.PNG' %}';">
+      {% for l in all_lessons %}
+      <div class="column is-one-quarter">
+        <div class="box alt-front-background">
+          <a href="{% url 'lesson:show_lesson' l.id %}">
+            <figure class="image is-1by1">
+            <img src="{{ l.img.url }}" class="is-rounded" style="object-fit: cover;" alt="Image not found" onerror="this.onerror=null;this.src='{% static 'teach/images/no_image_available.PNG' %}';">
+          </figure>
 
-        <!--
-              {% if l.subject == 'math' %}
-              <img class="icon is-small" src="https://img.icons8.com/doodle/48/000000/basketball--v1.png">
-              {% elif l.subject == 'science' %}
-              <img class="icon is-small" src='https://img.icons8.com/dusk/64/000000/baseball.png'>
-              {% elif l.subject == 'history' %}
-              <img class="icon is-small" src='https://img.icons8.com/dusk/64/000000/tennis.png'>
-              {% endif %}-->
-      </a>
-    </figure>
-    </div>
+            {% if l.subject == 'math' %}
+            <img class="icon is-small" src="https://img.icons8.com/doodle/48/000000/basketball--v1.png">
+            {% elif l.subject == 'science' %}
+            <img class="icon is-small" src='https://img.icons8.com/dusk/64/000000/baseball.png'>
+            {% elif l.subject == 'history' %}
+            <img class="icon is-small" src='https://img.icons8.com/dusk/64/000000/tennis.png'>
+            {% endif %}
+          </a>
+        </div>
+      </div>
 
-    <script type="text/javascript">
-      var elem = document.getElementById("line");
-      elem.innerHTML = "hello";
-      var i++;
-    </script>
+      <script type="text/javascript">
+        var elem = document.getElementById("line");
+        elem.innerHTML = "hello";
+        var i++;
+      </script>
 
-    {% endfor %}
+      {% endfor %}
     </div>
   </div>
 </div>
