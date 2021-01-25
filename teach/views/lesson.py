@@ -150,9 +150,7 @@ def edit_lesson(request, lesson_id):
             return redirect("share:login")
 
         lesson = get_object_or_404(Lesson, pk=lesson_id)
-        form = Sport_Location_Form()
-
-        # destinations = Destination.objects.filter(location=location_id)
+        form = Lesson_Form()
 
         if lesson.teacher.user.id == lesson.teacher.user.id:
             return render(request, "teach/lesson/edit_lesson.html", {"lesson":lesson, "form":form})
