@@ -56,9 +56,12 @@
               <figure class="image is-1by1">
                 <img src="{{ l.img.url }}" class="is-rounded" style="object-fit: cover;" alt="Image not found" onerror="this.onerror=null;this.src='{% static 'teach/images/no_image_available.PNG' %}';">
               </figure>
-              <img class="icon is-small" src="{{ l.icon }}">
+              <img class="icon" src="{{ l.icon }}">
             </div>
           </a>
+          <small style="color:white;">
+            Created: {{ l.created }}
+          </small>
         </div>
       </div>
       {% endif %}

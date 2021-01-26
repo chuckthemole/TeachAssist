@@ -28,12 +28,17 @@
               <u>Subject</u>: <b class="is-capitalized">{{ lesson.subject }}</b>
               <br>
               <u>Class</u>: <b class="is-capitalized">{{ lesson.subject_class }}</b>
+              <br>
+              <small>
+                Created: {{lesson.created}}
+                <br>
+                Updated: {{lesson.updated}}
+              </small>
             </span>
             <br>
           </h2>
         </div>
       </div>
-      <br><br><br><br>
     </div>
   </center>
 </div>
@@ -48,16 +53,16 @@
           <div class="scrollable child inline-block-child main-background" style='width: 45%; height: 45%;'>
             <article>
               {% if lesson.img %}
-                <div class="box alt-front-background">
-                  <a href="{% url 'lesson:show_lesson' lesson.id %}">
-                    <div class="container-img">
-                      <figure class="image is-1by1">
-                        <img src="{{ lesson.img.url }}" style="object-fit: cover;" alt="Image not found" onerror="this.onerror=null;this.src='{% static 'teach/images/no_image_available.PNG' %}';">
-                      </figure>
-                      <img class="icon is-small" src="{{ lesson.icon }}">
-                    </div>
-                  </a>
-                </div>
+              <div class="box alt-front-background">
+                <a href="{% url 'lesson:show_lesson' lesson.id %}">
+                  <div class="container-img">
+                    <figure class="image is-1by1">
+                      <img src="{{ lesson.img.url }}" style="object-fit: cover;" alt="Image not found" onerror="this.onerror=null;this.src='{% static 'teach/images/no_image_available.PNG' %}';">
+                    </figure>
+                    <img class="icon" src="{{ lesson.icon }}">
+                  </div>
+                </a>
+              </div>
               {% endif %}
             </article>
           </div>
