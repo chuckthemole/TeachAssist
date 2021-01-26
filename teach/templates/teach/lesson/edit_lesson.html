@@ -32,27 +32,27 @@
 
 <br><br><br>
 
-  <form id="subject_class_dropdown" action="{% url 'lesson:update_lesson' lesson.id %}" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    <center>
-      <div class="box front-background tile is-vertical is-8 is-centered">
-        <h1 class="title has-text-centered">
-          <span style="color:#1496ed">
-            {{ user.username }}
-            <br>
-          </span>
-        </h1>
-        <h4 class="title has-text-centered">
-          <span style="color:white;">
-            What subject? What lesson?
-          </span>
-        </h4>
-        {% if error %}
-        <h3 style="color: red">{{ error }}</h3>
-        {% endif %}
+<form id="subject_class_dropdown" action="{% url 'lesson:update_lesson' lesson.id %}" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <center>
+    <div class="box front-background tile is-vertical is-8 is-centered">
+      <h1 class="title has-text-centered">
+        <span style="color:#1496ed">
+          {{ user.username }}
+          <br>
+        </span>
+      </h1>
+      <h4 class="title has-text-centered">
+        <span style="color:white;">
+          What subject? What lesson?
+        </span>
+      </h4>
+      {% if error %}
+      <h3 style="color: red">{{ error }}</h3>
+      {% endif %}
 
-        <fieldset>
-          <div align="left">
+      <fieldset>
+        <div align="left">
           <legend>
             <span>
               <label class="label" style="color:white;">Choose a subject:</label>
@@ -90,7 +90,7 @@
           </div>
         </div>
 
-          <!--
+        <!--
           <div class="field has-addons is-small">
             <div class="control">
               <input class="input is-rounded is-small" id="add_class" type="text" placeholder="Add Class">
@@ -102,66 +102,66 @@
             </div>
           </div>
         -->
-        </fieldset>
+      </fieldset>
 
-        <br><br><br>
+      <br><br><br>
 
-        <div class="field">
-          <div class="control">
-            <label class="label">
-              <span style="color:red;">*</span><span style="color:white;">
-                Lesson Name
-              </span>
-            </label>
-            <input class="input is-primary is-rounded" value="{{lesson.lesson_name}}" placeholder="The name of your lesson..." type="text" name="name">
-          </div>
-        </div>
-
-        <div class="field">
-          <div class="control">
-            <label class="label">
-              <span style="color:red;">*</span><span style="color:white;">
-                Lesson description
-              </span>
-            </label>
-            <input class="input is-primary is-large is-rounded textarea" value="{{lesson.description}}" placeholder="A short description..." name="description">
-          </div>
-        </div>
-
-        <br>
-
-        <div align="left">
-          <div class="inline-child-block">
-            <p><input type="file" accept="image/*" name="image" id="file" onchange="loadFile(event)" style="display: none;"></p>
-            <p>
-              {{ form.as_p }}
-              <!--<label class="button is-small is-rounded" for="file" style="cursor: pointer;">
-                Upload Image
-              </label>-->
-            </p>
-          </div>
-          <div class="inline-child-block">
-            <img id="output" width="100">
-          </div>
-        </div>
-
-        <script>
-          var loadFile = function(event) {
-            var image = document.getElementById('output');
-            image.src = URL.createObjectURL(event.target.files[0]);
-          };
-        </script>
-
-        <div class="field">
-          <div class="control">
-            <button class="button is-success is-rounded is-fullwidth" type="submit" value="Publish">
-              Update
-            </button>&nbsp;
-          </div>
+      <div class="field">
+        <div class="control">
+          <label class="label">
+            <span style="color:red;">*</span><span style="color:white;">
+              Lesson Name
+            </span>
+          </label>
+          <input class="input is-primary is-rounded" value="{{lesson.lesson_name}}" placeholder="The name of your lesson..." type="text" name="name">
         </div>
       </div>
-    </center>
-  </form>
+
+      <div class="field">
+        <div class="control">
+          <label class="label">
+            <span style="color:red;">*</span><span style="color:white;">
+              Lesson description
+            </span>
+          </label>
+          <input class="input is-primary is-large is-rounded textarea" value="{{lesson.description}}" placeholder="A short description..." name="description">
+        </div>
+      </div>
+
+      <br>
+
+      <div align="left">
+        <div class="inline-child-block">
+          <p><input type="file" accept="image/*" name="image" id="file" onchange="loadFile(event)" style="display: none;"></p>
+          <p>
+            {{ form.as_p }}
+            <!--<label class="button is-small is-rounded" for="file" style="cursor: pointer;">
+                Upload Image
+              </label>-->
+          </p>
+        </div>
+        <div class="inline-child-block">
+          <img src="{{ lesson.img.url }}" id="output" width="100">
+        </div>
+      </div>
+
+      <script>
+        var loadFile = function(event) {
+          var image = document.getElementById('output');
+          image.src = URL.createObjectURL(event.target.files[0]);
+        };
+      </script>
+
+      <div class="field">
+        <div class="control">
+          <button class="button is-success is-rounded is-fullwidth" type="submit" value="Publish">
+            Update
+          </button>&nbsp;
+        </div>
+      </div>
+    </div>
+  </center>
+</form>
 
 <br><br>
 

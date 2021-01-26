@@ -43,9 +43,9 @@
       <div>
         {% if lesson.is_public %}
         <b style="color:green;">Public<b>
-        {% else %}
-        <b style="color:red;">Private<b>
-        {% endif %}
+            {% else %}
+            <b style="color:red;">Private<b>
+                {% endif %}
       </div>
       <div class="box front-background">
         <a href="{% url 'lesson:show_lesson' lesson.id %}">
@@ -53,9 +53,13 @@
             <figure class="image is-1by1">
               <img src="{{ lesson.img.url }}" style="object-fit: cover;" alt="Image not found" onerror="this.onerror=null;this.src='{% static 'teach/images/no_image_available.PNG' %}';">
             </figure>
-            <img class="icon is-small" src="{{ lesson.icon }}">
+            <img class="icon" src="{{ lesson.icon }}">
           </div>
         </a>
+        <small style="color:white;">
+          Created: {{ lesson.created }} <br>
+          Last Updated: {{ lesson.updated }}
+        </small>
       </div>
       <div class="columns">
         <div class="column">
