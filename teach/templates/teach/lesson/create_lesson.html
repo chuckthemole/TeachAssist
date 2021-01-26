@@ -7,7 +7,7 @@
 <div class="columns is-centered">
   <div class="publish-form columns main-background panel-block">
 
-    <form id="create_lesson" action="{% url 'lesson:create_lesson' %}" method="post" enctype="multipart/form-data">
+    <form id="subject_class_dropdown" action="{% url 'lesson:create_lesson' %}" method="post" enctype="multipart/form-data">
       {% csrf_token %}
 
       <div class="column box front-background">
