@@ -177,22 +177,32 @@ def update_lesson(request, lesson_id):
 
         lesson = get_object_or_404(Lesson, pk=lesson_id)
 
-        if 'subject' in request.POST and 'subject_class' in request.POST:
-            try:
-                subject = request.POST["subject"]
-                subject_class = request.POST["choices"]
-                lesson_name = request.POST["name"]
-                lesson_description = request.POST["description"]
-            except:
-                return render(request, "teach/lesson/edit_lesson.html", {"error":"Error updating lesson!"})
-            if lesson.teacher.user.id == user.id:
-                Lesson.objects.filter(pk=lesson_id).update(subject=subject, subject_class=subject_class, lesson_name=lesson_name,
-                    description=lesson_description)
-                return render('GET', "teach/lesson/show_lesson.html", {"user":user, "lesson":lesson})
+        try:
+            subject = request.POST["subject"]
+            subject_class = request.POST["choices"]
+            lesson_name = request.POST["name"]
+            lesson_description = request.POST["description"]
+            if not subject or not subject_class:
+                return render(request, "teach/lesson/edit_lesson.html", {"lesson":lesson, "error":"One of the required fields was empty"})
+        except:
+            return render(request, "teach/lesson/edit_lesson.html", {"error":"Error updating lesson!"})
+        if lesson.teacher.user.id == user.id:
+            if subject == 'math':
+                icon = 'https://img.icons8.com/dusk/64/000000/math.png'
+            elif subject == 'science':
+                icon = 'https://img.icons8.com/dusk/64/000000/bunsen-burner.png'
+            elif subject == 'history':
+                icon = 'https://img.icons8.com/dusk/64/000000/archeology.png'
+            elif subject == 'english':
+                icon = 'https://img.icons8.com/dusk/64/000000/class.png'
             else:
-                return render(request, "teach/lesson/edit_lesson.html",{"lesson":lesson, "error":"Can't update!"})
+                icon = 'https://img.icons8.com/dusk/50/000000/book-and-pencil.png'
+            Lesson.objects.filter(pk=lesson_id).update(subject=subject, subject_class=subject_class, lesson_name=lesson_name,
+                description=lesson_description, icon=icon)
+            lesson = get_object_or_404(Lesson, pk=lesson_id)
+            return render(request, "teach/lesson/show_lesson.html", {"user":user, "lesson":lesson})
         else:
-            return render(request, "teach/lesson/edit_lesson.html", {"lesson":lesson, "error":"One of the required fields was empty"})
+            return render(request, "teach/lesson/edit_lesson.html",{"lesson":lesson, "error":"Can't update!"})
     else:
         user = request.user
         all_lessons = Lesson.objects.all()
