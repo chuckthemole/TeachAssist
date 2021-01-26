@@ -32,7 +32,7 @@
 
 <br><br><br>
 
-  <form id="create_lesson" action="{% url 'lesson:create_lesson' %}" method="post" enctype="multipart/form-data">
+  <form id="subject_class_dropdown" action="{% url 'lesson:update_lesson' lesson.id %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <center>
       <div class="box front-background tile is-vertical is-8 is-centered">
