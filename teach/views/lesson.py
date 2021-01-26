@@ -95,7 +95,6 @@ def create_lesson(request):
     else:
         user = request.user
         all_lessons = Lesson.objects.all()
-        form = Sport_Location_Form()
         return render(request, "teach/index.html", {"user":user, "all_lessons": all_lessons, "error":"Can't create!"})
 
 def show_lesson(request, lesson_id):
