@@ -197,6 +197,10 @@ def update_lesson(request, lesson_id):
                 icon = 'https://img.icons8.com/dusk/64/000000/class.png'
             else:
                 icon = 'https://img.icons8.com/dusk/50/000000/book-and-pencil.png'
+            form = Lesson_Form(request.POST, request.FILES, instance=lesson)
+            if form.is_valid():
+                print("Form is valid.")
+                lesson.save()
             Lesson.objects.filter(pk=lesson_id).update(subject=subject, subject_class=subject_class, lesson_name=lesson_name,
                 description=lesson_description, icon=icon)
             lesson = get_object_or_404(Lesson, pk=lesson_id)
