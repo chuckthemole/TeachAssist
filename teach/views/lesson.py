@@ -219,6 +219,23 @@ def delete_lesson(request, lesson_id):
         else:
             all_lessons = Lesson.objects.all()
             return render(request, "teach/index.html", {"user":user, "all_lessons": all_lessons, "error":"Can't delete!"})
-
     else:
         return HttpResponse(status=500)
+
+def switch_public_private(request, lesson_id):
+    if request.method == "GET":
+        user = request.user
+        if not user.is_authenticated:
+            return redirect("share:login")
+
+        lesson = get_object_or_404(Lesson, pk=lesson_id)
+
+        if lesson.is_public:
+            lesson.is_public = False
+        else:
+            lesson.is_public = True
+        #Lesson.objects.filter(pk=lesson_id).update(is_public=is_public)
+        lesson.save()
+        return render(request, "teach/lesson/show_lesson.html", {"user":user, "lesson":lesson})
+    else:
+        return render(request, "teach/lesson/edit_lesson.html", {"lesson":lesson, "error":"Unable to make change!"})
