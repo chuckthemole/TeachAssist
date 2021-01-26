@@ -24,7 +24,7 @@ class Upload(models.Model):
 
 class Lesson(models.Model):
 	def __str__(self):
-		return (self.subject + " \n" + self.lesson_name)
+		return ("Subject: " + self.subject + " \n" + "Title: " + self.lesson_name)
 
 	# FK
 	teacher = models.ForeignKey(teacher, on_delete=models.CASCADE, null=True)
