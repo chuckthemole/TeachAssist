@@ -48,6 +48,7 @@
     </script>
     <div class="columns is-multiline is-mobile">
       {% for l in all_lessons %}
+      {% if l.is_public %}
       <div class="column is-one-fifth">
         <div class="box alt-front-background">
           <a href="{% url 'lesson:show_lesson' l.id %}">
@@ -60,6 +61,7 @@
           </a>
         </div>
       </div>
+      {% endif %}
       {% endfor %}
     </div>
   </div>

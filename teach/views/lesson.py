@@ -183,17 +183,11 @@ def update_lesson(request, lesson_id):
                 subject_class = request.POST["choices"]
                 lesson_name = request.POST["name"]
                 lesson_description = request.POST["description"]
-                public_private = request.POST["is_public"]
-
-                if public_private == 'public':
-                    is_public = True
-                else:
-                    is_public = False
             except:
                 return render(request, "teach/lesson/edit_lesson.html", {"error":"Error updating lesson!"})
             if lesson.teacher.user.id == user.id:
                 Lesson.objects.filter(pk=lesson_id).update(subject=subject, subject_class=subject_class, lesson_name=lesson_name,
-                    description=lesson_description, is_public=is_public)
+                    description=lesson_description)
                 return render('GET', "teach/lesson/show_lesson.html", {"user":user, "lesson":lesson})
             else:
                 return render(request, "teach/lesson/edit_lesson.html",{"lesson":lesson, "error":"Can't update!"})
@@ -230,12 +224,16 @@ def switch_public_private(request, lesson_id):
 
         lesson = get_object_or_404(Lesson, pk=lesson_id)
 
-        if lesson.is_public:
-            lesson.is_public = False
+        if lesson.teacher.user.id == user.id:
+            if lesson.is_public:
+                lesson.is_public = False
+            else:
+                lesson.is_public = True
+            #Lesson.objects.filter(pk=lesson_id).update(is_public=is_public)
+            lesson.save()
+            return render(request, "teach/lesson/show_lesson.html", {"user":user, "lesson":lesson})
         else:
-            lesson.is_public = True
-        #Lesson.objects.filter(pk=lesson_id).update(is_public=is_public)
-        lesson.save()
-        return render(request, "teach/lesson/show_lesson.html", {"user":user, "lesson":lesson})
+            all_lessons = Lesson.objects.all()
+            return render(request, "teach/index.html", {"user":user, "all_lessons": all_lessons, "error":"Unable to make change!"})
     else:
         return render(request, "teach/lesson/edit_lesson.html", {"lesson":lesson, "error":"Unable to make change!"})

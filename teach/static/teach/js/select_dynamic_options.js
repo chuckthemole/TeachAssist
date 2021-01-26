@@ -13,7 +13,7 @@ var Select_List_Data = {
     },
     english: {
       text: ['American Literature', 'World Literature', 'Creative Writing', 'Journalism'],
-      value: ['biology', 'chemistry', 'physics', 'astronomy']
+      value: ['American Literature', 'World Literature', 'Creative Writing', 'Journalism']
     },
     history: {
       text: ['Government', 'Geography', 'Ethnic Studies', 'Economics'],
