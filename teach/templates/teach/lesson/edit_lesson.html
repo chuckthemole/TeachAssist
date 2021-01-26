@@ -1,4 +1,5 @@
 {% extends "teach/base.html" %}
+
 {% block content %}
 
 <head>
@@ -31,7 +32,7 @@
 
 <br><br><br>
 
-  <form id="update_lesson" action="{% url 'lesson:update_lesson' lesson.id %}" method="post" enctype="multipart/form-data">
+  <form id="create_lesson" action="{% url 'lesson:create_lesson' %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <center>
       <div class="box front-background tile is-vertical is-8 is-centered">
@@ -102,10 +103,8 @@
           </div>
         -->
         </fieldset>
-        <br>
 
-
-        <br><br>
+        <br><br><br>
 
         <div class="field">
           <div class="control">
@@ -160,9 +159,6 @@
             </button>&nbsp;
           </div>
         </div>
-
-        {% load static %}
-        <script type='text/javascript' src="{% static 'teach/js/select_dynamic_options.js' %}"></script>
       </div>
     </center>
   </form>
@@ -191,5 +187,8 @@
     </div>
   </center>
 </div>
+
+{% load static %}
+<script type='text/javascript' src="{% static 'teach/js/select_dynamic_options.js' %}"></script>
 
 {% endblock content %}
