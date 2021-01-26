@@ -36,26 +36,40 @@
 
     <!-- List all user's lessons -->
     {% for lesson in my_lessons %}
-    <div class="parent">
-      <div class="box alt-front-background">
-        <div class="content alt-front-background" align="left">
-          <a class="child inline-block-child" href="{% url 'lesson:show_lesson' lesson.id %}">
-            <div class="container-img">
-              <img src="{{ lesson.img.url }}" alt="Image not found" onerror="this.onerror=null;this.src='{% static 'teach/images/no_image_available.PNG' %}';" width="100%" height="100%" style="padding:0; margin:0;" class="box front-background">
-
-              {% if lesson.subject == 'math' %}
-              <img class="icon" src="https://img.icons8.com/doodle/48/000000/basketball--v1.png">
-              {% elif lesson.subject == 'science' %}
-              <img class="icon" src='https://img.icons8.com/dusk/64/000000/baseball.png'>
-              {% elif lesson.subject == 'history' %}
-              <img class="icon" src='https://img.icons8.com/dusk/64/000000/tennis.png'>
-              {% endif %}
-
-            </div>
-
+    <div class="box alt-front-background">
+      <div class="box front-background" align="center">
+        <b class="is-capitalized" style="color:white;">{{ lesson.lesson_name }}</b>
+      </div>
+      <div>
+        {% if lesson.is_public %}
+        <b style="color:green;">Public<b>
+        {% else %}
+        <b style="color:red;">Private<b>
+        {% endif %}
+      </div>
+      <div class="box front-background">
+        <a href="{% url 'lesson:show_lesson' lesson.id %}">
+          <div class="container-img">
+            <figure class="image is-1by1">
+              <img src="{{ lesson.img.url }}" style="object-fit: cover;" alt="Image not found" onerror="this.onerror=null;this.src='{% static 'teach/images/no_image_available.PNG' %}';">
+            </figure>
+            <img class="icon is-small" src="{{ lesson.icon }}">
+          </div>
+        </a>
+      </div>
+      <div class="columns">
+        <div class="column">
+          <a class="button is-success is-fullwidth" href="{% url 'lesson:edit_lesson' lesson.id %}">
+            Edit
           </a>
-          <a class="child inline-block-child button is-success is-medium" href="{% url 'lesson:show_lesson' lesson.id %}">
-            {{ lesson.lesson_name }}
+        </div>
+        <div class="column">
+          <a class="button is-success is-fullwidth" href="{% url 'lesson:edit_lesson' lesson.id %}">
+            {% if lesson.is_public %}
+            Make Private
+            {% else %}
+            Make Public
+            {% endif %}
           </a>
         </div>
       </div>

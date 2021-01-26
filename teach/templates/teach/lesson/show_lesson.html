@@ -48,19 +48,16 @@
           <div class="scrollable child inline-block-child main-background" style='width: 45%; height: 45%;'>
             <article>
               {% if lesson.img %}
-              <a href="{% url 'lesson:show_lesson' lesson.id %}">
-                <div class="container-img">
-                  <!--Image of Location-->
-                  <img src="{{ lesson.img.url }}" alt="Image not found" onerror="this.onerror=null;this.src='{% static 'teach/images/no_image_available.PNG' %}';" width="100%" height="100%" style="padding:0; margin:0;" class="box main-background">
-                  {% if lesson.subject == 'math' %}
-                  <img class="icon" src="https://img.icons8.com/doodle/48/000000/basketball--v1.png">
-                  {% elif lesson.subject == 'science' %}
-                  <img class="icon" src='https://img.icons8.com/dusk/64/000000/baseball.png'>
-                  {% elif lesson.subject == 'history' %}
-                  <img class="icon" src='https://img.icons8.com/dusk/64/000000/tennis.png'>
-                  {% endif %}
+                <div class="box alt-front-background">
+                  <a href="{% url 'lesson:show_lesson' lesson.id %}">
+                    <div class="container-img">
+                      <figure class="image is-1by1">
+                        <img src="{{ lesson.img.url }}" style="object-fit: cover;" alt="Image not found" onerror="this.onerror=null;this.src='{% static 'teach/images/no_image_available.PNG' %}';">
+                      </figure>
+                      <img class="icon is-small" src="{{ lesson.icon }}">
+                    </div>
+                  </a>
                 </div>
-              </a>
               {% endif %}
             </article>
           </div>
