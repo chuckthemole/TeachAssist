@@ -65,8 +65,8 @@
         <div class="buttons">
         <figure class="image button is-primary">
           {% load static %}
-          <a href="{% url 'collections:index' %}">
-            <img src="{{ user.teacher.img.url }}" class="is-rounded" style="object-fit: cover;" alt="Image not found" onerror="this.onerror=null;this.src='https://img.icons8.com/fluent-systems-filled/24/000000/user.png';">
+          <a href="{% url 'collections:edit_settings' user.teacher.id %}">
+            <img src="{{ user.teacher.img.url }}" class="is-rounded" style="object-fit: cover;" alt="Image not found" onerror="this.onerror=null;this.src='https://img.icons8.com/material-outlined/24/000000/user--v1.png';">
           </a>
         </figure>
       </div>
