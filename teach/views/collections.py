@@ -116,6 +116,33 @@ def logout_view(request):
     logout(request)
     return redirect("collections:login")
 
+def edit_settings(request, teacher_id):
+    if request.method == "GET":
+        user = request.user
+        if not user.is_authenticated:
+            return redirect("teach:login")
+        else:
+            form = Teacher_Form()
+            return render(request, "teach/edit_profile.html", {"user":user, "form":form} )
+
+def publish_settings(request, teacher_id):
+    if request.method == "POST":
+        user = request.user
+        if not user.is_authenticated:
+            return redirect("teach:login")
+    teach = get_object_or_404(teacher, pk=user.teacher.id)
+    form = Teacher_Form(request.POST, request.FILES, instance=teach)
+    if form.is_valid():
+        print("Form is valid.")
+        teach.save()
+    else:
+        print("Form is not valid!")
+    try:
+        my_lessons = Lesson.objects.filter(teacher=user.teacher.id)
+    except:
+        return redirect("collections:login")
+    return render(request, "teach/dashboard.html", {"user":user, "my_lessons":my_lessons})
+
 def testHTTP_request(request):
     # Testing http request object inside a view function
     print('********************************************')

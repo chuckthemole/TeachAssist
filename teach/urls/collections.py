@@ -11,4 +11,6 @@ urlpatterns = [
     path('login', collections.login_view, name='login'),
     path('logout', collections.logout_view, name='logout'),
     path('signup', collections.signup, name='signup'),
+    path('<int:teacher_id>/edit', collections.edit_settings, name='edit_settings'),
+    path('<int:teacher_id>/publish', collections.publish_settings, name='publish_settings'),
 ]
