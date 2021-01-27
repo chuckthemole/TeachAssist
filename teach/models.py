@@ -17,6 +17,8 @@ class teacher(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
 	created = models.DateField(auto_now=True)   # maybe redundant, user model has date_joined :)
 	updated = models.DateField(auto_now=True)
+	img = models.ImageField(upload_to='images/teachers', blank=True, default="static/teach/images/no_image_available.PNG")
+	is_teacher = models.BooleanField(default=True)
 
 class Upload(models.Model):
     uploaded_at = models.DateTimeField(auto_now_add=True)
@@ -36,7 +38,7 @@ class Lesson(models.Model):
 	description = models.TextField(max_length=100, null=False, blank=False, unique=False, default="")
 
 	# Image of location
-	img = models.ImageField(upload_to='images/', blank=True, default="static/teach/images/no_image_available.PNG")
+	img = models.ImageField(upload_to='images/lessons', blank=True, default="static/teach/images/no_image_available.PNG")
 	img_url = models.TextField(max_length=100, null=False, blank=True, unique=False, default="")
 	icon = models.TextField(max_length = 200, default="https://img.icons8.com/dusk/50/000000/book-and-pencil.png")
 

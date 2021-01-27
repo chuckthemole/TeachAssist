@@ -15,8 +15,8 @@ def index(request):
             user = request.user
             all_lessons = Lesson.objects.all()   # all_lessons is a list object [   ]
             #coordinates = []
-            #for location in all_locations:
-            #    coordinates.append([location.latitude, location.longitude])
+            #for lesson in all_lessons:
+            #    coordinates.append([lesson.latitude, lesson.longitude])
 
             if len(all_lessons) != 0:
                 return render(request, "teach/index.html", {"user":user, "all_lessons": all_lessons})
@@ -29,21 +29,6 @@ def index(request):
         return HttpResponse(status=500)
 
 def dashboard(request):
-    # retieve user, my_problems, my-scripts
-    # builds my_problems_scripts dict
-    # renders dashboard.html
-    # each problem should have a link show more details of a particular problem,
-    # this link starts route show_my_problem
-
-    # Testing http request object inside a view function
-    print('*********** Testing request obj ************')
-    print('request:' , request)
-    print('request.headers: ', request.headers)
-    print('request.headers["host"]:', request.headers['host'])
-    print('request.method: ', request.method)
-    print('request.user:' , request.user)
-    print('********************************************')
-
     if request.method == "GET":
         user = request.user
         if not user.is_authenticated:
@@ -53,12 +38,6 @@ def dashboard(request):
                 my_lessons = Lesson.objects.filter(teacher=user.teacher.id)
             except:
                 return redirect("collections:login")
-
-            print('*********** Testing objs retrieved from DB ************')
-            #print('my_problems:', my_problems)
-            #print('my_scripts:', my_scripts)
-            print('*******************************************************')
-
             return render(request, "teach/dashboard.html", {"user":user, "my_lessons":my_lessons})
 
 def create(request):
@@ -67,7 +46,7 @@ def create(request):
         email = request.POST['email']
         password = request.POST['password']
         is_base_visible = False
-        all_locations = Location.objects.all()   # all_problems is a list object [   ]
+        all_lessons = Lesson.objects.all()   # all_problems is a list object [   ]
 
         #teacher_yet = request.POST['teacher_yet']
 
@@ -102,16 +81,16 @@ def login_user(request):
     if request.method == "POST":
         username = request.POST["username"]
         password = request.POST["password"]
-        all_locations = Location.objects.all()   # all_problems is a list object [   ]
+        all_lessons = Lesson.objects.all()   # all_problems is a list object [   ]
         is_base_visible = False
         if not username or not password:
-            return render(request, "teach/login.html", {"error":"One of the fields was empty", "is_base_visible":is_base_visible, "all_locations":all_locations})
+            return render(request, "teach/login.html", {"error":"One of the fields was empty", "is_base_visible":is_base_visible, "all_lessons":all_lessons})
         user = authenticate(request, username=username, password=password)
         if user is not None:
             login(request, user)
             return redirect("collections:index")
         else:
-            return render(request, "teach/login.html", {"error":"Wrong username or password", "all_locations":all_locations, "is_base_visible":is_base_visible})
+            return render(request, "teach/login.html", {"error":"Wrong username or password", "all_lessons":all_lessons, "is_base_visible":is_base_visible})
     else:
         return redirect("collections:index")
 
@@ -123,8 +102,8 @@ def login_view(request):
 
         all_lessons = Lesson.objects.all()   # all_problems is a list object [   ]
         coordinates = []
-        #for location in all_locations:
-        #    coordinates.append([location.latitude, location.longitude])
+        #for lesson in all_lessons:
+        #    coordinates.append([lesson.latitude, lesson.longitude])
         if len(all_lessons) != 0:
             return render(request, "teach/login.html", {"all_lessons": all_lessons,
             'is_base_visible':is_base_visible, "lesson": all_lessons[0]})
@@ -136,3 +115,15 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return redirect("collections:login")
+
+def testHTTP_request(request):
+    # Testing http request object inside a view function
+    print('********************************************')
+    print('*********** Testing request obj ************')
+    print('*********** request:' , request)
+    print('*********** request.headers: ', request.headers)
+    print('*********** request.headers["host"]:', request.headers['host'])
+    print('*********** request.method: ', request.method)
+    print('*********** request.user:' , request.user)
+    print('********************************************')
+    print('********************************************')
