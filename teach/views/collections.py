@@ -1,30 +1,35 @@
 from .imports import *
 
 def index(request):
-    # Testing http request object inside a view function
-    print('*********** Testing request obj ************')
-    print('request:' , request)
-    print('request.headers: ', request.headers)
-    print('request.headers["host"]:', request.headers['host'])
-    print('request.method: ', request.method)
-    print('request.user:' , request.user)
-    print('*******************************')
-
     if request.method == "GET":
         if request.user.is_authenticated:
             user = request.user
-            all_lessons = Lesson.objects.all()   # all_lessons is a list object [   ]
-            #coordinates = []
-            #for lesson in all_lessons:
-            #    coordinates.append([lesson.latitude, lesson.longitude])
-
+            all_lessons = Lesson.objects.all()
             if len(all_lessons) != 0:
                 return render(request, "teach/index.html", {"user":user, "all_lessons": all_lessons})
             else:
                 return render(request, "teach/index.html", {"user":user, "all_lessons": all_lessons})
         else:
-            #return render(request, "teach/login.html", {"login_dash":login_dash})
             return redirect("collections:login")
+    else:
+        return HttpResponse(status=500)
+
+def index_filter(request):
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            subject = request.POST["subject"]
+
+        user = request.user
+        all_lessons = Lesson.objects.all()
+
+        if subject != "all":
+            subject_lessons = []
+            for l in all_lessons:
+                if l.subject == subject:
+                    subject_lessons.append(l)
+            all_lessons = subject_lessons
+
+        return render(request, "teach/index_filter.html", {"user":user, "all_lessons": all_lessons})
     else:
         return HttpResponse(status=500)
 
@@ -46,9 +51,7 @@ def create(request):
         email = request.POST['email']
         password = request.POST['password']
         is_base_visible = False
-        all_lessons = Lesson.objects.all()   # all_problems is a list object [   ]
-
-        #teacher_yet = request.POST['teacher_yet']
+        all_lessons = Lesson.objects.all()
 
         if username is not None and email is not None and password is not None: # checking that they are not None
             if not username or not email or not password: # checking that they are not empty
@@ -57,7 +60,7 @@ def create(request):
                 return render(request, "teach/signup.html", {"error": "Username already exists", "is_base_visible":is_base_visible})
             elif User.objects.filter(email=email).exists():
                 return render(request, "teach/signup.html", {"error": "Email already exists", "is_base_visible":is_base_visible})
-            # save our new user in the User model
+
             user = User.objects.create_user(username, email, password)
             teacher_user = teacher.objects.create(user= user).save()
             user.save()
@@ -81,7 +84,7 @@ def login_user(request):
     if request.method == "POST":
         username = request.POST["username"]
         password = request.POST["password"]
-        all_lessons = Lesson.objects.all()   # all_problems is a list object [   ]
+        all_lessons = Lesson.objects.all()
         is_base_visible = False
         if not username or not password:
             return render(request, "teach/login.html", {"error":"One of the fields was empty", "is_base_visible":is_base_visible, "all_lessons":all_lessons})
@@ -100,10 +103,9 @@ def login_view(request):
     else:
         is_base_visible = False
 
-        all_lessons = Lesson.objects.all()   # all_problems is a list object [   ]
+        all_lessons = Lesson.objects.all()
         coordinates = []
-        #for lesson in all_lessons:
-        #    coordinates.append([lesson.latitude, lesson.longitude])
+
         if len(all_lessons) != 0:
             return render(request, "teach/login.html", {"all_lessons": all_lessons,
             'is_base_visible':is_base_visible, "lesson": all_lessons[0]})
