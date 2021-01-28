@@ -123,9 +123,6 @@
 
 <div class="columns box front-background is-centered is-10">
   <div class="column is-10 is-centered">
-    <script type="text/javascript">
-      var i = 0;
-    </script>
 
     <div class="columns is-multiline is-mobile">
       {% for l in all_lessons %}
@@ -154,36 +151,6 @@
   </div>
 </div>
 
-<div id='this'></div>
-<script type="text/javascript">
-  document.forms['subject_dropdown'].elements['subject'].onchange = function(e) {
-    if (this.form.elements['subject'].value == 'math') {
-      document.getElementById('this').innerHTML = "Hello there";
-    } else {
-      document.getElementById('this').innerHTML = "nope";
-    }
-  }
-</script>
-
 {% endblock content %}
-
-<!--{% for l in all_lessons %}
-  <article>
-    <figure class="image is-128x128">
-      <a href="{% url 'lesson:show_lesson' l.id %}">
-        <div class="container-img">
-          <img src="{{ l.img.url }}" alt="Image not found" onerror="this.onerror=null;this.src='{% static 'teach/images/no_image_available.PNG' %}';" style="padding:0; margin:0;" class="box main-background">
-          {% if l.subject == 'math' %}
-          <img class="icon is-small" src="https://img.icons8.com/doodle/48/000000/basketball--v1.png">
-          {% elif l.subject == 'science' %}
-          <img class="icon is-small" src='https://img.icons8.com/dusk/64/000000/baseball.png'>
-          {% elif l.subject == 'history' %}
-          <img class="icon is-small" src='https://img.icons8.com/dusk/64/000000/tennis.png'>
-          {% endif %}
-        </div>
-      </a>
-    </figure>
-  </article><br><br>
-  {% endfor %}-->
 
 </html>
