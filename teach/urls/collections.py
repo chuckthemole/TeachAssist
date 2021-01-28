@@ -5,12 +5,12 @@ app_name = 'teach'
 urlpatterns = [
     path('',collections.index, name='index'),
     path('dashboard', collections.dashboard, name='dashboard'),
-
     path('create', collections.create, name='create'),
     path('loguser', collections.login_user, name='loguser'),
     path('login', collections.login_view, name='login'),
     path('logout', collections.logout_view, name='logout'),
     path('signup', collections.signup, name='signup'),
-    path('<int:teacher_id>/edit', collections.edit_settings, name='edit_settings'),
+    path('<int:teacher_id>/settings', collections.edit_settings, name='edit_settings'),
     path('<int:teacher_id>/publish', collections.publish_settings, name='publish_settings'),
+    path('filter', collections.index_filter, name='index_filter'),
 ]
