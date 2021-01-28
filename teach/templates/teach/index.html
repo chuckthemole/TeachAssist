@@ -64,30 +64,32 @@
       </div>
 
       <div class="column is-one-fifth">
-        <div class="columns is-centered">
-          <fieldset>
-            <legend>
-              <span style="color:white;">
-                <label>Filter by subject:</label>
-              </span>
-            </legend>
-            <div class="control has-icons-left">
-              <div class="select is-rounded is-small is-focused is-info">
-                <select name="subject" id="subject">
-                  <option selected disabled hidden>Select Option</option>
-                  <option value="all">All Subjects</option>
-                  <option value="math">Math</option>
-                  <option value="science">Science</option>
-                  <option value="english">English</option>
-                  <option value="history">History</option>
-                </select>
+        <form id="subject_dropdown">
+          <div class="columns is-centered">
+            <fieldset>
+              <legend>
+                <span style="color:white;">
+                  <label>Filter by subject:</label>
+                </span>
+              </legend>
+              <div class="control has-icons-left">
+                <div class="select is-rounded is-small is-focused is-info">
+                  <select name="subject" id="subject">
+                    <option selected disabled hidden>Select Option</option>
+                    <option value="all">All Subjects</option>
+                    <option value="math">Math</option>
+                    <option value="science">Science</option>
+                    <option value="english">English</option>
+                    <option value="history">History</option>
+                  </select>
+                </div>
+                <span class="icon is-left">
+                  <i class="fas fa-home"></i>
+                </span>
               </div>
-              <span class="icon is-left">
-                <i class="fas fa-home"></i>
-              </span>
-            </div>
-          </fieldset>
-        </div>
+            </fieldset>
+          </div>
+        </form>
       </div>
 
       <div class="column is-one-fifth">
@@ -125,7 +127,7 @@
       <div class="column is-one-fifth">
         <div class="box alt-front-background">
           <a href="{% url 'lesson:show_lesson' l.id %}">
-            <div class="container-img">
+            <div class="container-img" id='{{l.subject}}'>
               <figure class="image is-1by1">
                 <img src="{{ l.img.url }}" class="is-rounded" style="object-fit: cover;" alt="Image not found" onerror="this.onerror=null;this.src='{% static 'teach/images/no_image_available.PNG' %}';">
               </figure>
@@ -142,6 +144,16 @@
     </div>
   </div>
 </div>
+<div id='this'></div>
+<script type="text/javascript">
+  document.forms['subject_dropdown'].elements['subject'].onchange = function(e) {
+    if (this.form.elements['subject'].value == 'math') {
+      document.getElementById('this').innerHTML = "Hello there";
+    } else {
+      document.getElementById('this').innerHTML = "nope";
+    }
+  }
+</script>
 
 {% endblock content %}
 <!--{% for l in all_lessons %}
