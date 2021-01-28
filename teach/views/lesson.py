@@ -1,6 +1,5 @@
 from .imports import *
 
-# Locations
 def publish_lesson(request):
     if request.method == "GET":
         user = request.user
