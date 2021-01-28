@@ -29,7 +29,7 @@ def index_filter(request):
                     subject_lessons.append(l)
             all_lessons = subject_lessons
 
-        return render(request, "teach/index_filter.html", {"user":user, "all_lessons": all_lessons})
+        return render(request, "teach/index.html", {"user":user, "all_lessons": all_lessons})
     else:
         return HttpResponse(status=500)
 
