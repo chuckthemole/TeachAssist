@@ -1,4 +1,5 @@
 from .imports import *
+from .constants import *
 
 def publish_lesson(request):
     if request.method == "GET":
@@ -21,6 +22,8 @@ def create_lesson(request):
         lesson_name = request.POST["name"]
         lesson_description = request.POST["description"]
         public_private = request.POST["is_public"]
+        game_link = request.POST["game_link"]
+        instructions = request.POST["instructions"]
 
         if public_private == 'public':
             is_public = True
@@ -30,15 +33,15 @@ def create_lesson(request):
             return render(request, "teach/lesson/create_lesson.html", {"error":"Please choose a subject and class!"})
 
         if subject == 'math':
-            icon = 'https://img.icons8.com/dusk/64/000000/math.png'
+            icon = MATH_ICON
         elif subject == 'science':
-            icon = 'https://img.icons8.com/dusk/64/000000/bunsen-burner.png'
+            icon = SCIENCE_ICON
         elif subject == 'history':
-            icon = 'https://img.icons8.com/dusk/64/000000/archeology.png'
+            icon = HISTORY_ICON
         elif subject == 'english':
-            icon = 'https://img.icons8.com/dusk/64/000000/class.png'
+            icon = ENGLISH_ICON
         else:
-            icon = 'https://img.icons8.com/dusk/50/000000/book-and-pencil.png'
+            icon = SUBJECT_ICON
 
         # Geocoding an address
         #address = request.POST["address"]
