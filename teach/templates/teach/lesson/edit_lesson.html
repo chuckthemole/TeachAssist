@@ -51,56 +51,58 @@
       <h3 style="color: red">{{ error }}</h3>
       {% endif %}
 
+
       <fieldset>
         <div align="left">
-          <legend>
-            <span>
-              <label class="label" style="color:white;">Choose a subject:</label>
-            </span>
-          </legend>
+          <div class="columns is-centered">
+            <div class="column is-one-third">
+              <legend>
+                <span>
+                  <label class="label" style="color:white;">Choose a subject:</label>
+                </span>
+              </legend>
 
-          {% if lesson.subject == "math" %}
-          <div class="select is-rounded is-small is-focused is-info">
-            <select name="subject" id="subject" value="{{lesson.subject}}">
-              <option selected value="math">Math</option>
-              <option value="science">Science</option>
-              <option value="english">English</option>
-              <option value="history">History</option>
-            </select>
-          </div>
-          {% endif %}
-          {% if lesson.subject == "science" %}
-          <div class="select is-rounded is-small is-focused is-info">
-            <select name="subject" id="subject" value="{{lesson.subject}}">
-              <option selected value="science">Science</option>
-              <option value="math">Math</option>
-              <option value="english">English</option>
-              <option value="history">History</option>
-            </select>
-          </div>
-          {% endif %}
-          {% if lesson.subject == "english" %}
-          <div class="select is-rounded is-small is-focused is-info">
-            <select name="subject" id="subject" value="{{lesson.subject}}">
-              <option selected value="english">English</option>
-              <option value="math">Math</option>
-              <option value="science">Science</option>
-              <option value="history">History</option>
-            </select>
-          </div>
-          {% endif %}
-          {% if lesson.subject == "history" %}
-          <div class="select is-rounded is-small is-focused is-info">
-            <select name="subject" id="subject" value="{{lesson.subject}}">
-              <option value="history" selected>History</option>
-              <option value="math">Math</option>
-              <option value="science">Science</option>
-              <option value="english">English</option>
-            </select>
-          </div>
-          {% endif %}
-
-          <!--
+              {% if lesson.subject == "math" %}
+              <div class="select is-rounded is-small is-focused is-info">
+                <select name="subject" id="subject" value="{{lesson.subject}}">
+                  <option selected value="math">Math</option>
+                  <option value="science">Science</option>
+                  <option value="english">English</option>
+                  <option value="history">History</option>
+                </select>
+              </div>
+              {% endif %}
+              {% if lesson.subject == "science" %}
+              <div class="select is-rounded is-small is-focused is-info">
+                <select name="subject" id="subject" value="{{lesson.subject}}">
+                  <option selected value="science">Science</option>
+                  <option value="math">Math</option>
+                  <option value="english">English</option>
+                  <option value="history">History</option>
+                </select>
+              </div>
+              {% endif %}
+              {% if lesson.subject == "english" %}
+              <div class="select is-rounded is-small is-focused is-info">
+                <select name="subject" id="subject" value="{{lesson.subject}}">
+                  <option selected value="english">English</option>
+                  <option value="math">Math</option>
+                  <option value="science">Science</option>
+                  <option value="history">History</option>
+                </select>
+              </div>
+              {% endif %}
+              {% if lesson.subject == "history" %}
+              <div class="select is-rounded is-small is-focused is-info">
+                <select name="subject" id="subject" value="{{lesson.subject}}">
+                  <option value="history" selected>History</option>
+                  <option value="math">Math</option>
+                  <option value="science">Science</option>
+                  <option value="english">English</option>
+                </select>
+              </div>
+              {% endif %}
+              <!--
           <div class="field has-addons is-small">
             <div class="control">
               <input class="input is-rounded is-small" type="text" placeholder="Add Subject">
@@ -112,15 +114,21 @@
             </div>
           </div>
           -->
-          <legend>
-            <span>
-              <label class="label" style="color:white;">Choose a class:</label>
-            </span>
-          </legend>
-          <div class="select is-rounded is-small is-hovered is-info">
-            <select name="choices" id="choices">
-              <!-- populated using JavaScript -->
-            </select>
+            </div>
+
+            <div class="column is-one-third">
+              <legend>
+                <span>
+                  <label class="label" style="color:white;">Choose a class:</label>
+                </span>
+              </legend>
+              <div class="select is-rounded is-small is-hovered is-info">
+                <select name="choices" id="choices">
+                  <!-- populated using JavaScript -->
+                </select>
+              </div>
+            </div>
+
           </div>
         </div>
 
@@ -138,7 +146,10 @@
         -->
       </fieldset>
 
-      <br><br><br>
+      <div class="columns">
+        <div class="column">
+        </div>
+      </div>
 
       <div class="field">
         <div class="control">
@@ -155,10 +166,32 @@
         <div class="control">
           <label class="label">
             <span style="color:red;">*</span><span style="color:white;">
+              Link to game
+            </span>
+          </label>
+          <input class="input is-primary is-rounded" value="{{ lesson.game_link }}" type="text" name="game_link">
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="control">
+          <label class="label">
+            <span style="color:red;">*</span><span style="color:white;">
               Lesson description
             </span>
           </label>
-          <input class="input is-primary is-large is-rounded textarea" value="{{lesson.description}}" placeholder="A short description..." name="description">
+          <textarea rows="3" cols="10" wrap="soft" class="textarea is-primary has-fixed-size" name="description">{{ lesson.description }}</textarea>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="control">
+          <label class="label">
+            <span style="color:red;">*</span><span style="color:white;">
+              Lesson instructions
+            </span>
+          </label>
+          <textarea rows="5" cols="10" wrap="soft" class="textarea is-primary is-rounded" name="instructions">{{ lesson.instructions }}</textarea>
         </div>
       </div>
 
