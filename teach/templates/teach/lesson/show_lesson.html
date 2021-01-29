@@ -75,6 +75,7 @@
                 <u>Lesson Name</u>: <b class="is-capitalized">{{ lesson.lesson_name}}</b>
               </span>
             </div>
+
             <div class="box main-background tile is-fullwidth">
               <span style="color:white;">
                 <div class="columns">
@@ -87,6 +88,27 @@
                 </div>
               </span>
             </div>
+
+            <div class="box main-background tile is-fullwidth">
+              <span style="color:white;">
+                <div class="columns">
+                  <div class="column">
+                    {% if lesson.game_link != None %}
+                    <a class="button is-primary" href="{{ lesson.game_link }}" target="_blank" rel="noopener noreferrer">
+                      Game Link
+                    </a>
+                    {% endif %}
+                    {% if lesson.game_link == None %}
+                    No link to game!
+                    {% endif %}
+                  </div>
+                  <div class="column">
+                    {{ lesson.instructions }}
+                  </div>
+                </div>
+              </span>
+            </div>
+
           </div>
         </div>
 
