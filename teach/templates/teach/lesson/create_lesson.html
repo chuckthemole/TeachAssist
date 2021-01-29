@@ -3,51 +3,49 @@
 {% extends "teach/base.html" %}
 
 {% block content %}
-
-<div class="columns is-centered">
-  <div class="publish-form columns main-background panel-block">
-
+<center>
+  <div class="box front-background tile is-vertical is-8 is-centered">
     <form id="subject_class_dropdown" action="{% url 'lesson:create_lesson' %}" method="post" enctype="multipart/form-data">
       {% csrf_token %}
 
-      <div class="column box front-background">
-        <h1 class="title is-3 has-text-centered">
-          <span style="color:#1496ed">
-            {{ user.username }}
-            <br>
-          </span>
-        </h1>
-        <h4 class="title is-5 has-text-centered">
-          <span style="color:white;">
-            What subject? What lesson?
-          </span>
-        </h4>
-        {% if error %}
-        <h3 style="color: red">{{ error }}</h3>
-        {% endif %}
+      <h1 class="title is-3 has-text-centered">
+        <span style="color:#1496ed">
+          {{ user.username }}
+          <br>
+        </span>
+      </h1>
+      <h4 class="title is-5 has-text-centered">
+        <span style="color:white;">
+          What subject? What lesson?
+        </span>
+      </h4>
+      {% if error %}
+      <h3 style="color: red">{{ error }}</h3>
+      {% endif %}
 
-        <fieldset>
-
-          <legend>
-            <span style="color:white;">
-              <label>Choose a subject:</label>
-            </span>
-          </legend>
-          <div class="control has-icons-left">
-            <div class="select is-rounded is-small is-focused is-info">
-              <select name="subject" id="subject">
-                <option value="math">Math</option>
-                <option value="science">Science</option>
-                <option value="english">English</option>
-                <option value="history">History</option>
-              </select>
+      <div class="columns is-centered">
+        <div class="column is-one-third">
+          <fieldset>
+            <legend>
+              <span style="color:white;">
+                <label>Choose a subject:</label>
+              </span>
+            </legend>
+            <div class="control has-icons-left">
+              <div class="select is-rounded is-small is-focused is-info">
+                <select name="subject" id="subject">
+                  <option value="math">Math</option>
+                  <option value="science">Science</option>
+                  <option value="english">English</option>
+                  <option value="history">History</option>
+                </select>
+              </div>
+              <span class="icon is-left">
+                <i class="fas fa-home"></i>
+              </span>
             </div>
-            <span class="icon is-left">
-              <i class="fas fa-home"></i>
-            </span>
-          </div>
 
-          <!--
+            <!--
           <div class="field has-addons is-small">
             <div class="control">
               <input class="input is-rounded is-small" type="text" placeholder="Add Subject">
@@ -59,7 +57,9 @@
             </div>
           </div>
         -->
+        </div>
 
+        <div class="column is-one-third">
           <legend>
             <span style="color:white;">
               <label>Choose a class:</label>
@@ -83,83 +83,82 @@
             </div>
           </div>
           -->
-
-        </fieldset>
-        <br>
-
-
-        <br><br>
-
-        <div class="field">
-          <div class="control">
-            <label class="label">
-              <span style="color:red;">*</span><span style="color:white;">
-                Lesson Name
-              </span>
-            </label>
-            <input class="input is-primary is-rounded" placeholder="The name of your lesson..." type="text" name="name">
-          </div>
+          </fieldset>
         </div>
+      </div>
 
-        <div class="field">
-          <div class="control">
-            <label class="label">
-              <span style="color:red;">*</span><span style="color:white;">
-                Lesson description
-              </span>
-            </label>
-            <input class="input is-primary is-large is-rounded textarea" placeholder="A short description..." name="description">
-          </div>
-        </div>
+      <br><br><br>
 
+      <div class="field">
         <div class="control">
-          <label class="radio">
-            <input type="radio" id="public" name="is_public" value="public" checked>
-            public
+          <label class="label">
+            <span style="color:red;">*</span><span style="color:white;">
+              Lesson Name
+            </span>
           </label>
-          <label class="radio">
-            <input type="radio" id="private" name="is_public" value="private">
-            private
-          </label>
+          <input class="input is-primary is-rounded" placeholder="The name of your lesson..." type="text" name="name">
         </div>
+      </div>
 
-        <br>
+      <div class="field">
+        <div class="control">
+          <label class="label">
+            <span style="color:red;">*</span><span style="color:white;">
+              Lesson description
+            </span>
+          </label>
+          <textarea rows="14" cols="10" wrap="soft" class="textarea is-primary is-rounded" placeholder="A short description..." name="description"></textarea>
+        </div>
+      </div>
 
-        <div class="columns is-centered">
-          <div class="inline-child-block">
-            <p><input type="file" accept="image/*" name="image" id="file" onchange="loadFile(event)" style="display: none;"></p>
-            <p>
-              {{ form.as_p }}
-              <!--<label class="button is-small is-rounded" for="file" style="cursor: pointer;">
+      <div class="control">
+        <label class="radio">
+          <input type="radio" id="public" name="is_public" value="public" checked>
+          public
+        </label>
+        <label class="radio">
+          <input type="radio" id="private" name="is_public" value="private">
+          private
+        </label>
+      </div>
+
+      <br>
+
+      <div class="columns is-centered">
+        <div class="inline-child-block">
+          <p><input type="file" accept="image/*" name="image" id="file" onchange="loadFile(event)" style="display: none;"></p>
+          <p>
+            {{ form.as_p }}
+            <!--<label class="button is-small is-rounded" for="file" style="cursor: pointer;">
                 Upload Image
               </label>-->
-            </p>
-          </div>
-          <div class="inline-child-block">
-            <img id="output" width="100">
-          </div>
+          </p>
         </div>
-
-        <script>
-          var loadFile = function(event) {
-            var image = document.getElementById('output');
-            image.src = URL.createObjectURL(event.target.files[0]);
-          };
-        </script>
-
-        <div class="field">
-          <div class="control">
-            <button class="button is-success is-rounded is-fullwidth" type="submit" value="Publish">
-              Publish
-            </button>&nbsp;
-          </div>
+        <div class="inline-child-block">
+          <img id="output" width="100">
         </div>
-
-        {% load static %}
-        <script type='text/javascript' src="{% static 'teach/js/select_dynamic_options.js' %}"></script>
       </div>
+
+      <script>
+        var loadFile = function(event) {
+          var image = document.getElementById('output');
+          image.src = URL.createObjectURL(event.target.files[0]);
+        };
+      </script>
+
+      <div class="field">
+        <div class="control">
+          <button class="button is-success is-rounded is-fullwidth" type="submit" value="Publish">
+            Publish
+          </button>&nbsp;
+        </div>
+      </div>
+
+      {% load static %}
+      <script type='text/javascript' src="{% static 'teach/js/select_dynamic_options.js' %}"></script>
 
     </form>
   </div>
-</div>
+</center>
+
 {% endblock content %}
