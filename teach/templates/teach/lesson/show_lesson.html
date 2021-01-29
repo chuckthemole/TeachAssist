@@ -21,7 +21,10 @@
             </span>
           </h1>
           {% if not lesson.is_public %}
-          <h3 style="color: red"><b>This lesson is private.<b></h3>
+          <h3 style="color: red;"><b>This lesson is private.<b></h3>
+          {% endif %}
+          {% if lesson.is_public %}
+          <h3 style="color: green;"><b>This lesson is public.<b></h3>
           {% endif %}
           <h2>
             <span style="color:white;">
