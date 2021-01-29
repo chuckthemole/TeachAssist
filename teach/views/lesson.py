@@ -103,6 +103,10 @@ def show_lesson(request, lesson_id):
             return redirect("teach:login")
         else:
             lesson = get_object_or_404(Lesson, pk=lesson_id)
+            if lesson.teacher.id != user.teacher.id:
+                if not lesson.is_public:
+                    all_lessons = Lesson.objects.all()
+                    return render(request, "teach/index.html", {"user":user, "all_lessons": all_lessons})
             return render(request, "teach/lesson/show_lesson.html", {"user":user, "lesson":lesson})
 
 def publish_image(request, location_id):
