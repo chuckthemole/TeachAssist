@@ -35,7 +35,9 @@ class Lesson(models.Model):
 	subject_class = models.TextField(max_length=30, null=False, blank=False, unique=False, default="")
 	topic = models.TextField(max_length=30, null=False, blank=False, unique=False, default="")
 	lesson_name = models.TextField(max_length=30, null=False, blank=False, unique=False, default="")
-	description = models.TextField(max_length=100, null=False, blank=False, unique=False, default="")
+	description = models.TextField(max_length=300, null=False, blank=False, unique=False, default="")
+	instructions = models.TextField(max_length=300, null=True, blank=True, unique=False, default="")
+	game_link = models.URLField(max_length = 200, null=True, blank=True, unique=False, default="")
 
 	# Image of location
 	img = models.ImageField(upload_to='images/lessons', blank=True, default="static/teach/images/no_image_available.PNG")
