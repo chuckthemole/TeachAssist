@@ -58,14 +58,48 @@
               <label class="label" style="color:white;">Choose a subject:</label>
             </span>
           </legend>
+
+          {% if lesson.subject == "math" %}
           <div class="select is-rounded is-small is-focused is-info">
             <select name="subject" id="subject" value="{{lesson.subject}}">
-              <option value="math">Math</option>
+              <option selected value="math">Math</option>
               <option value="science">Science</option>
               <option value="english">English</option>
               <option value="history">History</option>
             </select>
           </div>
+          {% endif %}
+          {% if lesson.subject == "science" %}
+          <div class="select is-rounded is-small is-focused is-info">
+            <select name="subject" id="subject" value="{{lesson.subject}}">
+              <option selected value="science">Science</option>
+              <option value="math">Math</option>
+              <option value="english">English</option>
+              <option value="history">History</option>
+            </select>
+          </div>
+          {% endif %}
+          {% if lesson.subject == "english" %}
+          <div class="select is-rounded is-small is-focused is-info">
+            <select name="subject" id="subject" value="{{lesson.subject}}">
+              <option selected value="english">English</option>
+              <option value="math">Math</option>
+              <option value="science">Science</option>
+              <option value="history">History</option>
+            </select>
+          </div>
+          {% endif %}
+          {% if lesson.subject == "history" %}
+          <div class="select is-rounded is-small is-focused is-info">
+            <select name="subject" id="subject" value="{{lesson.subject}}">
+              <option value="history" selected>History</option>
+              <option value="math">Math</option>
+              <option value="science">Science</option>
+              <option value="english">English</option>
+            </select>
+          </div>
+          {% endif %}
+
           <!--
           <div class="field has-addons is-small">
             <div class="control">
