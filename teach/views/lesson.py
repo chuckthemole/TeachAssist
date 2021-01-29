@@ -28,7 +28,6 @@ def create_lesson(request):
         game_link = request.POST["game_link"]
         instructions = request.POST["instructions"]
 
-
         validate = URLValidator()
         try:
             validate(game_link)
@@ -208,6 +207,23 @@ def update_lesson(request, lesson_id):
             subject_class = request.POST["choices"]
             lesson_name = request.POST["name"]
             lesson_description = request.POST["description"]
+            game_link = request.POST["game_link"]
+            instructions = request.POST["instructions"]
+
+            validate = URLValidator()
+            try:
+                validate(game_link)
+                print("String is a valid URL")
+                try:
+                    response = requests.get(game_link)
+                    print("URL is valid and exists on the internet")
+                except requests.ConnectionError as exception:
+                    game_link = None
+                    print("URL does not exist on Internet")
+            except ValidationError as exception:
+                game_link = None
+                print("String is not valid URL")
+
             if not subject or not subject_class:
                 return render(request, "teach/lesson/edit_lesson.html", {"lesson":lesson, "error":"One of the required fields was empty"})
         except:
@@ -228,7 +244,7 @@ def update_lesson(request, lesson_id):
                 print("Form is valid.")
                 lesson.save()
             Lesson.objects.filter(pk=lesson_id).update(subject=subject, subject_class=subject_class, lesson_name=lesson_name,
-                description=lesson_description, icon=icon)
+                description=lesson_description, icon=icon, game_link=game_link, instructions=instructions)
             lesson = get_object_or_404(Lesson, pk=lesson_id)
             return render(request, "teach/lesson/show_lesson.html", {"user":user, "lesson":lesson})
         else:
