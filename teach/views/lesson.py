@@ -1,5 +1,8 @@
 from .imports import *
 from .constants import *
+import requests
+from django.core.validators import URLValidator
+from django.core.exceptions import ValidationError
 
 def publish_lesson(request):
     if request.method == "GET":
@@ -24,6 +27,21 @@ def create_lesson(request):
         public_private = request.POST["is_public"]
         game_link = request.POST["game_link"]
         instructions = request.POST["instructions"]
+
+
+        validate = URLValidator()
+        try:
+            validate(game_link)
+            print("String is a valid URL")
+            try:
+                response = requests.get(game_link)
+                print("URL is valid and exists on the internet")
+            except requests.ConnectionError as exception:
+                game_link = None
+                print("URL does not exist on Internet")
+        except ValidationError as exception:
+            game_link = None
+            print("String is not valid URL")
 
         if public_private == 'public':
             is_public = True
@@ -74,7 +92,9 @@ def create_lesson(request):
                 description = lesson_description,
                 topic = 'this',
                 is_public = is_public,
-                icon = icon
+                icon = icon,
+                instructions = instructions,
+                game_link = game_link
                 #sport_location_img='images/no_image_available.PNG',
                 #latitude=latitude, longitude=longitude,
                 #teacher=teacher, address=address, zip=zip,
