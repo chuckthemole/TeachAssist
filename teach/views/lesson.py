@@ -23,6 +23,7 @@ def create_lesson(request):
         teacher = user.teacher
         subject = request.POST["subject"]
         subject_class = request.POST["choices"]
+        topic = request.POST["topic"]
         lesson_name = request.POST["name"]
         lesson_description = request.POST["description"]
         public_private = request.POST["is_public"]
@@ -92,7 +93,7 @@ def create_lesson(request):
                 subject_class = subject_class,
                 lesson_name = lesson_name,
                 description = lesson_description,
-                topic = 'this',
+                topic = topic,
                 is_public = is_public,
                 icon = icon,
                 instructions = instructions,
@@ -208,6 +209,7 @@ def update_lesson(request, lesson_id):
         try:
             subject = request.POST["subject"]
             subject_class = request.POST["choices"]
+            topic = request.POST["topic"]
             lesson_name = request.POST["name"]
             lesson_description = request.POST["description"]
             game_link = request.POST["game_link"]
@@ -249,7 +251,7 @@ def update_lesson(request, lesson_id):
                 print("Form is valid.")
                 lesson.save()
             Lesson.objects.filter(pk=lesson_id).update(subject=subject, subject_class=subject_class, lesson_name=lesson_name,
-                description=lesson_description, icon=icon, game_link=game_link, instructions=instructions)
+                description=lesson_description, icon=icon, game_link=game_link, instructions=instructions, topic=topic)
             lesson = get_object_or_404(Lesson, pk=lesson_id)
             return render(request, "teach/lesson/show_lesson.html", {"user":user, "lesson":lesson})
         else:
