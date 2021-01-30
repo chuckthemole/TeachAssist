@@ -49,93 +49,96 @@
 <br><br>
 <center>
   <div class="parent columns">
-    <div class="column">
-      <div class="parent main-background" style='width: 80%; height: 80%;'>
+    <div class="parent column box front-background" style='width: 80%; height: 80%;'>
 
-        <div class="columns col-container is-centered">
-          <div class="scrollable child inline-block-child main-background" style='width: 45%; height: 45%;'>
-            <article>
-              {% if lesson.img %}
-              <div class="box alt-front-background">
-                <a href="{% url 'lesson:show_lesson' lesson.id %}">
-                  <div class="container-img">
-                    <figure class="image is-1by1">
-                      <img src="{{ lesson.img.url }}" style="object-fit: cover;" alt="Image not found" onerror="this.onerror=null;this.src='{% static 'teach/images/no_image_available.PNG' %}';">
-                    </figure>
-                    <img class="icon" src="{{ lesson.icon }}">
-                  </div>
-                </a>
-              </div>
-              {% endif %}
-            </article>
-          </div>
-          <div class="child inline-block-child main-backgroud" style='width: 45%; height: 45%;'>
-            <div class="box front-background tile is-fullwidth">
-              <span style="color:#1496ed">
-                <u>Lesson Name</u>: <b class="is-capitalized">{{ lesson.lesson_name}}</b>
-              </span>
-            </div>
-
-            <div class="box main-background tile is-fullwidth">
-              <span style="color:white;">
-                <div class="columns">
-                  <div class="column">
-                    <u>Topic</u>: <b class="is-capitalized">{{ lesson.topic }}</b>
-                  </div>
-                  <div class="column">
-                    {{ lesson.description }}
-                  </div>
-                </div>
-              </span>
-            </div>
-
-            <div class="box main-background tile is-fullwidth">
-              <span style="color:white;">
-                <div class="columns">
-                  <div class="column">
-                    {% if lesson.game_link != None %}
-                    <a class="button is-primary" href="{{ lesson.game_link }}" target="_blank" rel="noopener noreferrer">
-                      Game Link
-                    </a>
-                    {% endif %}
-                    {% if lesson.game_link == None %}
-                    No link to game!
-                    {% endif %}
-                  </div>
-                  <div class="column">
-                    {{ lesson.instructions }}
-                  </div>
-                </div>
-              </span>
-            </div>
-
-          </div>
+      <div class="columns box main-background is-centered">
+        <div class="column is-half">
+        <span style="color:#1496ed;">
+          <u>Lesson Name</u>: <br> <b class="is-capitalized">{{ lesson.lesson_name}}</b>
+        </span>
         </div>
-
-        <div class="columns">
-          <div class="column">
-            <center>
-              <div class="parent main-background" style='width: 90%; height: 90%;'>
-
-                {% if user.id == lesson.teacher.user.id %}
-                <a class="button is-primary is-fullwidth is-rounded" href="{% url 'lesson:edit_lesson' lesson.id %}">
-                  Make Changes
-                </a>
-                <br>
-                <form action="{% url 'lesson:delete_lesson' lesson.id %}" method="post">
-                  {% csrf_token %}
-                  <button class="button is-danger is-outlined is-fullwidth is-rounded" type="submit" name="delete" value="Delete">
-                    Delete
-                  </button>&nbsp;
-                </form>
-                {% endif %}
-
-              </div>
-            </center>
-          </div>
-        </div>
-
       </div>
+
+      <div class="columns col-container is-centered">
+        <div class="scrollable child inline-block-child" style='width: 45%; height: 45%;'>
+          <article>
+            {% if lesson.img %}
+            <div class="box main-background">
+              <a href="{% url 'lesson:show_lesson' lesson.id %}">
+                <div class="container-img">
+                  <figure class="image is-1by1">
+                    <img src="{{ lesson.img.url }}" style="object-fit: cover;" alt="Image not found" onerror="this.onerror=null;this.src='{% static 'teach/images/no_image_available.PNG' %}';">
+                  </figure>
+                  <img class="icon" src="{{ lesson.icon }}">
+                </div>
+              </a>
+            </div>
+            {% endif %}
+          </article>
+        </div>
+        <div class="child inline-block-child main-backgroud" style='width: 45%; height: 45%;'>
+
+
+          <div class="box main-background tile is-fullwidth">
+            <span style="color:white;">
+              <div class="columns">
+                <div class="column">
+                  <u>Topic</u>: <b class="is-capitalized">{{ lesson.topic }}</b>
+                </div>
+                <div class="column">
+                  {{ lesson.description }}
+                </div>
+              </div>
+            </span>
+          </div>
+
+          <div class="box main-background tile is-fullwidth">
+            <span style="color:white;">
+              <div class="columns">
+                <div class="column">
+                  {{ lesson.instructions }}
+                </div>
+              </div>
+            </span>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="column">
+        {% if lesson.game_link != None %}
+        <a class="button is-primary" href="{{ lesson.game_link }}" target="_blank" rel="noopener noreferrer">
+          Game Link
+        </a>
+        {% endif %}
+        {% if lesson.game_link == None %}
+        No link to game!
+        {% endif %}
+      </div>
+
+      <div class="columns">
+        <div class="column">
+          <center>
+            <div class="parent" style='width: 90%; height: 90%;'>
+
+              {% if user.id == lesson.teacher.user.id %}
+              <a class="button is-primary is-fullwidth is-rounded" href="{% url 'lesson:edit_lesson' lesson.id %}">
+                Make Changes
+              </a>
+              <br>
+              <form action="{% url 'lesson:delete_lesson' lesson.id %}" method="post">
+                {% csrf_token %}
+                <button class="button is-danger is-outlined is-fullwidth is-rounded" type="submit" name="delete" value="Delete">
+                  Delete
+                </button>&nbsp;
+              </form>
+              {% endif %}
+
+            </div>
+          </center>
+        </div>
+      </div>
+
     </div>
   </div>
 </center>
