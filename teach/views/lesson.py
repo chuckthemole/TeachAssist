@@ -1,6 +1,7 @@
 from .imports import *
 from .constants import *
 import requests
+import re
 from django.core.validators import URLValidator
 from django.core.exceptions import ValidationError
 
@@ -27,6 +28,8 @@ def create_lesson(request):
         public_private = request.POST["is_public"]
         game_link = request.POST["game_link"]
         instructions = request.POST["instructions"]
+
+        game_link = formaturl(game_link)
 
         validate = URLValidator()
         try:
@@ -210,6 +213,8 @@ def update_lesson(request, lesson_id):
             game_link = request.POST["game_link"]
             instructions = request.POST["instructions"]
 
+            game_link = formaturl(game_link)
+
             validate = URLValidator()
             try:
                 validate(game_link)
@@ -293,3 +298,8 @@ def switch_public_private(request, lesson_id):
             return render(request, "teach/index.html", {"user":user, "all_lessons": all_lessons, "error":"Unable to make change!"})
     else:
         return render(request, "teach/lesson/edit_lesson.html", {"lesson":lesson, "error":"Unable to make change!"})
+
+def formaturl(url):
+    if not re.match('(?:http|ftp|https)://', url):
+        return 'http://www.{}'.format(url)
+    return url
