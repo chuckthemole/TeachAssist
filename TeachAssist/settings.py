@@ -37,7 +37,7 @@ if USE_S3:
     PRIVATE_MEDIA_LOCATION = 'private'
     PRIVATE_FILE_STORAGE = "TeachAssist.storage_backends.PrivateMediaStorage"
 else:
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+    STATIC_ROOT = os.path.join(BASE_DIR, 'teach/static')
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
     STATIC_URL = '/static/'
     STATICFILES_DIRS = (
@@ -53,7 +53,7 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'teach/static'),
     )
 
-STATICFILES_DIRS = (os.path.join(BASE_DIR, 'teach/static'),)
+# STATICFILES_DIRS = (os.path.join(BASE_DIR, 'teach/static'),)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
