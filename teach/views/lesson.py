@@ -1,5 +1,5 @@
 from .imports import *
-from .constants import *
+from ..static.teach.py.constants import *
 import requests
 import re
 from django.core.validators import URLValidator
