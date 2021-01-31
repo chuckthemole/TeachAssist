@@ -9,38 +9,36 @@
 <br>
 <div style="margin: auto;">
   <center>
-    <div class="box front-background tile is-8 is-vertical">
-      <div class="tile is-ancestor">
-        <div class="tile is-vertical has-text-centered alt-front-backgroud">
-          <h1 class="title is-2">
-            <span style="color:white;">
-              Lesson added by:
-            </span>
-            <span style="color:#1496ed">
-              {{ lesson.teacher.user.username }}
-            </span>
-          </h1>
-          {% if not lesson.is_public %}
-          <h3 style="color: red;"><b>This lesson is private.<b></h3>
-          {% endif %}
-          {% if lesson.is_public %}
-          <h3 style="color: green;"><b>This lesson is public.<b></h3>
-          {% endif %}
-          <h2>
-            <span style="color:white;">
-              <u>Subject</u>: <b class="is-capitalized">{{ lesson.subject }}</b>
-              <br>
-              <u>Class</u>: <b class="is-capitalized">{{ lesson.subject_class }}</b>
-              <br>
-              <small>
-                Created: {{lesson.created}}
-                <br>
-                Updated: {{lesson.updated}}
-              </small>
-            </span>
+    <div class="tile is-8 is-vertical">
+      <div class="box front-background">
+        <h1 class="title is-2">
+          <span style="color:white;">
+            Lesson added by:
+          </span>
+          <span style="color:#1496ed">
+            {{ lesson.teacher.user.username }}
+          </span>
+        </h1>
+        {% if not lesson.is_public %}
+        <h3 style="color: red;"><b>This lesson is private.<b></h3>
+        {% endif %}
+        {% if lesson.is_public %}
+        <h3 style="color: green;"><b>This lesson is public.<b></h3>
+        {% endif %}
+        <h2>
+          <span style="color:white;">
+            <u>Subject</u>: <b class="is-capitalized">{{ lesson.subject }}</b>
             <br>
-          </h2>
-        </div>
+            <u>Class</u>: <b class="is-capitalized">{{ lesson.subject_class }}</b>
+            <br>
+            <small>
+              Created: {{lesson.created}}
+              <br>
+              Updated: {{lesson.updated}}
+            </small>
+          </span>
+          <br>
+        </h2>
       </div>
     </div>
   </center>
@@ -51,11 +49,11 @@
   <div class="parent columns">
     <div class="parent column box front-background" style='width: 80%; height: 80%;'>
 
-      <div class="columns box main-background is-centered">
-        <div class="column is-half">
-        <span style="color:#1496ed;">
-          <u>Lesson Name</u>: <br> <b class="is-capitalized">{{ lesson.lesson_name}}</b>
-        </span>
+      <div class="column is-centered">
+        <div class="column box main-background is-half">
+          <span style="color:#1496ed;">
+            <u>Lesson Name</u>: <br> <b class="is-capitalized" style="color:white;">{{ lesson.lesson_name}}</b>
+          </span>
         </div>
       </div>
 
@@ -81,14 +79,9 @@
 
           <div class="box main-background tile is-fullwidth">
             <span style="color:white;">
-              <div class="columns">
-                <div class="column">
-                  <u>Topic</u>: <b class="is-capitalized">{{ lesson.topic }}</b>
-                </div>
-                <div class="column">
-                  {{ lesson.description }}
-                </div>
-              </div>
+              <div style="color:#1496ed;"><u style="color:#1496ed;">Topic</u>:</div> <b class="is-capitalized" style="color:white;">{{ lesson.topic }}</b>
+              <br><br>
+              <div style="color:#1496ed;"><u style="color:#1496ed;">Description</u>:</div> <b class="is-capitalized" style="color:white;">{{ lesson.description }}</b>
             </span>
           </div>
 
@@ -96,7 +89,7 @@
             <span style="color:white;">
               <div class="columns">
                 <div class="column">
-                  {{ lesson.instructions }}
+                  <div style="color:#1496ed;"><u style="color:#1496ed;">Instructions</u>:</div> <b class="is-capitalized" style="color:white;">{{ lesson.instructions }}</b>
                 </div>
               </div>
             </span>
