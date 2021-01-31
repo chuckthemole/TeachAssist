@@ -31,15 +31,19 @@ login {
 }
 
 .main-background {
-  background-color:#9AE1EF;
+  background-color:#E8A87C;
 }
 
 .front-background {
-  background-color:#9AD1EF;
+  background-color:#E27D60;
 }
 
 .alt-front-background {
-  background-color:#52b8e1;
+  background-color:#CA522f;
+}
+
+.main-text-color {
+  color: #CA522f;
 }
 
 .map {
