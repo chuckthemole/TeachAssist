@@ -63,18 +63,22 @@
       </div>
       <div class="columns">
         <div class="column">
-          <a class="button is-success is-fullwidth" href="{% url 'lesson:edit_lesson' lesson.id %}">
-            Edit
-          </a>
+          <form action="{% url 'lesson:edit_lesson' lesson.id %}" method="get">
+            <button class="button is-success is-fullwidth is-rounded">
+              Edit
+            </button>
+          </form>
         </div>
         <div class="column">
-          <a class="button is-success is-fullwidth" href="{% url 'lesson:switch_public_private' lesson.id %}">
-            {% if lesson.is_public %}
-            Make Private
-            {% else %}
-            Make Public
-            {% endif %}
-          </a>
+          <form action="{% url 'lesson:switch_public_private' lesson.id %}" method="get">
+            <button class="button is-success is-fullwidth is-rounded">
+              {% if lesson.is_public %}
+              Make Private
+              {% else %}
+              Make Public
+              {% endif %}
+            </button>
+          </form>
         </div>
       </div>
     </div>

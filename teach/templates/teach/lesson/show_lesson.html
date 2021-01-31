@@ -15,7 +15,7 @@
           <span style="color:white;">
             Lesson added by:
           </span>
-          <span style="color:#1496ed">
+          <span class="main-text-color">
             {{ lesson.teacher.user.username }}
           </span>
         </h1>
@@ -51,7 +51,7 @@
 
       <div class="column is-centered">
         <div class="column box main-background is-half">
-          <span style="color:#1496ed;">
+          <span class="main-text-color">
             <u>Lesson Name</u>: <br> <b class="is-capitalized" style="color:white;">{{ lesson.lesson_name}}</b>
           </span>
         </div>
@@ -79,9 +79,9 @@
 
           <div class="box main-background tile is-fullwidth">
             <span style="color:white;">
-              <div style="color:#1496ed;"><u style="color:#1496ed;">Topic</u>:</div> <b class="is-capitalized" style="color:white;">{{ lesson.topic }}</b>
-              <br><br>
-              <div style="color:#1496ed;"><u style="color:#1496ed;">Description</u>:</div> <b class="is-capitalized" style="color:white;">{{ lesson.description }}</b>
+              <div class="main-text-color""><u>Topic</u>:</div> <b class=" is-capitalized" style="color:white;">{{ lesson.topic }}</b>
+                <br><br>
+                <div class="main-text-color""><u>Description</u>:</div> <b class=" is-capitalized" style="color:white;">{{ lesson.description }}</b>
             </span>
           </div>
 
@@ -89,46 +89,53 @@
             <span style="color:white;">
               <div class="columns">
                 <div class="column">
-                  <div style="color:#1496ed;"><u style="color:#1496ed;">Instructions</u>:</div> <b class="is-capitalized" style="color:white;">{{ lesson.instructions }}</b>
+                  <div class="main-text-color""><u>Instructions</u>:</div> <b class=" is-capitalized" style="color:white;">{{ lesson.instructions }}</b>
+                  </div>
                 </div>
-              </div>
             </span>
           </div>
 
         </div>
       </div>
 
-      <div class="column">
-        {% if lesson.game_link != None %}
-        <a class="button is-primary" href="{{ lesson.game_link }}" target="_blank" rel="noopener noreferrer">
-          Game Link
-        </a>
-        {% endif %}
-        {% if lesson.game_link == None %}
-        No link to game!
-        {% endif %}
+      <div class="columns">
+        <div class="column">
+          <div class="parent" style='width: 90%; height: 90%;'>
+            {% if lesson.game_link != None %}
+            <form action="{{ lesson.game_link }}" target="_blank" method="get">
+              <button class="button is-fullwidth is-rounded is-info" rel="noopener noreferrer">
+                Game Link
+              </button>
+            </form>
+            {% endif %}
+            {% if lesson.game_link == None %}
+            No link to game!
+            {% endif %}
+          </div>
+        </div>
       </div>
+
 
       <div class="columns">
         <div class="column">
-          <center>
-            <div class="parent" style='width: 90%; height: 90%;'>
+          <div class="parent" style='width: 90%; height: 90%;'>
 
-              {% if user.id == lesson.teacher.user.id %}
-              <a class="button is-primary is-fullwidth is-rounded" href="{% url 'lesson:edit_lesson' lesson.id %}">
+            {% if user.id == lesson.teacher.user.id %}
+            <form action="{% url 'lesson:edit_lesson' lesson.id %}" method="get">
+              <button class="button is-primary is-outlined is-fullwidth is-rounded">
                 Make Changes
-              </a>
-              <br>
-              <form action="{% url 'lesson:delete_lesson' lesson.id %}" method="post">
-                {% csrf_token %}
-                <button class="button is-danger is-outlined is-fullwidth is-rounded" type="submit" name="delete" value="Delete">
-                  Delete
-                </button>&nbsp;
-              </form>
-              {% endif %}
+              </button>
+            </form>
+            <br>
+            <form action="{% url 'lesson:delete_lesson' lesson.id %}" method="post">
+              {% csrf_token %}
+              <button class="button is-danger is-outlined is-fullwidth is-rounded" type="submit" name="delete" value="Delete">
+                Delete
+              </button>&nbsp;
+            </form>
+            {% endif %}
 
-            </div>
-          </center>
+          </div>
         </div>
       </div>
 
