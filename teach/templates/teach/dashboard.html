@@ -29,9 +29,12 @@
         Your lessons are listed below
       </span>
     </h4>
-    <a class="button is-info is-medium" href="{% url 'lesson:publish_lesson' %}">
-      Make a new lesson
-    </a>
+    <form action="{% url 'lesson:publish_lesson' %}" method="get">
+      <button class="button is-info is-fullwidth is-rounded">
+        Make a new lesson
+      </button>
+    </form>
+
     <br><br>
 
     <!-- List all user's lessons -->
