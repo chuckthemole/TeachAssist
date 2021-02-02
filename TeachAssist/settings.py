@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 import dj_database_url
-import django_heroku
+#import django_heroku
 from decouple import config
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -64,7 +64,8 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["teach-env.eba-ntsdfena.us-west-1.elasticbeanstalk.com"]
+#ALLOWED_HOSTS = ["teach-env.eba-ntsdfena.us-west-1.elasticbeanstalk.com"]
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -160,4 +161,4 @@ USE_L10N = True
 
 USE_TZ = True
 
-django_heroku.settings(locals())
+#django_heroku.settings(locals())
