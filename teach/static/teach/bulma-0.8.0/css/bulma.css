@@ -2504,13 +2504,13 @@ fieldset[disabled] .button.is-success.is-inverted {
 
 .button.is-success.is-outlined {
   background-color: transparent;
-  border-color: #48c774;
-  color: #48c774;
+  border-color: #41B3A3;
+  color: #32A494;
 }
 
 .button.is-success.is-outlined:hover, .button.is-success.is-outlined.is-hovered, .button.is-success.is-outlined:focus, .button.is-success.is-outlined.is-focused {
-  background-color: #48c774;
-  border-color: #48c774;
+  background-color: #32A494;
+  border-color: #32A494;
   color: #fff;
 }
 
