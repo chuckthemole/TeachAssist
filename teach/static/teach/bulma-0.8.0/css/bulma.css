@@ -6686,7 +6686,7 @@ a.list-item {
   .navbar.is-primary .navbar-end .navbar-link:focus,
   .navbar.is-primary .navbar-end .navbar-link:hover,
   .navbar.is-primary .navbar-end .navbar-link.is-active {
-    background-color: #A9EAF7; /*#00b89c;*/
+    background-color: #FEA86E; /*#00b89c;*/
     color: #fff;
   }
   .navbar.is-primary .navbar-start .navbar-link::after,
@@ -6696,11 +6696,11 @@ a.list-item {
   .navbar.is-primary .navbar-item.has-dropdown:focus .navbar-link,
   .navbar.is-primary .navbar-item.has-dropdown:hover .navbar-link,
   .navbar.is-primary .navbar-item.has-dropdown.is-active .navbar-link {
-    background-color: #A9EAF7; /*#00b89c;*/
+    background-color: #FEA86E; /*#00b89c;*/
     color: #fff;
   }
   .navbar.is-primary .navbar-dropdown a.navbar-item.is-active {
-    background-color: #A9EAF7; /*#00b89c;*/
+    background-color: #FEA86E; /*#00b89c;*/
     color: #fff;
   }
 }
