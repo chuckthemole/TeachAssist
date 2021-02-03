@@ -36,7 +36,7 @@
     </div>
 
     {% if is_base_visible != False %}
-    <div id="navbarData" class="navbar-menu is-active">
+    <div id="navbarData" class="navbar-menu is-primary">
       <!-- navbar-menu hidden in mobile devices -->
       <!-- is-actice makes id show in mobile devices -->
       <div class="navbar-start">
@@ -47,8 +47,8 @@
         </div>
 
         <!-- **************need to fix this dropdown *******************-->
-        <div class="navbar-link">
-          <div class="navbar-item has-dropdown">
+        <div class="navbar-link is-primary">
+          <div class="navbar-item has-dropdown is-primary">
             <a class="button is-primary">
               More
             </a>
@@ -100,7 +100,7 @@
 
   </nav>
 
-  <section class="section" style="background-color:#9AE1EF">
+  <section class="section main-backgroud">
     <div class="container">
       {% block content %}{% endblock content %}
     </div>

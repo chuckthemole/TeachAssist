@@ -20,7 +20,7 @@
       <span style="color:white;">
         Hello
       </span>
-      <span style="color:#1496ed">
+      <span class="main-text-color">
         {{ user.username }}
       </span>
     </h1>
@@ -29,9 +29,12 @@
         Your lessons are listed below
       </span>
     </h4>
-    <a class="button is-info is-medium" href="{% url 'lesson:publish_lesson' %}">
-      Make a new lesson
-    </a>
+    <form action="{% url 'lesson:publish_lesson' %}" method="get">
+      <button class="button is-info is-fullwidth is-rounded">
+        Make a new lesson
+      </button>
+    </form>
+
     <br><br>
 
     <!-- List all user's lessons -->
@@ -63,18 +66,22 @@
       </div>
       <div class="columns">
         <div class="column">
-          <a class="button is-success is-fullwidth" href="{% url 'lesson:edit_lesson' lesson.id %}">
-            Edit
-          </a>
+          <form action="{% url 'lesson:edit_lesson' lesson.id %}" method="get">
+            <button class="button is-success is-fullwidth is-rounded">
+              Edit
+            </button>
+          </form>
         </div>
         <div class="column">
-          <a class="button is-success is-fullwidth" href="{% url 'lesson:switch_public_private' lesson.id %}">
-            {% if lesson.is_public %}
-            Make Private
-            {% else %}
-            Make Public
-            {% endif %}
-          </a>
+          <form action="{% url 'lesson:switch_public_private' lesson.id %}" method="get">
+            <button class="button is-success is-fullwidth is-rounded">
+              {% if lesson.is_public %}
+              Make Private
+              {% else %}
+              Make Public
+              {% endif %}
+            </button>
+          </form>
         </div>
       </div>
     </div>
