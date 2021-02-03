@@ -64,9 +64,9 @@
 
     <div class="navbar-end">
 
-      {% if request.path != "/login" and request.path != "/loguser" and request.path != "/signup" %}
+      {% if request.path != "/login" and request.path != "/loguser" and request.path != "/signup" and request.path != "/create" %}
       <div class="navbar-item">
-        <a href="{% url 'collections:edit_settings' user.teacher.id %}">
+        <a href="{% url 'collections:edit_settings' %}">
           <article class="media container-img">
             <figure class="image is-32x32">
               {% load static %}
@@ -84,7 +84,7 @@
           <a class="button is-primary" href="{% url 'collections:signup' %}">
             Signup
           </a>
-          {% elif request.path == "/signup"  %}
+          {% elif request.path == "/signup" or request.path == "/create"  %}
           <a class="button is-primary" href="{% url 'collections:login' %}">
             Login
           </a>
