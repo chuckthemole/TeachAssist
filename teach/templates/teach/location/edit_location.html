@@ -13,7 +13,7 @@
       <div class="tile is-ancestor">
         <div class="tile is-vertical has-text-centered alt-front-backgroud">
           <h2 class="title is-3">
-            <span style="color:#1496ed">
+            <span class="main-text-color">
               {% if user %}
                 {{ user.username }},
               {% endif %}
@@ -22,7 +22,7 @@
               edit your location.
             </span>
           </h2>
-          <h4 class="title is-5" style="color:#1496ed">
+          <h4 class="title is-5" class="main-text-color">
             <span style="color:white;">
               {{location.address}} {{location.zip}}
             </span>
