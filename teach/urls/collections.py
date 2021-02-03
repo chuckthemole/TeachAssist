@@ -10,7 +10,7 @@ urlpatterns = [
     path('login', collections.login_view, name='login'),
     path('logout', collections.logout_view, name='logout'),
     path('signup', collections.signup, name='signup'),
-    path('<int:teacher_id>/settings', collections.edit_settings, name='edit_settings'),
+    path('settings', collections.edit_settings, name='edit_settings'),
     path('<int:teacher_id>/publish', collections.publish_settings, name='publish_settings'),
     path('filter', collections.index_filter, name='index_filter'),
 ]

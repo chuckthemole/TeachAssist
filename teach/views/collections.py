@@ -62,7 +62,8 @@ def create(request):
                 return render(request, "teach/signup.html", {"error": "Email already exists", "is_base_visible":is_base_visible})
 
             user = User.objects.create_user(username, email, password)
-            teacher_user = teacher.objects.create(user= user).save()
+            teacher_user = teacher.objects.create(user=user)
+            teacher_user.save()
             user.save()
 
             login(request, user, backend="django.contrib.auth.backends.ModelBackend")
@@ -118,7 +119,7 @@ def logout_view(request):
     logout(request)
     return redirect("collections:login")
 
-def edit_settings(request, teacher_id):
+def edit_settings(request):
     if request.method == "GET":
         user = request.user
         if not user.is_authenticated:
