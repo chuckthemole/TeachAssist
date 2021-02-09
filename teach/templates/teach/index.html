@@ -51,7 +51,7 @@
         <div class="box front-background">
           <center>
             <small style='color:white;'><b>Math</b></small>
-            <img class="icon" src='https://img.icons8.com/dusk/64/000000/math.png'>
+            <img class="icon" src='{{ all_icons.0 }}'>
           </center>
         </div>
       </div>
@@ -60,7 +60,7 @@
         <div class="box front-background">
           <center>
             <small style='color:white;'><b>Science</b></small>
-            <img class="icon" src='https://img.icons8.com/dusk/64/000000/bunsen-burner.png'>
+            <img class="icon" src='{{ all_icons.1 }}'>
           </center>
         </div>
       </div>
@@ -101,7 +101,7 @@
         <div class="box front-background">
           <center>
             <small style='color:white;'><b>English</b></small>
-            <img class="icon" src='https://img.icons8.com/dusk/64/000000/class.png'>
+            <img class="icon" src='{{ all_icons.2 }}'>
           </center>
         </div>
       </div>
@@ -110,7 +110,7 @@
         <div class="box front-background">
           <center>
             <small style='color:white;'><b>History</b></small>
-            <img class="icon" src='https://img.icons8.com/dusk/64/000000/archeology.png'>
+            <img class="icon" src='{{ all_icons.3 }}'>
           </center>
         </div>
       </div>
@@ -124,6 +124,7 @@
 <div class="columns box front-background is-centered is-10">
   <div class="column is-10 is-centered">
 
+    {% if not no_lessons %}
     <div class="columns is-multiline is-mobile">
       {% for l in all_lessons %}
       {% if l.is_public %}
@@ -147,6 +148,13 @@
       {% endif %}
       {% endfor %}
     </div>
+    {% endif %}
+
+    {% if no_lessons %}
+    <div class="columns is-centered">
+      <b style="color: white;">Nobody has created any lessons!</b>
+    </div>
+    {% endif %}
 
   </div>
 </div>
