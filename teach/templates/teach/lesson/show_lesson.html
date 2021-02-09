@@ -44,7 +44,20 @@
   </center>
 </div>
 
-<br><br>
+<form action="{% url 'quiz:publish_quiz' lesson.id %}" method="get">
+  <button class="button is-primary is-fullwidth is-rounded">
+    Create a quiz for this lesson
+  </button>
+</form>
+<br>
+<form action="{% url 'quiz:show_all_quizzes' lesson.id %}" method="get">
+  <button class="button is-primary is-fullwidth is-rounded">
+    View quizzes for this lesson
+  </button>
+</form>
+
+<br>
+
 <center>
   <div class="parent columns">
     <div class="parent column box front-background" style='width: 80%; height: 80%;'>
