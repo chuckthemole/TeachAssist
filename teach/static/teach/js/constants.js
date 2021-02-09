@@ -1,3 +1,5 @@
+// Used in base.html for top left subject icon
+
 const MATH_ICON = 'https://img.icons8.com/dusk/64/000000/math.png'
 const SCIENCE_ICON = 'https://img.icons8.com/dusk/64/000000/bunsen-burner.png'
 const ENGLISH_ICON = 'https://img.icons8.com/dusk/64/000000/class.png'
