@@ -25,14 +25,6 @@ def index_filter(request):
             all_lessons = Lesson.objects.filter(is_public=True, subject=subject)
         else:
             all_lessons = Lesson.objects.filter(is_public=True)
-            '''
-            subject_lessons = []
-            for l in all_lessons:
-                if l.subject == subject:
-                    subject_lessons.append(l)
-            all_lessons = subject_lessons
-            '''
-
         all_icons = [MATH_ICON, SCIENCE_ICON, ENGLISH_ICON, HISTORY_ICON]
         no_lessons = True
         if len(all_lessons) != 0:
