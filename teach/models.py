@@ -64,7 +64,7 @@ class Problem(models.Model):
 	quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, null=True)
 
 	question = models.TextField(max_length=100, null=False, blank=False, unique=False, default="")
-	answers = ArrayField(models.TextField(max_length=30, null=False, blank=False, unique=False, default=""), size=4,)
+	answers = ArrayField(ArrayField(models.TextField(max_length=30, null=False, blank=False, unique=False, default=""), size=2,), 4,)
 	correct_answer = models.IntegerField(null=True, blank=False, unique=False, default=1)
 
 
