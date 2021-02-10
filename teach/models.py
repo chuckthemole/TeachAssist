@@ -2,6 +2,7 @@ import os
 import uuid
 
 from django.db import models
+from django.contrib.postgres.fields import ArrayField
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.core.validators import MaxValueValidator, MinValueValidator
@@ -48,6 +49,24 @@ class Lesson(models.Model):
 
 	created = models.DateField(auto_now=True)
 	updated = models.DateField(auto_now=True)
+
+class Quiz(models.Model):
+	# FK
+	teacher = models.ForeignKey(teacher, on_delete=models.CASCADE, null=True)
+	lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, null=True)
+
+	name = models.TextField(max_length=30, null=False, blank=False, unique=False, default="")
+	created = models.DateField(auto_now=True)
+
+class Problem(models.Model):
+	# FK
+	teacher = models.ForeignKey(teacher, on_delete=models.CASCADE, null=True)
+	quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, null=True)
+
+	question = models.TextField(max_length=100, null=False, blank=False, unique=False, default="")
+	answers = ArrayField(ArrayField(models.TextField(max_length=30, null=False, blank=False, unique=False, default=""), size=2,), 4,)
+	correct_answer = models.IntegerField(null=True, blank=False, unique=False, default=1)
+
 
 class Review(models.Model):
 	def __str__(self):
