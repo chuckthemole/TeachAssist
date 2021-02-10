@@ -42,9 +42,19 @@ def create_quiz(request, lesson_id):
             else:
                 answers = []
                 for j in range(4):
+                    pair = []
                     try:
+                        if j == 0:
+                            pair.append('A')
+                        elif j == 1:
+                            pair.append('B')
+                        elif j == 2:
+                            pair.append('C')
+                        else:
+                            pair.append('D')
                         answer = request.POST["question" + str(i) + "_answer" + str(j + 1)]
-                        answers.append(answer)
+                        pair.append(answer)
+                        answers.append(pair)
                     except:
                         Quiz.objects.get(pk=quiz.id).delete()
                         return render(request, "teach/quiz/create_quiz.html", {"user":user, "lesson":lesson, "error":"Please choose answers for all questoins!"})
