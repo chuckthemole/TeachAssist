@@ -38,6 +38,7 @@
     <br><br>
 
     <!-- List all user's lessons -->
+    {% if not no_lessons %}
     {% for lesson in my_lessons %}
     <div class="box alt-front-background">
       <div class="box front-background" align="center">
@@ -86,9 +87,18 @@
       </div>
     </div>
     {% endfor %}
+    {% endif %}
 
   </div>
 </div>
+
+{% if no_lessons %}
+<br><br><br>
+<div class="has-text-centered tile is-ancestor is-5" style="margin: auto" <div class="tile is-8 is-parent">
+  <div class="tile is-child box front-background">
+    <b style="color: white;">You have not created any lessons!</b>
+  </div>
 </div>
+{% endif %}
 
 {% endblock content %}

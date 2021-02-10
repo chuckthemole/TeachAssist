@@ -1,14 +1,16 @@
 from .imports import *
+from ..static.teach.py.constants import *
 
 def index(request):
     if request.method == "GET":
         if request.user.is_authenticated:
             user = request.user
-            all_lessons = Lesson.objects.all()
+            all_lessons = Lesson.objects.filter(is_public=True)
+            all_icons = [MATH_ICON, SCIENCE_ICON, ENGLISH_ICON, HISTORY_ICON]
+            no_lessons = True
             if len(all_lessons) != 0:
-                return render(request, "teach/index.html", {"user":user, "all_lessons": all_lessons})
-            else:
-                return render(request, "teach/index.html", {"user":user, "all_lessons": all_lessons})
+                no_lessons = False
+            return render(request, "teach/index.html", {"user":user, "all_lessons": all_lessons, "all_icons": all_icons, "no_lessons": no_lessons})
         else:
             return redirect("collections:login")
     else:
@@ -18,18 +20,16 @@ def index_filter(request):
     if request.user.is_authenticated:
         if request.method == "POST":
             subject = request.POST["subject"]
-
         user = request.user
-        all_lessons = Lesson.objects.all()
-
         if subject != "all":
-            subject_lessons = []
-            for l in all_lessons:
-                if l.subject == subject:
-                    subject_lessons.append(l)
-            all_lessons = subject_lessons
-
-        return render(request, "teach/index.html", {"user":user, "all_lessons": all_lessons})
+            all_lessons = Lesson.objects.filter(is_public=True, subject=subject)
+        else:
+            all_lessons = Lesson.objects.filter(is_public=True)
+        all_icons = [MATH_ICON, SCIENCE_ICON, ENGLISH_ICON, HISTORY_ICON]
+        no_lessons = True
+        if len(all_lessons) != 0:
+            no_lessons = False
+        return render(request, "teach/index.html", {"user":user, "all_lessons": all_lessons, "all_icons": all_icons, "no_lessons": no_lessons})
     else:
         return HttpResponse(status=500)
 
@@ -43,7 +43,10 @@ def dashboard(request):
                 my_lessons = Lesson.objects.filter(teacher=user.teacher.id)
             except:
                 return redirect("collections:login")
-            return render(request, "teach/dashboard.html", {"user":user, "my_lessons":my_lessons})
+            no_lessons = True
+            if len(my_lessons) != 0:
+                no_lessons = False
+            return render(request, "teach/dashboard.html", {"user":user, "my_lessons": my_lessons, "no_lessons": no_lessons})
 
 def create(request):
     if request.method == "POST":
