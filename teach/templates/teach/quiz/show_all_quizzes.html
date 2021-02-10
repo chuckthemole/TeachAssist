@@ -16,7 +16,9 @@
             Lesson
           </span>
           <span class="main-text-color">
-            {{ lesson.lesson_name }}
+            <a href="{% url 'lesson:show_lesson' lesson.id %}">
+              {{ lesson.lesson_name }}
+            </a>
           </span>
           <span style="color:white;">
             has {{ number_of_quizzes }} quizzes.
