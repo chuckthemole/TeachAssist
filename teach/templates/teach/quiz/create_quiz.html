@@ -2,4 +2,136 @@
 
 {% block content %}
 
+{% load static %}
+
+<head>
+  <link rel="stylesheet" type="text/css" href="{% static 'teach/bulma-0.8.0/css/stylesChuck.css' %}" />
+</head>
+
+<center>
+  <div class="box front-background tile is-vertical is-8 is-centered">
+    <form action="{% url 'quiz:create_quiz' lesson.id %}" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <h1 class="title is-3 has-text-centered">
+        <span class="main-text-color">
+          {{ user.username }}
+          <br>
+        </span>
+      </h1>
+      <h4 class="title is-5 has-text-centered">
+        <span style="color:white;">
+          {{ lesson.lesson_name }}
+        </span>
+      </h4>
+      {% if error %}
+      <h3 style="color: red">{{ error }}</h3>
+      {% endif %}
+
+      <div class="field">
+        <div class="control">
+          <label class="label">
+            <span style="color:red;">*</span><span style="color:white;">
+              Quiz Name
+            </span>
+          </label>
+          <input class="input is-primary is-rounded" placeholder="The name of your quiz..." type="text" name="name">
+        </div>
+      </div>
+
+      <button type="button" class="collapsible box">Question 1</button>
+      <div class="content box main-background">
+        <div class="field">
+          <div class="control">
+            <label class="label">
+              <span style="color:red;">*</span><span style="color:white;">
+                Question:
+              </span>
+            </label>
+            <textarea rows="5" cols="10" wrap="soft" class="textarea is-primary is-rounded" placeholder="What is the circumference of the sun?" name="question"></textarea>
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="control">
+            <label class="label">
+              <span style="color:red;">*</span><span style="color:white;">
+                Answer 1
+              </span>
+            </label>
+            <input class="input is-primary is-rounded" placeholder="Three inches" type="text" name="answer1">
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="control">
+            <label class="label">
+              <span style="color:red;">*</span><span style="color:white;">
+                Answer 2
+              </span>
+            </label>
+            <input class="input is-primary is-rounded" placeholder="Nine light-years" type="text" name="answer2">
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="control">
+            <label class="label">
+              <span style="color:red;">*</span><span style="color:white;">
+                Answer 3
+              </span>
+            </label>
+            <input class="input is-primary is-rounded" placeholder="What is the sun?" type="text" name="answer3">
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="control">
+            <label class="label">
+              <span style="color:red;">*</span><span style="color:white;">
+                Answer 4
+              </span>
+            </label>
+            <input class="input is-primary is-rounded" placeholder="Who loves the sun?" type="text" name="answer4">
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="control">
+          <button type="button" class="button is-primary is-outlined is-rounded is-fullwidth">
+            Add question
+          </button>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="control">
+          <button class="button is-success is-outlined is-rounded is-fullwidth" type="submit" value="Publish">
+            Publish Quiz
+          </button>&nbsp;
+        </div>
+      </div>
+
+    </form>
+  </div>
+</center>
+
+<script>
+  var coll = document.getElementsByClassName("collapsible");
+  var i;
+
+  for (i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function() {
+      this.classList.toggle("active");
+      var content = this.nextElementSibling;
+      if (content.style.display === "block") {
+        content.style.display = "none";
+      } else {
+        content.style.display = "block";
+      }
+    });
+  }
+</script>
+
 {% endblock content %}

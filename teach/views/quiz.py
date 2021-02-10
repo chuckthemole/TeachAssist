@@ -6,10 +6,10 @@ def publish_quiz(request, lesson_id):
         if not user.is_authenticated:
             return redirect("teach:login")
         else:
-            form = Lesson_Form()
-            return render(request, "teach/quiz/create_quiz.html", {"user":user, "form":form})
+            lesson = get_object_or_404(Lesson, pk=lesson_id)
+            return render(request, "teach/quiz/create_quiz.html", {"user":user, "lesson":lesson})
 
-def create_quiz(request):
+def create_quiz(request, lesson_id):
     pass
 
 def show_quiz(request, lesson_id):
