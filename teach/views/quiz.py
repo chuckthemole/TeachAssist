@@ -109,12 +109,30 @@ def show_quiz_with_numbered_problems(request, quiz):
         problems.append(item)
     return render(request, "teach/quiz/show_quiz.html", {"user":user, "quiz":quiz, "problems":problems})
 
+def edit_quiz(request, quiz_id):
+    if request.method == "GET":
+         user = request.user
+         if not user.is_authenticated:
+             return redirect("collections:login")
 
-def edit_quiz(request):
-    pass
+         quiz = get_object_or_404(Quiz, pk=quiz_id)
 
-def update_quiz(request):
-    pass
+         if quiz.teacher.user.id == request.user.id:
+             lesson = get_object_or_404(Lesson, pk=quiz.lesson.id)
+             p = Problem.objects.filter(quiz=quiz)
+             problems = []
+             for i in range(len(p)):
+                 item = []
+                 item.append(i + 1)
+                 item.append(p[i])
+                 problems.append(item)
+             return render(request, "teach/quiz/edit_quiz.html", {"user":user, "lesson":lesson, "quiz":quiz, "problems":problems})
+         else:
+             return render(request, "teach/index.html",
+             {"error":"You are not the author of the quiz that you tried to edit."})
+
+def update_quiz(request, quiz_id):
+    return redirect("collections:login")
 
 def delete_quiz(request, quiz_id):
     if request.method == "POST":

@@ -2,4 +2,255 @@
 
 {% block content %}
 
+{% load static %}
+
+<head>
+  <link rel="stylesheet" type="text/css" href="{% static 'teach/bulma-0.8.0/css/stylesChuck.css' %}" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<center>
+  <div class="box front-background tile is-vertical is-8 is-centered">
+    <form action="{% url 'quiz:update_quiz' quiz.id %}" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      <h1 class="title is-3 has-text-centered">
+        <span class="main-text-color">
+          {{ user.username }}
+          <br>
+        </span>
+      </h1>
+      <h4 class="title is-5 has-text-centered">
+        <span style="color:white;">
+          <a href="{% url 'lesson:show_lesson' lesson.id %}">
+            {{ lesson.lesson_name }}
+          </a>
+        </span>
+      </h4>
+      {% if error %}
+      <h3 style="color: red">{{ error }}</h3>
+      {% endif %}
+
+      <div class="field">
+        <div class="control">
+          <label class="label">
+            <span style="color:red;">*</span><span style="color:white;">
+              Quiz Name
+            </span>
+          </label>
+          <input class="input is-primary is-rounded" placeholder="The name of your quiz..." type="text" name="name">
+        </div>
+      </div>
+
+
+      <script type="text/javascript">
+        var clicks = 0;
+
+        function increment() {
+          clicks++;
+        }
+
+        function decrement() {
+          if (clicks > 0) {
+            clicks--;
+          }
+        }
+      </script>
+
+      {% for problem in problems %}
+
+      <script type="text/javascript">
+        increment();
+      </script>
+
+      <div class="columns" style="padding: 9px;" id="problem{{ problem.0 }}">
+        <div class="column is-four-fifths">
+          <button type="button" class="collapsible box column is-full">
+            <img src="https://img.icons8.com/officexs/16/000000/drag-list-down.png" />
+            Question {{ problem.0 }}
+          </button>
+          <div class="content column is-full front-background main-text-color" style="text-align: left;">
+            <b style="color: white;">{{problem.1.question}}</b> <br>
+            {% for answer in problem.1.answers %}
+            <b style="color: white;">{{answer.0}}.</b> {{answer.1}}&emsp;
+            {% endfor %}
+          </div>
+        </div>
+        <div class="column is-one-fifth">
+          <button type="button" class="button is-danger is-outlined is-rounded is-fullwidth" id="delete_problem{{ problem.0 }}">
+            Delete question
+          </button>
+        </div>
+      </div>
+
+      <script type="text/javascript">
+        $('#delete_problem{{ problem.0 }}').click(function() {
+          document.getElementById("problem{{ problem.0 }}").remove();
+          decrement();
+        });
+      </script>
+
+      {% endfor %}
+
+      <script>
+        var coll = document.getElementsByClassName("collapsible");
+        var i;
+
+        for (i = 0; i < coll.length; i++) {
+          coll[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.display === "block") {
+              content.style.display = "none";
+            } else {
+              content.style.display = "block";
+            }
+          });
+        }
+      </script>
+
+      <div id="questions"></div>
+
+      <br>
+
+      <div class="columns">
+        <div class="field column">
+          <div class="control">
+            <button type="button" class="button is-primary is-outlined is-rounded is-fullwidth" id="add_question">
+              Add question
+            </button>
+          </div>
+        </div>
+
+        <div class="field column">
+          <div class="control">
+            <button type="button" class="button is-danger is-outlined is-rounded is-fullwidth" id="delete_question">
+              Delete question
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="control">
+          <button class="button is-success is-outlined is-rounded is-fullwidth" type="submit" value="Publish">
+            Publish Quiz
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <form action="{% url 'quiz:delete_quiz' quiz.id %}" method="post">
+      {% csrf_token %}
+      <button class="button is-danger is-outlined is-fullwidth is-rounded">
+        <div style="color:white;">Delete Quiz</div>
+      </button>&nbsp;
+    </form>
+    
+  </div>
+</center>
+
+<script type="text/javascript">
+  function increment() {
+    clicks++;
+  }
+
+  function decrement() {
+    if (clicks > 0) {
+      clicks--;
+    }
+  }
+
+  $('#delete_question').click(function() {
+    if (clicks > 0) {
+      document.getElementById("question" + clicks).remove();
+      clicks--;
+    }
+  });
+
+  $('#add_question').click(function() {
+    add()
+  });
+
+  function add() {
+    clicks++;
+    $('#questions').append('<div id="question' + clicks + '"><br>' +
+      '<button type="button" id="collapsible' + clicks + '" class="collapsible box">' +
+      '<img src="https://img.icons8.com/officexs/16/000000/drag-list-down.png"/>' +
+      '    Question ' + clicks +
+      '</button>' +
+      '<div class="content box main-background">' +
+      '<div class="field">' +
+      '<div class="control">' +
+      '<label class="label">' +
+      '<span style="color:red;">*</span><span style="color:white;">' +
+      'Question:' +
+      '</span>' +
+      '</label>' +
+      '<textarea rows="5" cols="10" wrap="soft" class="textarea is-primary is-rounded" ' +
+      'placeholder="What is the circumference of the sun?" name="question' + clicks + '"></textarea>' +
+      '</div>' +
+      '</div>' +
+
+      '<div class="field">' +
+      '<div class="control">' +
+      '<label class="label">' +
+      '<span style="color:red;">*</span><span style="color:white;">' +
+      'Answer 1' +
+      '</span>' +
+      '</label>' +
+      '<input class="input is-primary is-rounded" placeholder="Three inches" type="text" name="question' + clicks + '_answer1">' +
+      '</div>' +
+      '</div>' +
+
+      '<div class="field">' +
+      '<div class="control">' +
+      '<label class="label">' +
+      '<span style="color:red;">*</span><span style="color:white;">' +
+      'Answer 2' +
+      '</span>' +
+      '</label>' +
+      '<input class="input is-primary is-rounded" placeholder="Nine light-years" type="text" name="question' + clicks + '_answer2">' +
+      '</div>' +
+      '</div>' +
+
+      '<div class="field">' +
+      '<div class="control">' +
+      '<label class="label">' +
+      '<span style="color:red;">*</span><span style="color:white;">' +
+      'Answer 3' +
+      '</span>' +
+      '</label>' +
+      '<input class="input is-primary is-rounded" placeholder="What is the sun?" type="text" name="question' + clicks + '_answer3">' +
+      '</div>' +
+      '</div>' +
+
+      '<div class="field">' +
+      '<div class="control">' +
+      '<label class="label">' +
+      '<span style="color:red;">*</span><span style="color:white;">' +
+      'Answer 4' +
+      '</span>' +
+      '</label>' +
+      '<input class="input is-primary is-rounded" placeholder="Who loves the sun?" type="text" name="question' + clicks + '_answer4">' +
+      '</div>' +
+      '</div>' +
+      '</div>' +
+      '</div><div>   </div>');
+
+    var coll = document.getElementById("collapsible" + clicks);
+    var i;
+
+    coll.addEventListener("click", function() {
+      this.classList.toggle("active");
+      var content = this.nextElementSibling;
+      if (content.style.display === "block") {
+        content.style.display = "none";
+      } else {
+        content.style.display = "block";
+      }
+    });
+  }
+</script>
+
 {% endblock content %}
