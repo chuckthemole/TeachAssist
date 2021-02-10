@@ -54,7 +54,10 @@ class Quiz(models.Model):
 	# FK
 	teacher = models.ForeignKey(teacher, on_delete=models.CASCADE, null=True)
 	lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, null=True)
+
 	name = models.TextField(max_length=30, null=False, blank=False, unique=False, default="")
+	created = models.DateField(auto_now=True)
+	updated = models.DateField(auto_now=True)
 
 class Problem(models.Model):
 	# FK
