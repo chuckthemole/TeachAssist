@@ -52,7 +52,7 @@
           <div class="column is-one-third">
             <form action="{% url 'quiz:edit_quiz' quiz.id %}" method="get">
               <button class="button is-primary is-outlined is-fullwidth is-rounded">
-                Edit quiz
+                <div style="color:white;">Edit Quiz</div>
               </button>
             </form>
           </div>
@@ -61,14 +61,14 @@
             <form action="{% url 'quiz:delete_quiz' quiz.id %}" method="post">
               {% csrf_token %}
               <button class="button is-danger is-outlined is-fullwidth is-rounded">
-                Delete quiz
+                <div style="color:white;">Delete Quiz</div>
               </button>&nbsp;
             </form>
           </div>
           <div class="column is-one-third">
             <form action="{% url 'quiz:show_quiz' quiz.id %}" method="get">
               <button class="button is-success is-outlined is-fullwidth is-rounded">
-                View quiz
+                <div style="color:white;">View Quiz</div>
               </button>
             </form>
           </div>

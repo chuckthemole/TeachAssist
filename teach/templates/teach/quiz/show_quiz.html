@@ -70,11 +70,11 @@
   <div class="tile is-8 is-vertical">
     {% for problem in problems %}
     <div class="box front-background">
-      <button type="button" class="collapsible">Question</button>
+      <button type="button" class="collapsible">Question {{ problem.0 }}</button>
       <div class="content front-background main-text-color" style="text-align: left;">
-        <b style="color: white;">{{problem.question}}</b> <br>
-        {% for answer in problem.answers %}
-        <b style="color: white;">{{answer.0}}.</b> {{answer.1}} 
+        <b style="color: white;">{{problem.1.question}}</b> <br>
+        {% for answer in problem.1.answers %}
+        <b style="color: white;">{{answer.0}}.</b> {{answer.1}}
         <br>
         {% endfor %}
       </div>
