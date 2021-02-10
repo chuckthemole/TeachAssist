@@ -187,7 +187,7 @@ def edit_lesson(request, lesson_id):
    if request.method == "GET":
         user = request.user
         if not user.is_authenticated:
-            return redirect("share:login")
+            return redirect("collections:login")
 
         lesson = get_object_or_404(Lesson, pk=lesson_id)
         form = Lesson_Form()
@@ -283,7 +283,7 @@ def switch_public_private(request, lesson_id):
     if request.method == "GET":
         user = request.user
         if not user.is_authenticated:
-            return redirect("share:login")
+            return redirect("collections:login")
 
         lesson = get_object_or_404(Lesson, pk=lesson_id)
 
