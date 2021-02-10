@@ -62,10 +62,10 @@ STATICFILES_DIRS = (
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-#ALLOWED_HOSTS = ["teach-env.eba-ntsdfena.us-west-1.elasticbeanstalk.com"]
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["teach-env.eba-ntsdfena.us-west-1.elasticbeanstalk.com"]
+#ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
