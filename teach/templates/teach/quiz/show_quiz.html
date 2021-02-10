@@ -2,4 +2,13 @@
 
 {% block content %}
 
+{{quiz.name}} <br>
+
+{% for problem in problems %}
+{{problem.question}}<br>
+{{problem.answers}} <br>
+{% endfor %}
+
+{{ questions }}
+
 {% endblock content %}
