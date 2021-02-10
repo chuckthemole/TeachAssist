@@ -21,7 +21,10 @@
         </h1>
         <h2>
           <span style="color:white;">
-            <u>Lesson</u>: <b class="is-capitalized">{{ quiz.lesson.lesson_name }}</b>
+            <a href="{% url 'lesson:show_lesson' quiz.lesson.id %}">
+              <u>Lesson</u>:
+              <b class="is-capitalized">{{ quiz.lesson.lesson_name }}</b>
+            </a>
             <br>
             <u>Quiz</u>: <b class="is-capitalized">{{ quiz.name }}</b>
             <br>
@@ -66,12 +69,15 @@
 <center>
   <div class="tile is-8 is-vertical">
     {% for problem in problems %}
-    <button type="button" class="collapsible box">Question</button>
-    <div class="content box front-background main-text-color" style="text-align: left;">
-      <b style="color: white;">{{problem.question}}</b> <br>
-      {% for answer in problem.answers %}
-        {{answer}} <br>
-      {% endfor %}
+    <div class="box front-background">
+      <button type="button" class="collapsible">Question</button>
+      <div class="content front-background main-text-color" style="text-align: left;">
+        <b style="color: white;">{{problem.question}}</b> <br>
+        {% for answer in problem.answers %}
+        <b style="color: white;">{{answer.0}}.</b> {{answer.1}} 
+        <br>
+        {% endfor %}
+      </div>
     </div>
     {% endfor %}
   </div>
