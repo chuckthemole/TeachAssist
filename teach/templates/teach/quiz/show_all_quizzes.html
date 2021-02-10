@@ -1,0 +1,97 @@
+<!-- show a lesson belonging to any user  -->
+{% extends "teach/base.html" %}
+
+{% block content %}
+
+{% load static %}
+
+<!--<div class="no-scroll">-->
+<br>
+<div style="margin: auto;">
+  <center>
+    <div class="tile is-8 is-vertical">
+      <div class="box front-background">
+        <h1 class="title is-2">
+          <span style="color:white;">
+            Lesson
+          </span>
+          <span class="main-text-color">
+            {{ lesson.lesson_name }}
+          </span>
+          <span style="color:white;">
+            has {{ number_of_quizzes }} quizzes.
+          </span>
+        </h1>
+        <h2>
+          <span style="color:white;">
+            <small>
+              Created by {{ lesson.teacher.user.username }}
+            </small>
+          </span>
+          <br>
+        </h2>
+      </div>
+    </div>
+  </center>
+</div>
+
+<br><br>
+
+<br><br>
+
+<center>
+  <div class="tile is-8 is-vertical">
+    {% for quiz in quizzes %}
+    <div class="box alt-front-background">
+      <button type="button" class="collapsible">Quiz: {{quiz.name}}</button>
+      <div class="content alt-front-background main-text-color" style="text-align: left;">
+        <div class="columns is-centered">
+          {% if quiz.teacher.user.id == user.id %}
+          <div class="column is-one-third">
+            <form action="{% url 'quiz:edit_quiz' quiz.id %}" method="get">
+              <button class="button is-primary is-outlined is-fullwidth is-rounded">
+                Edit quiz
+              </button>
+            </form>
+          </div>
+          {% endif %}
+          <div class="column is-one-third">
+            <form action="{% url 'quiz:delete_quiz' quiz.id %}" method="post">
+              {% csrf_token %}
+              <button class="button is-danger is-outlined is-fullwidth is-rounded">
+                Delete quiz
+              </button>&nbsp;
+            </form>
+          </div>
+          <div class="column is-one-third">
+            <form action="{% url 'quiz:show_quiz' quiz.id %}" method="get">
+              <button class="button is-success is-outlined is-fullwidth is-rounded">
+                View quiz
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</center>
+
+<script>
+  var coll = document.getElementsByClassName("collapsible");
+  var i;
+
+  for (i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function() {
+      this.classList.toggle("active");
+      var content = this.nextElementSibling;
+      if (content.style.display === "block") {
+        content.style.display = "none";
+      } else {
+        content.style.display = "block";
+      }
+    });
+  }
+</script>
+
+{% endblock content %}
