@@ -6,7 +6,7 @@
 
 <head>
   <link rel="stylesheet" type="text/css" href="{% static 'teach/bulma-0.8.0/css/stylesChuck.css' %}" />
-   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
 <center>
@@ -44,19 +44,21 @@
 
       <br>
 
-      <div class="field">
-        <div class="control">
-          <button type="button" class="button is-primary is-outlined is-rounded is-fullwidth" id="add_question">
-            Add question
-          </button>
+      <div class="columns">
+        <div class="field column">
+          <div class="control">
+            <button type="button" class="button is-primary is-outlined is-rounded is-fullwidth" id="add_question">
+              Add question
+            </button>
+          </div>
         </div>
-      </div>
 
-      <div class="field">
-        <div class="control">
-          <button type="button" class="button is-danger is-outlined is-rounded is-fullwidth" id="delete_question">
-            Delete question
-          </button>
+        <div class="field column">
+          <div class="control">
+            <button type="button" class="button is-danger is-outlined is-rounded is-fullwidth" id="delete_question">
+              Delete question
+            </button>
+          </div>
         </div>
       </div>
 
@@ -75,77 +77,78 @@
 <script type="text/javascript">
   var clicks = 0;
 
-  $('#delete_question').click(function () {
+  $('#delete_question').click(function() {
     if (clicks > 0) {
       document.getElementById("question" + clicks).remove();
       clicks--;
     }
   });
 
-  $('#add_question').click(function () {
+  $('#add_question').click(function() {
     clicks++;
     $('#questions').append('<div id="question' + clicks + '"><br>' +
-    '<button type="button" id="collapsible' + clicks + '" class="collapsible box">' +
+      '<button type="button" id="collapsible' + clicks + '" class="collapsible box">' +
       '<img src="https://img.icons8.com/officexs/16/000000/drag-list-down.png"/>' +
       '    Question ' + clicks +
-    '</button>' +
-    '<div class="content box main-background">' +
+      '</button>' +
+      '<div class="content box main-background">' +
       '<div class="field">' +
-        '<div class="control">' +
-          '<label class="label">' +
-            '<span style="color:red;">*</span><span style="color:white;">' +
-              'Question:' +
-            '</span>' +
-          '</label>' +
-          '<textarea rows="5" cols="10" wrap="soft" class="textarea is-primary is-rounded" placeholder="What is the circumference of the sun?" name="question"></textarea>' +
-        '</div>' +
+      '<div class="control">' +
+      '<label class="label">' +
+      '<span style="color:red;">*</span><span style="color:white;">' +
+      'Question:' +
+      '</span>' +
+      '</label>' +
+      '<textarea rows="5" cols="10" wrap="soft" class="textarea is-primary is-rounded" ' +
+      'placeholder="What is the circumference of the sun?" name="question' + clicks + '"></textarea>' +
+      '</div>' +
       '</div>' +
 
       '<div class="field">' +
-        '<div class="control">' +
-          '<label class="label">' +
-            '<span style="color:red;">*</span><span style="color:white;">' +
-              'Answer 1' +
-            '</span>' +
-          '</label>' +
-          '<input class="input is-primary is-rounded" placeholder="Three inches" type="text" name="answer1">' +
-        '</div>' +
+      '<div class="control">' +
+      '<label class="label">' +
+      '<span style="color:red;">*</span><span style="color:white;">' +
+      'Answer 1' +
+      '</span>' +
+      '</label>' +
+      '<input class="input is-primary is-rounded" placeholder="Three inches" type="text" name="question' + clicks + '_answer1">' +
+      '</div>' +
       '</div>' +
 
       '<div class="field">' +
-        '<div class="control">' +
-          '<label class="label">' +
-            '<span style="color:red;">*</span><span style="color:white;">' +
-              'Answer 2' +
-            '</span>' +
-          '</label>' +
-          '<input class="input is-primary is-rounded" placeholder="Nine light-years" type="text" name="answer2">' +
-        '</div>' +
+      '<div class="control">' +
+      '<label class="label">' +
+      '<span style="color:red;">*</span><span style="color:white;">' +
+      'Answer 2' +
+      '</span>' +
+      '</label>' +
+      '<input class="input is-primary is-rounded" placeholder="Nine light-years" type="text" name="question' + clicks + '_answer2">' +
+      '</div>' +
       '</div>' +
 
       '<div class="field">' +
-        '<div class="control">' +
-          '<label class="label">' +
-            '<span style="color:red;">*</span><span style="color:white;">' +
-              'Answer 3' +
-            '</span>' +
-          '</label>' +
-          '<input class="input is-primary is-rounded" placeholder="What is the sun?" type="text" name="answer3">' +
-        '</div>' +
+      '<div class="control">' +
+      '<label class="label">' +
+      '<span style="color:red;">*</span><span style="color:white;">' +
+      'Answer 3' +
+      '</span>' +
+      '</label>' +
+      '<input class="input is-primary is-rounded" placeholder="What is the sun?" type="text" name="question' + clicks + '_answer3">' +
+      '</div>' +
       '</div>' +
 
       '<div class="field">' +
-        '<div class="control">' +
-          '<label class="label">' +
-            '<span style="color:red;">*</span><span style="color:white;">' +
-              'Answer 4' +
-            '</span>' +
-          '</label>' +
-          '<input class="input is-primary is-rounded" placeholder="Who loves the sun?" type="text" name="answer4">' +
-        '</div>' +
+      '<div class="control">' +
+      '<label class="label">' +
+      '<span style="color:red;">*</span><span style="color:white;">' +
+      'Answer 4' +
+      '</span>' +
+      '</label>' +
+      '<input class="input is-primary is-rounded" placeholder="Who loves the sun?" type="text" name="question' + clicks + '_answer4">' +
       '</div>' +
-    '</div>' +
-  '</div><div>   </div>');
+      '</div>' +
+      '</div>' +
+      '</div><div>   </div>');
 
     var coll = document.getElementById("collapsible" + clicks);
     var i;
