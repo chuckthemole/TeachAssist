@@ -53,18 +53,17 @@ def create_quiz(request, lesson_id):
                 problem.save()
                 i += 1
 
-def show_quiz(request, lesson_id):
+def show_quiz(request, quiz_id):
     if request.method == "GET":
         user = request.user
         if not user.is_authenticated:
             return redirect("teach:login")
         else:
-            lesson = get_object_or_404(Lesson, pk=lesson_id)
-            if lesson.teacher.id != user.teacher.id:
-                if not lesson.is_public:
-                    all_lessons = Lesson.objects.all()
-                    return render(request, "teach/index.html", {"user":user, "all_lessons": all_lessons})
-            return render(request, "teach/lesson/show_lesson.html", {"user":user, "lesson":lesson})
+            quiz = get_object_or_404(Quiz, pk=quiz_id)
+            if quiz:
+                problems = Problem.objects.filter(quiz=quiz)
+                return render(request, "teach/quiz/show_quiz.html", {"user":user, "quiz":quiz, "problems":problems})
+        return redirect("teach:login")
 
 def show_all_quizzes(request, lesson_id):
     if request.method == "GET":
@@ -72,7 +71,10 @@ def show_all_quizzes(request, lesson_id):
         if not user.is_authenticated:
             return redirect("teach:login")
         else:
-            return render(request, "teach/quiz/show_all_quizzes.html", {"user":user})
+            lesson = get_object_or_404(Lesson, pk=lesson_id)
+            quizzes = Quiz.objects.filter(lesson=lesson)
+            number_of_quizzes = len(quizzes)
+            return render(request, "teach/quiz/show_all_quizzes.html", {"user":user, "lesson":lesson, "quizzes":quizzes, "number_of_quizzes":number_of_quizzes})
 
 def edit_quiz(request):
     pass
@@ -80,8 +82,23 @@ def edit_quiz(request):
 def update_quiz(request):
     pass
 
-def delete_quiz(request):
-    pass
+def delete_quiz(request, quiz_id):
+    if request.method == "POST":
+        user = request.user
+        if not user.is_authenticated:
+            return HttpResponse(status=500)
+        quiz = get_object_or_404(Quiz, pk=quiz_id)
+        lesson = get_object_or_404(Lesson, pk=quiz.lesson.id)
+        if quiz.teacher.user.id == user.id:
+            Quiz.objects.get(pk=quiz_id).delete()
+            quizzes = Quiz.objects.filter(lesson=lesson)
+            number_of_quizzes = len(quizzes)
+            return render(request, "teach/quiz/show_all_quizzes.html", {"user":user, "lesson":lesson, "quizzes":quizzes, "number_of_quizzes":number_of_quizzes})
+        quizzes = Quiz.objects.filter(lesson=lesson)
+        number_of_quizzes = len(quizzes)
+        return render(request, "teach/quiz/show_all_quizzes.html", {"user":user, "lesson":lesson, "quizzes":quizzes, "number_of_quizzes":number_of_quizzes})
+    else:
+        return HttpResponse(status=500)
 
 def switch_public_private(request):
     pass
