@@ -42,6 +42,8 @@
 
       <div id="questions"></div>
 
+      <br>
+
       <div class="field">
         <div class="control">
           <button type="button" class="button is-primary is-outlined is-rounded is-fullwidth" id="add_question">
@@ -78,13 +80,12 @@
       document.getElementById("question" + clicks).remove();
       clicks--;
     }
-    //$('#questions').last().remove();
   });
 
   $('#add_question').click(function () {
     clicks++;
-    $('#questions').append('<div id="question' + clicks + '">' +
-    '<button type="button" id="collapsible" class="collapsible box">' +
+    $('#questions').append('<div id="question' + clicks + '"><br>' +
+    '<button type="button" id="collapsible' + clicks + '" class="collapsible box">' +
       '<img src="https://img.icons8.com/officexs/16/000000/drag-list-down.png"/>' +
       '    Question ' + clicks +
     '</button>' +
@@ -144,9 +145,9 @@
         '</div>' +
       '</div>' +
     '</div>' +
-  '</div>');
+  '</div><div>   </div>');
 
-    var coll = document.getElementById("collapsible");
+    var coll = document.getElementById("collapsible" + clicks);
     var i;
 
     coll.addEventListener("click", function() {
