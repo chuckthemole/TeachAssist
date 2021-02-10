@@ -37,7 +37,13 @@ def create_quiz(request, lesson_id):
                 Quiz.objects.get(pk=quiz.id).delete()
                 return render(request, "teach/quiz/create_quiz.html", {"user":user, "lesson":lesson, "error":"Please choose questions for your lesson!"})
             elif not question:
-                problems = Problem.objects.filter(quiz=quiz)
+                p = Problem.objects.filter(quiz=quiz)
+                problems = []
+                for i in range(len(p)):
+                    item = []
+                    item.append(i + 1)
+                    item.append(p[i])
+                    problems.append(item)
                 return render(request, "teach/quiz/show_quiz.html", {"user":user, "quiz":quiz, "problems":problems})
             else:
                 answers = []
@@ -71,7 +77,13 @@ def show_quiz(request, quiz_id):
         else:
             quiz = get_object_or_404(Quiz, pk=quiz_id)
             if quiz:
-                problems = Problem.objects.filter(quiz=quiz)
+                p = Problem.objects.filter(quiz=quiz)
+                problems = []
+                for i in range(len(p)):
+                    item = []
+                    item.append(i + 1)
+                    item.append(p[i])
+                    problems.append(item)
                 return render(request, "teach/quiz/show_quiz.html", {"user":user, "quiz":quiz, "problems":problems})
         return redirect("teach:login")
 
@@ -85,6 +97,18 @@ def show_all_quizzes(request, lesson_id):
             quizzes = Quiz.objects.filter(lesson=lesson)
             number_of_quizzes = len(quizzes)
             return render(request, "teach/quiz/show_all_quizzes.html", {"user":user, "lesson":lesson, "quizzes":quizzes, "number_of_quizzes":number_of_quizzes})
+
+def show_quiz_with_numbered_problems(request, quiz):
+    user = quiz.teacher.user
+    p = Problem.objects.filter(quiz=quiz)
+    problems = []
+    for i in range(len(p)):
+        item = []
+        item.append(i + 1)
+        item.append(p[i])
+        problems.append(item)
+    return render(request, "teach/quiz/show_quiz.html", {"user":user, "quiz":quiz, "problems":problems})
+
 
 def edit_quiz(request):
     pass

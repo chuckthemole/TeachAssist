@@ -69,6 +69,10 @@ login {
   color: #CA522f;
 }
 
+.alt-text-color {
+  color:#E27D60;
+}
+
 .map {
   position: bottom;
 }
