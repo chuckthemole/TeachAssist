@@ -1,0 +1,22 @@
+{
+  "choices": {
+
+    "math": {
+      "text": ["Algebra", "Geometry", "Statistics", "Calculus", "Trigonometry"],
+      "value": ["algebra", "geometry", "statistics", "calculus", "trigonometry"]
+    },
+    "science": {
+      "text": ["Biology", "Chemistry", "Physics", "Astronomy"],
+      "value": ["biology", "chemistry", "physics", "astronomy"]
+    },
+    "english": {
+      "text": ["American Literature", "World Literature", "Creative Writing", "Journalism"],
+      "value": ["biology", "chemistry", "physics", "astronomy"]
+    },
+    "history": {
+      "text": ["Government", "Geography", "Ethnic Studies", "Economics"],
+      "value": ["government", "geography", "ethnic studies", "economics"]
+    }
+
+  }
+}
