@@ -25,7 +25,6 @@ def create_quiz(request, lesson_id):
             quiz = get_object_or_404(Quiz, pk=quiz.id)
             quiz.save()
         except:
-            print("*******Returning to create_quiz.html error*********")
             return render(request, "teach/quiz/create_quiz.html", {"user":user, "lesson":lesson, "error":"Can't create your quiz!"})
 
         i = 1
@@ -39,7 +38,7 @@ def create_quiz(request, lesson_id):
                 return render(request, "teach/quiz/create_quiz.html", {"user":user, "lesson":lesson, "error":"Please choose questions for your lesson!"})
             elif not question:
                 problems = Problem.objects.filter(quiz=quiz)
-                return render(request, "teach/quiz/show_quiz.html", {"quiz":quiz, "problems":problems})
+                return render(request, "teach/quiz/show_quiz.html", {"user":user, "quiz":quiz, "problems":problems})
             else:
                 answers = []
                 for j in range(4):
