@@ -44,7 +44,23 @@
   </center>
 </div>
 
-<br><br>
+<div class="columns is-centered">
+  <div class="column">
+    <form action="{% url 'quiz:publish_quiz' lesson.id %}" method="get">
+      <button class="button is-primary is-fullwidth is-rounded">
+        Create a quiz for this lesson
+      </button>
+    </form>
+  </div>
+  <div class="column">
+    <form action="{% url 'quiz:show_all_quizzes' lesson.id %}" method="get">
+      <button class="button is-primary is-fullwidth is-rounded">
+        View quizzes for this lesson
+      </button>
+    </form>
+  </div>
+</div>
+
 <center>
   <div class="parent columns">
     <div class="parent column box front-background" style='width: 80%; height: 80%;'>
@@ -77,19 +93,19 @@
         <div class="child inline-block-child main-backgroud" style='width: 45%; height: 45%;'>
 
 
-          <div class="box main-background tile is-fullwidth">
+          <div class="box main-background tile is-fullwidth" style="text-align: left;">
             <span style="color:white;">
-              <div class="main-text-color""><u>Topic</u>:</div> <b class=" is-capitalized" style="color:white;">{{ lesson.topic }}</b>
+              <div class="main-text-color""><u>Topic</u>:</div> <div class=" is-capitalized" style="color:white;">{{ lesson.topic }}</div>
                 <br><br>
-                <div class="main-text-color""><u>Description</u>:</div> <b class=" is-capitalized" style="color:white;">{{ lesson.description }}</b>
+                <div class="main-text-color""><u>Description</u>:</div> <div class=" is-capitalized" style="color:white;">{{ lesson.description }}</div>
             </span>
           </div>
 
-          <div class="box main-background tile is-fullwidth">
+          <div class="box main-background tile is-fullwidth" style="text-align: left;">
             <span style="color:white;">
               <div class="columns">
                 <div class="column">
-                  <div class="main-text-color""><u>Instructions</u>:</div> <b class=" is-capitalized" style="color:white;">{{ lesson.instructions }}</b>
+                  <div class="main-text-color""><u>Instructions</u>:</div> <div class=" is-capitalized" style="color:white;">{{ lesson.instructions }}</div>
                   </div>
                 </div>
             </span>
