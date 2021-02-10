@@ -49,7 +49,7 @@ def create_quiz(request, lesson_id):
                         Quiz.objects.get(pk=quiz.id).delete()
                         return render(request, "teach/quiz/create_quiz.html", {"user":user, "lesson":lesson, "error":"Please choose answers for all questoins!"})
                 problem = Problem.objects.create(teacher = teacher, quiz = quiz, question = question, answers = answers)
-                problem = get_object_or_404(Problem, pk=quiz.id)
+                problem = get_object_or_404(Problem, pk=problem.id)
                 problem.save()
                 i += 1
 
