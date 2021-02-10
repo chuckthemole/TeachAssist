@@ -140,7 +140,7 @@ def edit_location(request, location_id):
    if request.method == "GET":
         user = request.user
         if not user.is_authenticated:
-            return redirect("share:login")
+            return redirect("collections:login")
 
         location = get_object_or_404(Location, pk=location_id)
         form = Sport_Location_Form()
