@@ -52,6 +52,14 @@
 
       <div class="field">
         <div class="control">
+          <button type="button" class="button is-danger is-outlined is-rounded is-fullwidth" id="delete_question">
+            Delete question
+          </button>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="control">
           <button class="button is-success is-outlined is-rounded is-fullwidth" type="submit" value="Publish">
             Publish Quiz
           </button>&nbsp;
@@ -63,8 +71,23 @@
 </center>
 
 <script type="text/javascript">
+  var clicks = 0;
+
+  $('#delete_question').click(function () {
+    if (clicks > 0) {
+      document.getElementById("question" + clicks).remove();
+      clicks--;
+    }
+    //$('#questions').last().remove();
+  });
+
   $('#add_question').click(function () {
-    $('#questions').append('<button type="button" id="collapsible" class="collapsible box">Question 1</button>' +
+    clicks++;
+    $('#questions').append('<div id="question' + clicks + '">' +
+    '<button type="button" id="collapsible" class="collapsible box">' +
+      '<img src="https://img.icons8.com/officexs/16/000000/drag-list-down.png"/>' +
+      '    Question ' + clicks +
+    '</button>' +
     '<div class="content box main-background">' +
       '<div class="field">' +
         '<div class="control">' +
@@ -120,7 +143,8 @@
           '<input class="input is-primary is-rounded" placeholder="Who loves the sun?" type="text" name="answer4">' +
         '</div>' +
       '</div>' +
-    '</div>');
+    '</div>' +
+  '</div>');
 
     var coll = document.getElementById("collapsible");
     var i;
