@@ -62,10 +62,10 @@ STATICFILES_DIRS = (
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ["teach-env.eba-ntsdfena.us-west-1.elasticbeanstalk.com"]
-#ALLOWED_HOSTS = ["*"]
+# ALLOWED_HOSTS = ["teach-env.eba-ntsdfena.us-west-1.elasticbeanstalk.com"]
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
@@ -127,10 +127,10 @@ DATABASES = {
 
 # The content of default= '  '   is  found in Heroku app URI, starts with postgres://...
 # allow us to connect locally the DB is Heroku
-#DATABASES['default'] = dj_database_url.config(default='postgres://oizzvqmmxprzlx:4cd70b33d66165e585bd369d0030471cbff7d40415a5216a837b5a07f41982ac@ec2-34-200-15-192.compute-1.amazonaws.com:5432/d54d2caul1t9c2')
+# DATABASES['default'] = dj_database_url.config(default='postgres://oizzvqmmxprzlx:4cd70b33d66165e585bd369d0030471cbff7d40415a5216a837b5a07f41982ac@ec2-34-200-15-192.compute-1.amazonaws.com:5432/d54d2caul1t9c2')
 
-#db_from_env = dj_database_url.config(conn_max_age=600)
-#DATABASES['default'].update(db_from_env)
+# db_from_env = dj_database_url.config(conn_max_age=600)
+# DATABASES['default'].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
