@@ -114,7 +114,7 @@ WSGI_APPLICATION = 'TeachAssist.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-USE_AWS_RDS = True
+USE_AWS_RDS = False
 
 if USE_AWS_RDS:
     DATABASES = {
