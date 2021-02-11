@@ -114,23 +114,28 @@ WSGI_APPLICATION = 'TeachAssist.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': config('RDS_DB_NAME'),
-        'USER': config('RDS_USERNAME'),
-        'PASSWORD': config('RDS_PASSWORD'),
-        'HOST': config('RDS_HOSTNAME'),
-        'PORT': config('RDS_PORT'),
+USE_AWS_RDS = True
+
+if USE_AWS_RDS:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': config('RDS_DB_NAME'),
+            'USER': config('RDS_USERNAME'),
+            'PASSWORD': config('RDS_PASSWORD'),
+            'HOST': config('RDS_HOSTNAME'),
+            'PORT': config('RDS_PORT'),
+        }
     }
-}
-
-# The content of default= '  '   is  found in Heroku app URI, starts with postgres://...
-# allow us to connect locally the DB is Heroku
-# DATABASES['default'] = dj_database_url.config(default='postgres://oizzvqmmxprzlx:4cd70b33d66165e585bd369d0030471cbff7d40415a5216a837b5a07f41982ac@ec2-34-200-15-192.compute-1.amazonaws.com:5432/d54d2caul1t9c2')
-
-# db_from_env = dj_database_url.config(conn_max_age=600)
-# DATABASES['default'].update(db_from_env)
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        }
+    }
+    DATABASES['default'] = dj_database_url.config(default='postgres://oizzvqmmxprzlx:4cd70b33d66165e585bd369d0030471cbff7d40415a5216a837b5a07f41982ac@ec2-34-200-15-192.compute-1.amazonaws.com:5432/d54d2caul1t9c2')
+    db_from_env = dj_database_url.config(conn_max_age=600)
+    DATABASES['default'].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
