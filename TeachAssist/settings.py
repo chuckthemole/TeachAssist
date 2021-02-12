@@ -127,6 +127,9 @@ if USE_AWS_RDS:
             'PORT': config('RDS_PORT'),
         }
     }
+    STATICFILES_DIRS = (
+        os.path.join(BASE_DIR, 'staticfiles'),
+        )
 else:
     DATABASES = {
         'default': {
