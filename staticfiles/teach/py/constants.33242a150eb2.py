@@ -1,5 +1,0 @@
-MATH_ICON = 'https://img.icons8.com/dusk/64/000000/math.png'
-SCIENCE_ICON = 'https://img.icons8.com/dusk/64/000000/bunsen-burner.png'
-ENGLISH_ICON = 'https://img.icons8.com/dusk/64/000000/class.png'
-HISTORY_ICON = 'https://img.icons8.com/dusk/64/000000/archeology.png'
-SUBJECT_ICON = 'https://img.icons8.com/dusk/50/000000/book-and-pencil.png'
