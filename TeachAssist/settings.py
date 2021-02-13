@@ -39,7 +39,7 @@ if USE_S3:
 else:
     STATIC_ROOT = os.path.join(BASE_DIR, 'teach/static')
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-    STATIC_URL = '/static/'
+    STATIC_URL = '/staticfiles/'
     STATICFILES_DIRS = (
         os.path.join(BASE_DIR, 'teach/static'),
         )
