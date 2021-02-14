@@ -64,6 +64,8 @@ def create_lesson(request):
         else:
             icon = SUBJECT_ICON
 
+        number_of_quizzes = 0
+
         # Geocoding an address
         #address = request.POST["address"]
         #zip = request.POST["zip"]
@@ -97,7 +99,8 @@ def create_lesson(request):
                 is_public = is_public,
                 icon = icon,
                 instructions = instructions,
-                game_link = game_link
+                game_link = game_link,
+                number_of_quizzes = number_of_quizzes
                 #sport_location_img='images/no_image_available.PNG',
                 #latitude=latitude, longitude=longitude,
                 #teacher=teacher, address=address, zip=zip,
@@ -112,7 +115,6 @@ def create_lesson(request):
                 lesson.save()
             else:
                 print("Form is not valid!")
-
             return render(request, "teach/lesson/show_lesson.html", {"user":user, "lesson":lesson})
         except:
             print("*******Returning to create_lesson.html error*********")
