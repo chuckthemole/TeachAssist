@@ -55,7 +55,12 @@
   <div class="column">
     <form action="{% url 'quiz:show_all_quizzes' lesson.id %}" method="get">
       <button class="button is-primary is-fullwidth is-rounded">
-        View quizzes for this lesson
+        {% if lesson.number_of_quizzes == 1 %}
+        View {{ lesson.number_of_quizzes }} quiz for this lesson
+        {% endif %}
+        {% if lesson.number_of_quizzes != 1 %}
+        View {{ lesson.number_of_quizzes }} quizzes for this lesson
+        {% endif %}
       </button>
     </form>
   </div>
@@ -96,8 +101,8 @@
           <div class="box main-background tile is-fullwidth" style="text-align: left;">
             <span style="color:white;">
               <div class="main-text-color""><u>Topic</u>:</div> <div class=" is-capitalized" style="color:white;">{{ lesson.topic }}</div>
-                <br><br>
-                <div class="main-text-color""><u>Description</u>:</div> <div class=" is-capitalized" style="color:white;">{{ lesson.description }}</div>
+              <br><br>
+              <div class="main-text-color""><u>Description</u>:</div> <div class=" is-capitalized" style="color:white;">{{ lesson.description }}</div>
             </span>
           </div>
 
@@ -106,8 +111,8 @@
               <div class="columns">
                 <div class="column">
                   <div class="main-text-color""><u>Instructions</u>:</div> <div class=" is-capitalized" style="color:white;">{{ lesson.instructions }}</div>
-                  </div>
                 </div>
+              </div>
             </span>
           </div>
 
