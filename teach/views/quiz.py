@@ -233,5 +233,22 @@ def delete_quiz(request, quiz_id):
     else:
         return HttpResponse(status=500)
 
+def delete_problem(request, problem_id):
+    print("Delete Problem")
+    print(problem_id)
+    if request.method == "POST":
+        user = request.user
+        if not user.is_authenticated:
+            return HttpResponse(status=500)
+        problem = get_object_or_404(Problem, pk=problem_id)
+        quiz = get_object_or_404(Quiz, pk=problem.quiz.id)
+        Problem.objects.get(pk=problem_id).delete()
+        problems = Problem.objects.filter(quiz=quiz)
+        number_of_problems = len(problems)
+        Quiz.objects.filter(pk=quiz.id).update(number_of_problems=number_of_problems)
+        return HttpResponse(status=500)
+    else:
+        return HttpResponse(status=500)
+
 def switch_public_private(request):
     pass
