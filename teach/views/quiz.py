@@ -18,7 +18,7 @@ def create_quiz(request, lesson_id):
         lesson = get_object_or_404(Lesson, pk=lesson_id)
         name = request.POST["name"]
         if not name:
-            return render(request, "teach/quiz/create_quiz.html", {"user":user, "lesson":lesson, "error":"Please choose a name for your lesson!"})
+            return render(request, "teach/quiz/create_quiz.html", {"user":user, "lesson":lesson, "error":"Please choose a name for your quiz!"})
 
         try:
             quiz = Quiz.objects.create(teacher = teacher, lesson = lesson, name = name)
@@ -35,7 +35,7 @@ def create_quiz(request, lesson_id):
                 question = None
             if not question and i == 1:
                 Quiz.objects.get(pk=quiz.id).delete()
-                return render(request, "teach/quiz/create_quiz.html", {"user":user, "lesson":lesson, "error":"Please choose questions for your lesson!"})
+                return render(request, "teach/quiz/create_quiz.html", {"user":user, "lesson":lesson, "error":"Please create questions!"})
             elif not question:
                 p = Problem.objects.filter(quiz=quiz)
                 problems = []
@@ -44,6 +44,11 @@ def create_quiz(request, lesson_id):
                     item.append(i + 1)
                     item.append(p[i])
                     problems.append(item)
+                quizzes = Quiz.objects.filter(lesson=lesson)
+                number_of_quizzes = len(quizzes)
+                Lesson.objects.filter(pk=lesson_id).update(number_of_quizzes=number_of_quizzes)
+                number_of_problems = len(p)
+                Quiz.objects.filter(pk=quiz.id).update(number_of_problems=number_of_problems)
                 return render(request, "teach/quiz/show_quiz.html", {"user":user, "quiz":quiz, "problems":problems})
             else:
                 answers = []
@@ -95,7 +100,7 @@ def show_all_quizzes(request, lesson_id):
         else:
             lesson = get_object_or_404(Lesson, pk=lesson_id)
             quizzes = Quiz.objects.filter(lesson=lesson)
-            number_of_quizzes = len(quizzes)
+            number_of_quizzes = lesson.number_of_quizzes
             return render(request, "teach/quiz/show_all_quizzes.html", {"user":user, "lesson":lesson, "quizzes":quizzes, "number_of_quizzes":number_of_quizzes})
 
 def show_quiz_with_numbered_problems(request, quiz):
@@ -120,7 +125,7 @@ def edit_quiz(request, quiz_id):
          if quiz.teacher.user.id == request.user.id:
              lesson = get_object_or_404(Lesson, pk=quiz.lesson.id)
              p = Problem.objects.filter(quiz=quiz)
-             problems = []
+             problems = [] # Problems with numbers attached
              for i in range(len(p)):
                  item = []
                  item.append(i + 1)
@@ -132,7 +137,81 @@ def edit_quiz(request, quiz_id):
              {"error":"You are not the author of the quiz that you tried to edit."})
 
 def update_quiz(request, quiz_id):
-    return redirect("collections:login")
+    if request.method == "POST":
+        user = request.user
+        if not user.is_authenticated:
+            return redirect("teach:login")
+        teacher = user.teacher
+        quiz = get_object_or_404(Quiz, pk=quiz_id)
+        name = request.POST["name"]
+        lesson = get_object_or_404(Lesson, pk=quiz.lesson.id)
+        p = Problem.objects.filter(quiz=quiz)
+        problems = [] # Problems with numbers attached
+        for i in range(len(p)):
+            item = []
+            item.append(i + 1)
+            item.append(p[i])
+            problems.append(item)
+        if not name:
+            return render(request, "teach/quiz/edit_quiz.html", {"user":user, "lesson":lesson, "quiz":quiz, "problems":problems, "error":"Please choose a name!"})
+        try:
+            Quiz.objects.filter(pk=quiz_id).update(name=name)
+            quiz = get_object_or_404(Quiz, pk=quiz.id)
+            quiz.save()
+        except:
+            return render(request, "teach/quiz/edit_quiz.html", {"user":user, "lesson":lesson, "quiz":quiz, "problems":problems, "error":"Could not update!"})
+
+        i = 1
+        while True:
+            try:
+                question = request.POST["question" + str(i)]
+            except:
+                question = None
+            if not question and i == 1:
+                p = Problem.objects.filter(quiz=quiz)
+                problems = []
+                for i in range(len(p)):
+                    item = []
+                    item.append(i + 1)
+                    item.append(p[i])
+                    problems.append(item)
+                return render(request, "teach/quiz/edit_quiz.html", {"user":user, "lesson":lesson, "quiz":quiz, "problems":problems, "error":"Create questions for quiz or delete!"})
+            elif not question:
+                p = Problem.objects.filter(quiz=quiz)
+                problems = []
+                for i in range(len(p)):
+                    item = []
+                    item.append(i + 1)
+                    item.append(p[i])
+                    problems.append(item)
+                quizzes = Quiz.objects.filter(lesson=lesson)
+                number_of_quizzes = len(quizzes)
+                Lesson.objects.filter(pk=lesson.id).update(number_of_quizzes=number_of_quizzes)
+                number_of_problems = len(p)
+                Quiz.objects.filter(pk=quiz.id).update(number_of_problems=number_of_problems)
+                return render(request, "teach/quiz/show_quiz.html", {"user":user, "quiz":quiz, "problems":problems})
+            else:
+                answers = []
+                for j in range(4):
+                    pair = []
+                    try:
+                        if j == 0:
+                            pair.append('A')
+                        elif j == 1:
+                            pair.append('B')
+                        elif j == 2:
+                            pair.append('C')
+                        else:
+                            pair.append('D')
+                        answer = request.POST["question" + str(i) + "_answer" + str(j + 1)]
+                        pair.append(answer)
+                        answers.append(pair)
+                    except:
+                        return render(request, "teach/quiz/edit_quiz.html", {"user":user, "lesson":lesson, "quiz":quiz, "problems":problems, "error":"Create answers for all questions!"})
+                problem = Problem.objects.create(teacher = teacher, quiz = quiz, question = question, answers = answers)
+                problem = get_object_or_404(Problem, pk=problem.id)
+                problem.save()
+                i += 1
 
 def delete_quiz(request, quiz_id):
     if request.method == "POST":
@@ -145,10 +224,12 @@ def delete_quiz(request, quiz_id):
             Quiz.objects.get(pk=quiz_id).delete()
             quizzes = Quiz.objects.filter(lesson=lesson)
             number_of_quizzes = len(quizzes)
+            Lesson.objects.filter(pk=lesson.id).update(number_of_quizzes=number_of_quizzes)
             return render(request, "teach/quiz/show_all_quizzes.html", {"user":user, "lesson":lesson, "quizzes":quizzes, "number_of_quizzes":number_of_quizzes})
+
         quizzes = Quiz.objects.filter(lesson=lesson)
         number_of_quizzes = len(quizzes)
-        return render(request, "teach/quiz/show_all_quizzes.html", {"user":user, "lesson":lesson, "quizzes":quizzes, "number_of_quizzes":number_of_quizzes})
+        return render(request, "teach/quiz/show_all_quizzes.html", {"user":user, "lesson":lesson, "quizzes":quizzes, "number_of_quizzes":number_of_quizzes, "error":"This is not your quiz!"})
     else:
         return HttpResponse(status=500)
 

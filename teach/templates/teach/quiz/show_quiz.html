@@ -64,7 +64,18 @@
   </div>
 </center>
 
-<br><br>
+<br>
+<center>
+  <div class="main-text-color">
+    {% if quiz.number_of_problems == 1 %}
+    This quiz has {{quiz.number_of_problems}} question
+    {% endif %}
+    {% if quiz.number_of_problems != 1 %}
+    This quiz has {{quiz.number_of_problems}} questions
+    {% endif %}
+  </div>
+</center>
+
 
 <center>
   <div class="tile is-8 is-vertical">
