@@ -60,7 +60,6 @@
         function countExistingProblems() {
           initialProblems++;
         }
-
       </script>
 
       {% for problem in problems %}
@@ -83,6 +82,7 @@
             {% endfor %}
           </div>
         </div>
+
         <div class="column is-one-fifth">
           <button type="button" class="button is-danger is-outlined is-rounded is-fullwidth" id="delete_problem{{ problem.0 }}">
             Delete question
@@ -94,6 +94,19 @@
         $('#delete_problem{{ problem.0 }}').click(function() {
           document.getElementById("problem{{ problem.0 }}").remove();
           decrement();
+
+          // Makes it so the button does not return http request
+          $.post(
+            "{% url 'quiz:delete_problem' problem.1.id %}", {
+              reply: false,
+              csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').val(),
+              problem_id: $("{{ problem.1.id }}").val()
+            },
+            function(data) {
+              alert(data);
+            }
+          );
+
         });
       </script>
 
@@ -124,7 +137,7 @@
         <div class="field column">
           <div class="control">
             <button type="button" class="button is-primary is-outlined is-rounded is-fullwidth" id="add_question">
-              Add  new question
+              Add new question
             </button>
           </div>
         </div>
@@ -170,7 +183,7 @@
 
   $('#delete_question').click(function() {
     if (clicks > 0) {
-      document.getElementById("question" + clicks).remove();
+      document.getElementById("question" + (clicks - initialProblems)).remove();
       clicks--;
     }
   });
