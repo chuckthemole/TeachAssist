@@ -42,7 +42,12 @@
     {% for lesson in my_lessons %}
     <div class="box alt-front-background">
       <div class="box front-background" align="center">
-        <b class="is-capitalized" style="color:white;">{{ lesson.lesson_name }}</b>
+        <b class="is-capitalized" style="color:white;">
+          {{ lesson.lesson_name }}
+        </b> <br> 
+        <small style="color:white;">
+          Quizzes: {{ lesson.number_of_quizzes }}
+        </small>
       </div>
       <div>
         {% if lesson.is_public %}
