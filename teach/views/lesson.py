@@ -86,37 +86,37 @@ def create_lesson(request):
         #if address == "" or len(zip) < 5:
         #    return render(request, "teach/lesson/create_lesson.html", {"error":"Enter a proper address"})
 
-        try:
-            lesson = Lesson.objects.create(
-                teacher = teacher,
-                subject = subject,
-                subject_class = subject_class,
-                lesson_name = lesson_name,
-                description = lesson_description,
-                topic = topic,
-                is_public = is_public,
-                icon = icon,
-                instructions = instructions,
-                game_link = game_link
-                #sport_location_img='images/no_image_available.PNG',
-                #latitude=latitude, longitude=longitude,
-                #teacher=teacher, address=address, zip=zip,
-                #sport=sport, is_basketball=is_basketball,
-                #is_tennis=is_tennis, is_baseball=is_baseball
-                )
+    try:
+        lesson = Lesson.objects.create(
+            teacher = teacher,
+            subject = subject,
+            subject_class = subject_class,
+            lesson_name = lesson_name,
+            description = lesson_description,
+            topic = topic,
+            is_public = is_public,
+            icon = icon,
+            instructions = instructions,
+            game_link = game_link
+            #sport_location_img='images/no_image_available.PNG',
+            #latitude=latitude, longitude=longitude,
+            #teacher=teacher, address=address, zip=zip,
+            #sport=sport, is_basketball=is_basketball,
+            #is_tennis=is_tennis, is_baseball=is_baseball
+            )
 
-            lesson = get_object_or_404(Lesson, pk=lesson.id)
-            form = Lesson_Form(request.POST, request.FILES, instance=lesson)
-            if form.is_valid():
-                print("Form is valid.")
-                lesson.save()
-            else:
-                print("Form is not valid!")
+        lesson = get_object_or_404(Lesson, pk=lesson.id)
+        form = Lesson_Form(request.POST, request.FILES, instance=lesson)
+        if form.is_valid():
+            print("Form is valid.")
+            lesson.save()
+        else:
+            print("Form is not valid!")
 
-            return render(request, "teach/lesson/show_lesson.html", {"user":user, "lesson":lesson})
-        except:
-            print("*******Returning to create_lesson.html error*********")
-            return render(request, "teach/lesson/create_lesson.html", {"error":"Can't create the lesson"})
+        return render(request, "teach/lesson/show_lesson.html", {"user":user, "lesson":lesson})
+    except:
+        print("*******Returning to create_lesson.html error*********")
+        return render(request, "teach/lesson/create_lesson.html", {"error":"Can't create the lesson"})
     else:
         user = request.user
         all_lessons = Lesson.objects.all()
