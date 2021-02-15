@@ -73,7 +73,7 @@
         <div class="column is-four-fifths">
           <button type="button" class="collapsible box column is-full">
             <img src="https://img.icons8.com/officexs/16/000000/drag-list-down.png" />
-            Question {{ problem.0 }}
+            <small id="question_number{{ problem.0 }}">&nbsp;&nbsp;Question {{ problem.0 }}</small>
           </button>
           <div class="content column is-full front-background main-text-color" style="text-align: left;">
             <b style="color: white;">{{problem.1.question}}</b> <br>
@@ -84,7 +84,7 @@
         </div>
 
         <div class="column is-one-fifth">
-          <button type="button" class="button is-danger is-outlined is-rounded is-fullwidth" id="delete_problem{{ problem.0 }}">
+          <button type="button" class="button is-danger is-outlined is-rounded is-fullwidth" onclick="decrement_question_numbers()" id="delete_problem{{ problem.0 }}">
             Delete question
           </button>
         </div>
@@ -92,6 +92,14 @@
 
       <script type="text/javascript">
         $('#delete_problem{{ problem.0 }}').click(function() {
+
+          // Change affected problem numbers
+          for (var i = {{ problem.0 }} + 1; i <= initialProblems; i++) {
+            var element = document.getElementById("question_number" + i);
+            element.innerHTML = "&nbsp;&nbsp;Question " + (i - 1);
+          }
+
+          // Remove problem and decrement
           document.getElementById("problem{{ problem.0 }}").remove();
           decrement();
 
@@ -181,6 +189,19 @@
     }
   }
 
+  function decrement_question_numbers() {
+    if (clicks > 0) {
+      for (var i = 1; i <= clicks; i++) {
+        var element = document.getElementById("question_number" + i);
+        element.innerHTML = "&nbsp;&nbsp;Question " + (i - 1);
+      }
+      clicks--;
+      //var element = document.getElementById("question_number" + clicks);
+      //element.innerHTML = "&nbsp;&nbsp;Question " + (clicks - 1);
+      //initialProblems--;
+    }
+  }
+
   $('#delete_question').click(function() {
     if (clicks > 0) {
       document.getElementById("question" + (clicks - initialProblems)).remove();
@@ -197,7 +218,7 @@
     $('#questions').append('<div id="question' + (clicks - initialProblems) + '"><br>' +
       '<button type="button" id="collapsible' + (clicks - initialProblems) + '" class="collapsible box">' +
       '<img src="https://img.icons8.com/officexs/16/000000/drag-list-down.png"/>' +
-      '    Question ' + clicks +
+      '<small id="question_number' + clicks + '">&nbsp;&nbsp;Question ' + clicks + '</small>' +
       '</button>' +
       '<div class="content box main-background">' +
       '<div class="field">' +
