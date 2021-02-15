@@ -46,10 +46,10 @@
     {% for quiz in quizzes %}
     <div class="box alt-front-background">
       <button type="button" class="collapsible">
-        Quiz: {{quiz.name}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Problems {{quiz.number_of_problems}}
+        Quiz: {{quiz.name}}
       </button>
       <div class="content alt-front-background main-text-color" style="text-align: left;">
-        <div class="columns is-centered">
+        <div class="columns is-centered is-multiline">
           {% if quiz.teacher.user.id == user.id %}
           <div class="column is-one-third">
             <form action="{% url 'quiz:edit_quiz' quiz.id %}" method="get">
@@ -73,6 +73,9 @@
                 <div style="color:white;">View Quiz</div>
               </button>
             </form>
+          </div>
+          <div class="column is-fullwidth has-text-centered" style="color:white;">
+            This quiz has {{quiz.number_of_problems}} problems.
           </div>
         </div>
       </div>
