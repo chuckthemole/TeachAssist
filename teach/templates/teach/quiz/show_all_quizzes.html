@@ -45,7 +45,9 @@
   <div class="tile is-8 is-vertical">
     {% for quiz in quizzes %}
     <div class="box alt-front-background">
-      <button type="button" class="collapsible">Quiz: {{quiz.name}}</button>
+      <button type="button" class="collapsible">
+        Quiz: {{quiz.name}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Problems {{quiz.number_of_problems}}
+      </button>
       <div class="content alt-front-background main-text-color" style="text-align: left;">
         <div class="columns is-centered">
           {% if quiz.teacher.user.id == user.id %}
