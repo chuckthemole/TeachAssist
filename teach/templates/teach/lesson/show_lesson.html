@@ -20,16 +20,16 @@
           </span>
         </h1>
         {% if not lesson.is_public %}
-        <h3 style="color: red;"><b>This lesson is private.<b></h3>
+        <h3 style="color: red;"><b>This lesson is private.</b></h3>
         {% endif %}
         {% if lesson.is_public %}
-        <h3 style="color: green;"><b>This lesson is public.<b></h3>
+        <h3 style="color: green;"><b>This lesson is public.</b></h3>
         {% endif %}
         <h2>
           <span style="color:white;">
-            <u>Subject</u>: <b class="is-capitalized">{{ lesson.subject }}</b>
+            <u>Subject</u>: <b class="is-capitalized"> {{ lesson.subject }} </b>
             <br>
-            <u>Class</u>: <b class="is-capitalized">{{ lesson.subject_class }}</b>
+            <u>Class</u>: <b class="is-capitalized"> {{ lesson.subject_class }} </b>
             <br>
             <small>
               Created: {{lesson.created}}
@@ -43,6 +43,8 @@
     </div>
   </center>
 </div>
+
+<br>
 
 <div class="columns is-centered">
   <div class="column">
@@ -73,12 +75,18 @@
       <div class="column is-centered">
         <div class="column box main-background is-half">
           <span class="main-text-color">
-            <u>Lesson Name</u>: <br> <b class="is-capitalized" style="color:white;">{{ lesson.lesson_name}}</b>
+            <u>
+              Lesson Name
+            </u>: <br>
+            <b class="is-capitalized" style="color:white;">
+              {{ lesson.lesson_name}}
+            </b>
           </span>
         </div>
       </div>
 
       <div class="columns col-container is-centered">
+
         <div class="scrollable child inline-block-child" style='width: 45%; height: 45%;'>
           <article>
             {% if lesson.img %}
@@ -95,14 +103,13 @@
             {% endif %}
           </article>
         </div>
+
         <div class="child inline-block-child main-backgroud" style='width: 45%; height: 45%;'>
-
-
           <div class="box main-background tile is-fullwidth" style="text-align: left;">
             <span style="color:white;">
-              <div class="main-text-color""><u>Topic</u>:</div> <div class=" is-capitalized" style="color:white;">{{ lesson.topic }}</div>
+              <div class="main-text-color"><u>Topic</u>:</div> <div class="is-capitalized" style="color:white;">{{ lesson.topic }}</div>
               <br><br>
-              <div class="main-text-color""><u>Description</u>:</div> <div class=" is-capitalized" style="color:white;">{{ lesson.description }}</div>
+              <div class="main-text-color"><u>Description</u>:</div> <div class="is-capitalized" style="color:white;">{{ lesson.description }}</div>
             </span>
           </div>
 
@@ -110,13 +117,13 @@
             <span style="color:white;">
               <div class="columns">
                 <div class="column">
-                  <div class="main-text-color""><u>Instructions</u>:</div> <div class=" is-capitalized" style="color:white;">{{ lesson.instructions }}</div>
+                  <div class="main-text-color"><u>Instructions</u>:</div> <div class="is-capitalized" style="color:white;">{{ lesson.instructions }}</div>
                 </div>
               </div>
             </span>
           </div>
-
         </div>
+
       </div>
 
       <div class="columns">
