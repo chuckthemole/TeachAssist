@@ -130,6 +130,20 @@
       {% if l.is_public %}
       <div class="column is-one-fifth">
         <div class="box alt-front-background">
+          <small>
+            <div class="columns is-centered is-multiline">
+              <small class="column is-full alt-text-color has-text-centered">
+                <b class="is-capitalized is-size-5">{{ l.lesson_name }}</b>
+              </small>
+              <small class="column is-half is-size-7" style="color:white;">
+                Teacher: {{ l.teacher }}
+              </small>
+              <small class="column is-half is-size-7" style="color:white;">
+                Topic: {{ l.topic }}
+              </small>
+            </div>
+          </small>
+          <br>
           <a href="{% url 'lesson:show_lesson' l.id %}">
             <div class="container-img">
               <figure class="image is-1by1">
@@ -140,11 +154,20 @@
               <img class="icon" src="{{ l.icon }}">
             </div>
           </a>
-          <small style="color:white;">
-            Quizzes: {{ l.number_of_quizzes }}
-          </small><br>
-          <small style="color:white;">
-            Created: {{ l.created }}
+          <br>
+          <small class="columns is-centered">
+            <small class="is-size-7 alt-text-color">
+              Quizzes:
+            </small>
+            <small style="color:white;">
+              {{ l.number_of_quizzes }}&nbsp;&nbsp;
+            </small>
+            <small class="is-size-7 alt-text-color">
+              Created:
+            </small>
+            <small style="color:white;">
+              {{ l.created }}
+            </small>
           </small>
         </div>
       </div>
