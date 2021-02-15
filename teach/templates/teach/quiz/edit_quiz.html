@@ -45,6 +45,7 @@
 
       <script type="text/javascript">
         var clicks = 0;
+        var initialProblems = 0;
 
         function increment() {
           clicks++;
@@ -55,12 +56,17 @@
             clicks--;
           }
         }
+
+        function countExistingProblems() {
+          initialProblems++;
+        }
       </script>
 
       {% for problem in problems %}
 
       <script type="text/javascript">
         increment();
+        countExistingProblems();
       </script>
 
       <div class="columns" style="padding: 9px;" id="problem{{ problem.0 }}">
@@ -76,6 +82,7 @@
             {% endfor %}
           </div>
         </div>
+
         <div class="column is-one-fifth">
           <button type="button" class="button is-danger is-outlined is-rounded is-fullwidth" id="delete_problem{{ problem.0 }}">
             Delete question
@@ -87,6 +94,19 @@
         $('#delete_problem{{ problem.0 }}').click(function() {
           document.getElementById("problem{{ problem.0 }}").remove();
           decrement();
+
+          // Makes it so the button does not return http request
+          $.post(
+            "{% url 'quiz:delete_problem' problem.1.id %}", {
+              reply: false,
+              csrfmiddlewaretoken: $('input[name="csrfmiddlewaretoken"]').val(),
+              problem_id: $("{{ problem.1.id }}").val()
+            },
+            function(data) {
+              alert(data);
+            }
+          );
+
         });
       </script>
 
@@ -117,7 +137,7 @@
         <div class="field column">
           <div class="control">
             <button type="button" class="button is-primary is-outlined is-rounded is-fullwidth" id="add_question">
-              Add question
+              Add new question
             </button>
           </div>
         </div>
@@ -134,7 +154,7 @@
       <div class="field">
         <div class="control">
           <button class="button is-success is-outlined is-rounded is-fullwidth" type="submit" value="Publish">
-            Publish Quiz
+            Update Quiz
           </button>
         </div>
       </div>
@@ -146,7 +166,7 @@
         <div style="color:white;">Delete Quiz</div>
       </button>&nbsp;
     </form>
-    
+
   </div>
 </center>
 
@@ -163,7 +183,7 @@
 
   $('#delete_question').click(function() {
     if (clicks > 0) {
-      document.getElementById("question" + clicks).remove();
+      document.getElementById("question" + (clicks - initialProblems)).remove();
       clicks--;
     }
   });
@@ -174,8 +194,8 @@
 
   function add() {
     clicks++;
-    $('#questions').append('<div id="question' + clicks + '"><br>' +
-      '<button type="button" id="collapsible' + clicks + '" class="collapsible box">' +
+    $('#questions').append('<div id="question' + (clicks - initialProblems) + '"><br>' +
+      '<button type="button" id="collapsible' + (clicks - initialProblems) + '" class="collapsible box">' +
       '<img src="https://img.icons8.com/officexs/16/000000/drag-list-down.png"/>' +
       '    Question ' + clicks +
       '</button>' +
@@ -188,7 +208,7 @@
       '</span>' +
       '</label>' +
       '<textarea rows="5" cols="10" wrap="soft" class="textarea is-primary is-rounded" ' +
-      'placeholder="What is the circumference of the sun?" name="question' + clicks + '"></textarea>' +
+      'placeholder="What is the circumference of the sun?" name="question' + (clicks - initialProblems) + '"></textarea>' +
       '</div>' +
       '</div>' +
 
@@ -199,7 +219,7 @@
       'Answer 1' +
       '</span>' +
       '</label>' +
-      '<input class="input is-primary is-rounded" placeholder="Three inches" type="text" name="question' + clicks + '_answer1">' +
+      '<input class="input is-primary is-rounded" placeholder="Three inches" type="text" name="question' + (clicks - initialProblems) + '_answer1">' +
       '</div>' +
       '</div>' +
 
@@ -210,7 +230,7 @@
       'Answer 2' +
       '</span>' +
       '</label>' +
-      '<input class="input is-primary is-rounded" placeholder="Nine light-years" type="text" name="question' + clicks + '_answer2">' +
+      '<input class="input is-primary is-rounded" placeholder="Nine light-years" type="text" name="question' + (clicks - initialProblems) + '_answer2">' +
       '</div>' +
       '</div>' +
 
@@ -221,7 +241,7 @@
       'Answer 3' +
       '</span>' +
       '</label>' +
-      '<input class="input is-primary is-rounded" placeholder="What is the sun?" type="text" name="question' + clicks + '_answer3">' +
+      '<input class="input is-primary is-rounded" placeholder="What is the sun?" type="text" name="question' + (clicks - initialProblems) + '_answer3">' +
       '</div>' +
       '</div>' +
 
@@ -232,13 +252,13 @@
       'Answer 4' +
       '</span>' +
       '</label>' +
-      '<input class="input is-primary is-rounded" placeholder="Who loves the sun?" type="text" name="question' + clicks + '_answer4">' +
+      '<input class="input is-primary is-rounded" placeholder="Who loves the sun?" type="text" name="question' + (clicks - initialProblems) + '_answer4">' +
       '</div>' +
       '</div>' +
       '</div>' +
       '</div><div>   </div>');
 
-    var coll = document.getElementById("collapsible" + clicks);
+    var coll = document.getElementById("collapsible" + (clicks - initialProblems));
     var i;
 
     coll.addEventListener("click", function() {
