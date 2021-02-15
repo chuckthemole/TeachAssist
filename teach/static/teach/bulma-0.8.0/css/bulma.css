@@ -2386,7 +2386,7 @@ fieldset[disabled] .button.is-info.is-inverted {
 }
 
 .button.is-info.is-outlined:hover, .button.is-info.is-outlined.is-hovered, .button.is-info.is-outlined:focus, .button.is-info.is-outlined.is-focused {
-  background-color: #3298dc;
+  background-color: #C38D9E;
   border-color: #3298dc;
   color: #fff;
 }
@@ -2509,7 +2509,7 @@ fieldset[disabled] .button.is-success.is-inverted {
 }
 
 .button.is-success.is-outlined:hover, .button.is-success.is-outlined.is-hovered, .button.is-success.is-outlined:focus, .button.is-success.is-outlined.is-focused {
-  background-color: #32A494;
+  background-color: #57ee8b;
   border-color: #32A494;
   color: #fff;
 }

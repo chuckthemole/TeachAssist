@@ -46,6 +46,7 @@ class Lesson(models.Model):
 	icon = models.TextField(max_length = 200, default="https://img.icons8.com/dusk/50/000000/book-and-pencil.png")
 
 	is_public = models.BooleanField(default=True)
+	number_of_quizzes = models.IntegerField(blank=False, default=0)
 
 	created = models.DateField(auto_now=True)
 	updated = models.DateField(auto_now=True)
@@ -56,6 +57,7 @@ class Quiz(models.Model):
 	lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, null=True)
 
 	name = models.TextField(max_length=30, null=False, blank=False, unique=False, default="")
+	number_of_problems = models.IntegerField(blank=False, default=0)
 	created = models.DateField(auto_now=True)
 
 class Problem(models.Model):

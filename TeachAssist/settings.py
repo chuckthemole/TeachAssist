@@ -134,7 +134,8 @@ else:
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
         }
     }
-    DATABASES['default'] = dj_database_url.config(default='postgres://oizzvqmmxprzlx:4cd70b33d66165e585bd369d0030471cbff7d40415a5216a837b5a07f41982ac@ec2-34-200-15-192.compute-1.amazonaws.com:5432/d54d2caul1t9c2')
+    ALT_DB = config('ALT_DB')
+    DATABASES['default'] = dj_database_url.config(default=ALT_DB)
     db_from_env = dj_database_url.config(conn_max_age=600)
     DATABASES['default'].update(db_from_env)
 
