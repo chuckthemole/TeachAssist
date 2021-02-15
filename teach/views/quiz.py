@@ -167,6 +167,7 @@ def update_quiz(request, quiz_id):
                 question = request.POST["question" + str(i)]
             except:
                 question = None
+                """
             if not question and i == 1:
                 p = Problem.objects.filter(quiz=quiz)
                 problems = []
@@ -176,7 +177,8 @@ def update_quiz(request, quiz_id):
                     item.append(p[i])
                     problems.append(item)
                 return render(request, "teach/quiz/edit_quiz.html", {"user":user, "lesson":lesson, "quiz":quiz, "problems":problems, "error":"Create questions for quiz or delete!"})
-            elif not question:
+"""
+            if not question:
                 p = Problem.objects.filter(quiz=quiz)
                 problems = []
                 for i in range(len(p)):
@@ -184,6 +186,8 @@ def update_quiz(request, quiz_id):
                     item.append(i + 1)
                     item.append(p[i])
                     problems.append(item)
+                if len(p) == 0:
+                    return render(request, "teach/quiz/edit_quiz.html", {"user":user, "lesson":lesson, "quiz":quiz, "problems":problems, "error":"Create questions for quiz or delete!"})
                 quizzes = Quiz.objects.filter(lesson=lesson)
                 number_of_quizzes = len(quizzes)
                 Lesson.objects.filter(pk=lesson.id).update(number_of_quizzes=number_of_quizzes)
