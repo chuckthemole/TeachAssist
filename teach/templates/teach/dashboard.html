@@ -14,13 +14,13 @@
 </h3>
 {% endif %}
 
-<div class="has-text-centered tile is-ancestor is-5" style="margin: auto" <div class="tile is-8 is-parent">
+<div class="has-text-centered tile is-ancestor is-8" style="margin: auto">
   <div class="tile is-child box front-background">
     <h1 class="title is-2">
       <span style="color:white;">
         Hello
       </span>
-      <span style="color:#1496ed">
+      <span class="main-text-color">
         {{ user.username }}
       </span>
     </h1>
@@ -29,43 +29,150 @@
         Your lessons are listed below
       </span>
     </h4>
-    <a class="button is-info is-medium" href="{% url 'lesson:publish_lesson' %}">
-      Make a new lesson.
-    </a>
-    <br><br>
-
-    <!-- List all user's lessons -->
-    {% for lesson in my_lessons %}
-    <div class="parent">
-      <div class="box alt-front-background">
-        <div class="content alt-front-background" align="left">
-          <a class="child inline-block-child" href="{% url 'lesson:show_lesson' lesson.id %}">
-            <div class="container-img">
-              <img src="{{ lesson.img.url }}" alt="Image not found" onerror="this.onerror=null;this.src='{% static 'teach/images/no_image_available.PNG' %}';" width="100%" height="100%" style="padding:0; margin:0;" class="box front-background">
-
-              <!--
-                {% if lesson.sport == 'basketball' %}
-                  <img class="icon" src="https://img.icons8.com/doodle/48/000000/basketball--v1.png">
-                {% elif location.sport == 'baseball' %}
-                  <img class="icon" src='https://img.icons8.com/dusk/64/000000/baseball.png'>
-                {% elif location.sport == 'tennis' %}
-                  <img class="icon" src='https://img.icons8.com/dusk/64/000000/tennis.png'>
-                {% endif %}
-                -->
-
-            </div>
-
-          </a>
-          <a class="child inline-block-child button is-success is-medium" href="{% url 'lesson:show_lesson' lesson.id %}">
-            {{ lesson }}
-          </a>
-        </div>
-      </div>
-    </div>
-    {% endfor %}
-
+    <form action="{% url 'lesson:publish_lesson' %}" method="get">
+      <button class="button is-info is-fullwidth is-rounded is-outlined">
+        Make a new lesson
+      </button>
+    </form>
   </div>
 </div>
+
+<br><br>
+
+{% if not no_lessons %}
+
+<!-- List all user's lessons -->
+<div class="columns box front-background is-centered is-10">
+  <div class="column is-10 is-centered">
+    <div class="columns is-multiline is-mobile">
+      {% for lesson in my_lessons %}
+      <div class="column is-one-third">
+        <div class="box alt-front-background">
+          <div class="box front-background" align="center">
+            <b class="is-capitalized" style="color:white;">
+              {{ lesson.lesson_name }}
+            </b> <br>
+          </div>
+          <center>
+            <div>
+              {% if lesson.is_public %}
+              <b style="color:green;">Public</b>
+              {% else %}
+              <b style="color:red;">Private</b>
+              {% endif %}
+            </div>
+          </center>
+          <a href="{% url 'lesson:show_lesson' lesson.id %}">
+            <div class="container-img">
+              <figure class="image is-1by1">
+                <div id="choices" name="choices">
+                  <img src="{{ l.img.url }}" class="is-rounded" style="object-fit: cover;" alt="Image not found" onerror="this.onerror=null;this.src='{% static 'teach/images/no_image_available.PNG' %}';">
+                </div>
+              </figure>
+              <img class="icon" src="{{ lesson.icon }}">
+            </div>
+          </a>
+          <small style="color:white;">
+            Quizzes: {{ lesson.number_of_quizzes }}
+          </small><br>
+          <small style="color:white;">
+            Created: {{ lesson.created }} <br>
+            Last Updated: {{ lesson.updated }}
+          </small>
+          <br><br>
+          <div class="columns">
+            <div class="column">
+              <form action="{% url 'lesson:edit_lesson' lesson.id %}" method="get">
+                <button class="button is-success is-fullwidth is-rounded is-outlined">
+                  Edit
+                </button>
+              </form>
+            </div>
+            <div class="column">
+              <form action="{% url 'lesson:switch_public_private' lesson.id %}" method="get">
+                <button class="button is-success is-fullwidth is-rounded is-outlined">
+                  {% if lesson.is_public %}
+                  Make Private
+                  {% else %}
+                  Make Public
+                  {% endif %}
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
 </div>
+
+{% endif %}
+
+<!--
+{% if not no_lessons %}
+{% for lesson in my_lessons %}
+<div class="box alt-front-background">
+  <div class="box front-background" align="center">
+    <b class="is-capitalized" style="color:white;">
+      {{ lesson.lesson_name }}
+    </b> <br>
+    <small style="color:white;">
+      Quizzes: {{ lesson.number_of_quizzes }}
+    </small>
+  </div>
+  <div>
+    {% if lesson.is_public %}
+    <b style="color:green;">Public</b>
+    {% else %}
+    <b style="color:red;">Private</b>
+    {% endif %}
+  </div>
+  <div class="box front-background">
+    <a href="{% url 'lesson:show_lesson' lesson.id %}">
+      <div class="container-img">
+        <figure class="image is-1by1">
+          <img src="{{ lesson.img.url }}" style="object-fit: cover;" alt="Image not found" onerror="this.onerror=null;this.src='{% static 'teach/images/no_image_available.PNG' %}';">
+        </figure>
+        <img class="icon" src="{{ lesson.icon }}">
+      </div>
+    </a>
+    <small style="color:white;">
+      Created: {{ lesson.created }} <br>
+      Last Updated: {{ lesson.updated }}
+    </small>
+  </div>
+  <div class="columns">
+    <div class="column">
+      <form action="{% url 'lesson:edit_lesson' lesson.id %}" method="get">
+        <button class="button is-success is-fullwidth is-rounded is-outlined">
+          Edit
+        </button>
+      </form>
+    </div>
+    <div class="column">
+      <form action="{% url 'lesson:switch_public_private' lesson.id %}" method="get">
+        <button class="button is-success is-fullwidth is-rounded is-outlined">
+          {% if lesson.is_public %}
+          Make Private
+          {% else %}
+          Make Public
+          {% endif %}
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endfor %}
+{% endif %}
+-->
+
+{% if no_lessons %}
+<div class="has-text-centered tile is-ancestor is-8 is-parent" style="margin: auto">
+  <div class="tile is-child box front-background">
+    <b style="color: white;">You have not created any lessons!</b>
+  </div>
+</div>
+{% endif %}
 
 {% endblock content %}

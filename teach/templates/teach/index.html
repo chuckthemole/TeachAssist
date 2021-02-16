@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+<html lang="en" class="main-background">
 <!-- index renders a list of all the teach locations in the DB -->
 <!-- should implement a search button at some point -->
 {% extends "teach/base.html" %}
@@ -10,92 +12,179 @@
   <link rel="stylesheet" type="text/css" href="{% static 'teach/bulma-0.8.0/css/stylesChuck.css' %}" />
 </head>
 
-<div class="no-scroll">
-
-  <br><br><br>
-  <div style="margin: auto;">
-    <center>
-      <div class="box front-background tile is-8 is-vertical">
-        <div class="tile is-ancestor">
-          <div class="tile is-vertical has-text-centered alt-front-backgroud">
-            <h1><br></h1>
-            <h2 class="title is-3">
-              <span style="color:#1496ed">
-                {% if user %}
-                {{ user.username }},
-                {% endif %}
-              </span>
-              <span style="color:white;">
-                Welcome to TeachAssist.
-              </span>
-            </h2>
-            <h4 class="title is-5" style="color:#1496ed">
-              <span style="color:white;">
-                Take a look at the list of lessons created by TeachAssist users.
-              </span>
-            </h4>
-          </div>
+<br><br><br>
+<div style="margin: auto;">
+  <center>
+    <div class="box front-background tile is-8 is-vertical">
+      <div class="tile is-ancestor">
+        <div class="tile is-vertical has-text-centered alt-front-backgroud">
+          <h1><br></h1>
+          <h2 class="title is-3">
+            <span class="main-text-color">
+              {% if user %}
+              {{ user.username }},
+              {% endif %}
+            </span>
+            <span style="color:white;">
+              Welcome to TeachAssist.
+            </span>
+          </h2>
+          <h4 class="title is-5">
+            <span style="color:white;">
+              Take a look at the list of lessons created by TeachAssist users.
+            </span>
+          </h4>
         </div>
-        <br><br><br>
       </div>
-    </center>
-  </div>
+      <br><br><br>
+    </div>
+  </center>
+</div>
 
-  <br><br>
+<br><br>
 
-  <div class="margin: auto">
-    <div class="tile is-ancestor">
-      <div class="tile is-vertical">
+<div class="columns is-centered">
+  <div class="column is-three-quarters">
+    <div class="columns is-centered">
 
-        <div class="parent main-background" style='width: 100%; height: 100%;'>
+      <div class="column is-one-fifth">
+        <div class="box front-background">
+          <center>
+            <small style='color:white;'><b>Math</b></small>
+            <img class="icon" src='{{ all_icons.0 }}'>
+          </center>
+        </div>
+      </div>
 
-          <!--
-          <script>
-            //load_map({{location.latitude}}, {{location.longitude}}, {{location.id}});
-            var sports = [];
-            var i = 0;
-          </script>
+      <div class="column is-one-fifth">
+        <div class="box front-background">
+          <center>
+            <small style='color:white;'><b>Science</b></small>
+            <img class="icon" src='{{ all_icons.1 }}'>
+          </center>
+        </div>
+      </div>
 
-          {% for l in all_lessons %}
-          <script>
-            sports[i] = '{{l.subject}}';
-            i++;
-          </script>
-          {% endfor %}
+      <div class="column is-one-fifth">
+        <form action="{% url 'collections:index_filter' %}" method="post">
+          {% csrf_token %}
+          <div class="columns is-centered">
 
-          <div class='child inline-block-child' id='map' style='width: 70%; height: 550px;'></div>
-
-          <script>
-            //load_map_multiple_markers({{coordinates}}, sports);
-          </script>
-          -->
-
-          <div class="scrollable child inline-block-child main-background border" style='width: 29%; height: 550px;'>
-            {% for l in all_lessons %}
-            <article>
-              <a href="{% url 'lesson:show_lesson' l.id %}">
-                <div class="container-img">
-                  <!--Image of Location-->
-                  <img src="{{ l.img.url }}" alt="Image not found" onerror="this.onerror=null;this.src='{% static 'teach/images/no_image_available.PNG' %}';" width="100%" height="100%" style="padding:0; margin:0;" class="box main-background">
-                  <!--
-                      {% if l.sport == 'basketball' %}
-                        <img class="icon" src="https://img.icons8.com/doodle/48/000000/basketball--v1.png">
-                      {% elif l.sport == 'baseball' %}
-                        <img class="icon" src='https://img.icons8.com/dusk/64/000000/baseball.png'>
-                      {% elif l.sport == 'tennis' %}
-                        <img class="icon" src='https://img.icons8.com/dusk/64/000000/tennis.png'>
-                      {% endif %}
-                      -->
+            <fieldset>
+              <legend>
+                <span style="color:white;">
+                  <label>Filter by subject:</label>
+                </span>
+              </legend>
+              <div class="control has-icons-left">
+                <div class="select is-rounded is-small is-info">
+                  <select name="subject" id="subject" onchange="this.form.submit()">
+                    <option selected disabled hidden>Select Option</option>
+                    <option value="all">All Subjects</option>
+                    <option value="math">Math</option>
+                    <option value="science">Science</option>
+                    <option value="english">English</option>
+                    <option value="history">History</option>
+                  </select>
                 </div>
-              </a>
-            </article><br>
-            {% endfor %}
-          </div>
-        </div>
+                <span class="icon is-left">
+                  <i class="fas fa-home"></i>
+                </span>
+              </div>
+            </fieldset>
 
+          </div>
+        </form>
       </div>
+
+      <div class="column is-one-fifth">
+        <div class="box front-background">
+          <center>
+            <small style='color:white;'><b>English</b></small>
+            <img class="icon" src='{{ all_icons.2 }}'>
+          </center>
+        </div>
+      </div>
+
+      <div class="column is-one-fifth">
+        <div class="box front-background">
+          <center>
+            <small style='color:white;'><b>History</b></small>
+            <img class="icon" src='{{ all_icons.3 }}'>
+          </center>
+        </div>
+      </div>
+
     </div>
   </div>
 </div>
 
+<br>
+
+<div class="columns box front-background is-centered is-10">
+  <div class="column is-10 is-centered">
+
+    {% if not no_lessons %}
+    <div class="columns is-multiline is-mobile">
+      {% for l in all_lessons %}
+      {% if l.is_public %}
+      <div class="column is-one-fifth">
+        <div class="box alt-front-background">
+          <small>
+            <div class="columns is-centered is-multiline">
+              <small class="column is-full alt-text-color has-text-centered">
+                <b class="is-capitalized">{{ l.lesson_name }}</b>
+              </small>
+              <small class="column is-half is-size-7" style="color:white; align=left;">
+                {{ l.teacher }}
+              </small>
+              <small class="column is-half is-size-7" style="color:white;">
+                {{ l.topic }}
+              </small>
+            </div>
+          </small>
+          <br>
+          <a href="{% url 'lesson:show_lesson' l.id %}">
+            <div class="container-img">
+              <figure class="image is-1by1">
+                <div id="choices" name="choices">
+                  <img src="{{ l.img.url }}" class="is-rounded" style="object-fit: cover;" alt="Image not found" onerror="this.onerror=null;this.src='{% static 'teach/images/no_image_available.PNG' %}';">
+                </div>
+              </figure>
+              <img class="icon" src="{{ l.icon }}">
+            </div>
+          </a>
+          <br>
+          <small class="columns is-centered">
+            <small class="is-size-7 alt-text-color">
+              Quizzes:
+            </small>
+            <small style="color:white;">
+              {{ l.number_of_quizzes }}&nbsp;&nbsp;
+            </small>
+            <small class="is-size-7 alt-text-color">
+              Created:
+            </small>
+            <small style="color:white;">
+              {{ l.created }}
+            </small>
+          </small>
+        </div>
+      </div>
+      {% endif %}
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    {% if no_lessons %}
+    <div class="columns is-centered">
+      <b style="color: white;">Nobody has created any lessons!</b>
+    </div>
+    {% endif %}
+
+  </div>
+</div>
+
 {% endblock content %}
+
+</html>

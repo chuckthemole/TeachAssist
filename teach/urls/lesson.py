@@ -13,4 +13,5 @@ urlpatterns = [
     path('image/<int:lesson_id>/publish', lesson.publish_image, name='publish_image'),
     path('image/<int:lesson_id>/create', lesson.create_image, name='create_image'),
     path('image/<int:lesson_id>/show', lesson.show_image, name='show_image'),
+    path('lesson/<int:lesson_id>/switch', lesson.switch_public_private, name='switch_public_private'),
 ]

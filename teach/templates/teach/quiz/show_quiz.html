@@ -1,0 +1,116 @@
+<!-- show a lesson belonging to any user  -->
+{% extends "teach/base.html" %}
+
+{% block content %}
+
+{% load static %}
+
+<!--<div class="no-scroll">-->
+<br>
+<div style="margin: auto;">
+  <center>
+    <div class="tile is-8 is-vertical">
+      <div class="box front-background">
+        <h1 class="title is-2">
+          <span style="color:white;">
+            Quiz added by:
+          </span>
+          <span class="main-text-color">
+            {{ quiz.teacher.user.username }}
+          </span>
+        </h1>
+        <h2>
+          <span style="color:white;">
+            <a href="{% url 'lesson:show_lesson' quiz.lesson.id %}">
+              <u>Lesson</u>:
+              <b class="is-capitalized">{{ quiz.lesson.lesson_name }}</b>
+            </a>
+            <br>
+            <u>Quiz</u>: <b class="is-capitalized">{{ quiz.name }}</b>
+            <br>
+            <small>
+              Created: {{quiz.created}}
+            </small>
+          </span>
+          <br>
+        </h2>
+      </div>
+    </div>
+  </center>
+</div>
+
+<br><br>
+
+
+
+<center>
+  <div class="tile is-8 is-vertical">
+    <div class="columns is-centered">
+      {% if quiz.teacher.user.id == user.id %}
+      <div class="column">
+        <form action="{% url 'quiz:edit_quiz' quiz.id %}" method="get">
+          <button class="button is-primary is-fullwidth is-rounded">
+            Edit this quiz
+          </button>
+        </form>
+      </div>
+      {% endif %}
+      <div class="column">
+        <form action="{% url 'quiz:show_all_quizzes' quiz.lesson.id %}" method="get">
+          <button class="button is-primary is-fullwidth is-rounded">
+            View all quizzes for this lesson
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</center>
+
+<br>
+<center>
+  <div class="main-text-color">
+    {% if quiz.number_of_problems == 1 %}
+    This quiz has {{quiz.number_of_problems}} question
+    {% endif %}
+    {% if quiz.number_of_problems != 1 %}
+    This quiz has {{quiz.number_of_problems}} questions
+    {% endif %}
+  </div>
+</center>
+
+
+<center>
+  <div class="tile is-8 is-vertical">
+    {% for problem in problems %}
+    <div class="box front-background">
+      <button type="button" class="collapsible">Question {{ problem.0 }}</button>
+      <div class="content front-background main-text-color" style="text-align: left;">
+        <b style="color: white;">{{problem.1.question}}</b> <br>
+        {% for answer in problem.1.answers %}
+        <b style="color: white;">{{answer.0}}.</b> {{answer.1}}
+        <br>
+        {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</center>
+
+<script>
+  var coll = document.getElementsByClassName("collapsible");
+  var i;
+
+  for (i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function() {
+      this.classList.toggle("active");
+      var content = this.nextElementSibling;
+      if (content.style.display === "block") {
+        content.style.display = "none";
+      } else {
+        content.style.display = "block";
+      }
+    });
+  }
+</script>
+
+{% endblock content %}

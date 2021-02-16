@@ -1,0 +1,78 @@
+{% extends "teach/base.html" %}
+
+{% block content %}
+
+<head>
+  {% load static %}
+  <script type='text/javascript' src="{% static 'teach/js/google_map.js' %}"></script>
+  <link rel="stylesheet" type="text/css" href="{% static 'teach/bulma-0.8.0/css/stylesChuck.css' %}" />
+</head>
+
+<div style="margin: auto;">
+  <center>
+    <div class="box front-background tile is-8 is-vertical">
+      <div class="tile is-ancestor">
+        <div class="tile is-vertical has-text-centered alt-front-backgroud">
+          <h2 class="title is-3">
+            <span style="color:white;">
+              Settings
+            </span>
+          </h2>
+        </div>
+      </div>
+      <br><br><br>
+    </div>
+  </center>
+</div>
+
+<br><br><br>
+
+<form action="{% url 'collections:publish_settings' user.teacher.id %}" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <center>
+    <div class="box front-background tile is-vertical is-8 is-centered">
+      <h1 class="title has-text-centered">
+        <span class="main-text-color">
+          {{ user.username }}
+          <br>
+        </span>
+      </h1>
+      {% if error %}
+      <h3 style="color: red">{{ error }}</h3>
+      {% endif %}
+
+      <br><br><br>
+
+      <br>
+
+      <div align="left">
+        <div class="inline-child-block">
+          <p><input type="file" accept="image/*" name="image" id="file" onchange="loadFile(event)" style="display: none;"></p>
+          <p>
+            {{ form.as_p }}
+          </p>
+        </div>
+        <div class="inline-child-block">
+          <img src="{{ user.teacher.img.url }}" id="output" width="100" alt="Image not found" onerror="this.onerror=null;this.src='https://img.icons8.com/material-outlined/24/000000/user--v1.png';">
+        </div>
+      </div>
+
+      <script>
+        var loadFile = function(event) {
+          var image = document.getElementById('output');
+          image.src = URL.createObjectURL(event.target.files[0]);
+        };
+      </script>
+
+      <div class="field">
+        <div class="control">
+          <button class="button is-success is-rounded is-fullwidth" type="submit" value="Publish">
+            Update
+          </button>&nbsp;
+        </div>
+      </div>
+    </div>
+  </center>
+</form>
+
+{% endblock content %}
