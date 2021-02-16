@@ -1,5 +1,3 @@
-// object literal holding data for option elements
-
 var Select_List_Data = {
 
   'choices': { // name of associated select box
@@ -15,7 +13,7 @@ var Select_List_Data = {
     },
     english: {
       text: ['American Literature', 'World Literature', 'Creative Writing', 'Journalism'],
-      value: ['biology', 'chemistry', 'physics', 'astronomy']
+      value: ['American Literature', 'World Literature', 'Creative Writing', 'Journalism']
     },
     history: {
       text: ['Government', 'Geography', 'Ethnic Studies', 'Economics'],
@@ -48,7 +46,12 @@ function appendDataToSelect(sel, obj) {
   var f = document.createDocumentFragment();
   var labels = [],
     group, opts;
-
+  /*
+    var dropdown = document.createElement('option');
+    dropdown.appendChild(document.createTextNode('Select an option'));
+    dropdown.value = 'select_option';
+    f.appendChild(dropdown);
+  */
   function addOptions(obj) {
     var f = document.createDocumentFragment();
     var o;
@@ -105,14 +108,14 @@ function addClass() {
   //Select_List_Data[relName][subject].text.value.push(add_class);
   //Select_List_Data.relName.subject.value.value.push(add_class);
 
-/*
-  var select = document.getElementById('choices');
-  var opt = document.createElement('option');
-  var add_class = document.getElementById("add_class").value;
-  opt.value = add_class;
-  opt.innerHTML = add_class;
-  select.appendChild(opt);
-  */
+  /*
+    var select = document.getElementById('choices');
+    var opt = document.createElement('option');
+    var add_class = document.getElementById("add_class").value;
+    opt.value = add_class;
+    opt.innerHTML = add_class;
+    select.appendChild(opt);
+    */
 }
 
 function addSubject() {
@@ -120,7 +123,7 @@ function addSubject() {
 }
 
 // anonymous function assigned to onchange event of controlling select box
-document.forms['create_lesson'].elements['subject'].onchange = function(e) {
+document.forms['subject_class_dropdown'].elements['subject'].onchange = function(e) {
   // name of associated select box
   var relName = 'choices';
 
@@ -141,7 +144,7 @@ document.forms['create_lesson'].elements['subject'].onchange = function(e) {
 // populate associated select box as page loads
 (function() { // immediate function to avoid globals
 
-  var form = document.forms['create_lesson'];
+  var form = document.forms['subject_class_dropdown'];
 
   // reference to controlling select box
   var sel = form.elements['subject'];
@@ -163,7 +166,7 @@ document.forms['create_lesson'].elements['subject'].onchange = function(e) {
 
 function reset(subject) {
 
-  var form = document.forms['create_lesson'];
+  var form = document.forms['subject_class_dropdown'];
 
   // name of associated select box
   var relName = 'choices';
@@ -176,7 +179,7 @@ function reset(subject) {
   var data = Select_List_Data[relName][subject];
 
   // remove current option elements
-  var relList = document.forms['create_lesson'].elements['subject'].form.elements[relName];
+  var relList = document.forms['subject_class_dropdown'].elements['subject'].form.elements[relName];
   removeAllOptions(relList, true);
 
   // add options to associated select box

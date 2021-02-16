@@ -2,6 +2,7 @@ import os
 import uuid
 
 from django.db import models
+from django.contrib.postgres.fields import ArrayField
 from django.contrib.auth.models import User
 from django.utils import timezone
 from django.core.validators import MaxValueValidator, MinValueValidator
@@ -17,21 +18,8 @@ class teacher(models.Model):
 	user = models.OneToOneField(User, on_delete=models.CASCADE)
 	created = models.DateField(auto_now=True)   # maybe redundant, user model has date_joined :)
 	updated = models.DateField(auto_now=True)
-
-class Sport(models.Model):
-	def __str__(self):
-		return sport
-
-	# FK
-	teacher = models.ForeignKey(teacher, on_delete=models.CASCADE, null=True)
-
-	sport = models.TextField(max_length=30, null=False, blank=False, unique=False)
-	is_basketball = models.BooleanField(default=False)
-	is_tennis = models.BooleanField(default=False)
-	is_baseball = models.BooleanField(default=False)
-
-	created = models.DateField(auto_now=True)
-	updated = models.DateField(auto_now=True)
+	img = models.ImageField(upload_to='images/teachers', blank=True, default="static/teach/images/no_image_available.PNG")
+	is_teacher = models.BooleanField(default=True)
 
 class Upload(models.Model):
     uploaded_at = models.DateTimeField(auto_now_add=True)
@@ -39,86 +27,54 @@ class Upload(models.Model):
 
 class Lesson(models.Model):
 	def __str__(self):
-		return (self.subject + " \n" + self.description)
+		return ("Subject: " + self.subject + " \n" + "Title: " + self.lesson_name)
 
 	# FK
 	teacher = models.ForeignKey(teacher, on_delete=models.CASCADE, null=True)
 
-	lesson_name = models.TextField(max_length=30, null=False, blank=False, unique=False, default="")
 	subject = models.TextField(max_length=30, null=False, blank=False, unique=False, default="")
+	subject_class = models.TextField(max_length=30, null=False, blank=False, unique=False, default="")
 	topic = models.TextField(max_length=30, null=False, blank=False, unique=False, default="")
-	description = models.TextField(max_length=100, null=False, blank=False, unique=False, default="")
+	lesson_name = models.TextField(max_length=30, null=False, blank=False, unique=False, default="")
+	description = models.TextField(max_length=300, null=False, blank=False, unique=False, default="")
+	instructions = models.TextField(max_length=300, null=True, blank=True, unique=False, default="")
+	game_link = models.URLField(max_length = 200, null=True, blank=True, unique=False, default="")
 
 	# Image of location
-	img = models.ImageField(upload_to='images/', blank=True, default="static/teach/images/no_image_available.PNG")
+	img = models.ImageField(upload_to='images/lessons', blank=True, default="static/teach/images/no_image_available.PNG")
 	img_url = models.TextField(max_length=100, null=False, blank=True, unique=False, default="")
+	icon = models.TextField(max_length = 200, default="https://img.icons8.com/dusk/50/000000/book-and-pencil.png")
+
+	is_public = models.BooleanField(default=True)
+	number_of_quizzes = models.IntegerField(blank=False, default=0)
 
 	created = models.DateField(auto_now=True)
 	updated = models.DateField(auto_now=True)
 
-class Location(models.Model):
-	def __str__(self):
-		return (self.address + " " + self.zip)
-	def num_of_destinations(self):
-		destinations = Destination.objects.filter(location=self)
-		return len(destinations)
-
+class Quiz(models.Model):
 	# FK
 	teacher = models.ForeignKey(teacher, on_delete=models.CASCADE, null=True)
+	lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE, null=True)
 
-	# Sport type
-	sport = models.TextField(max_length=30, null=False, blank=False, unique=False, default="")
-	is_basketball = models.BooleanField(default=False)
-	is_tennis = models.BooleanField(default=False)
-	is_baseball = models.BooleanField(default=False)
-
-	# Location
-	zip = models.TextField(max_length=5, null=False, blank=False, unique=False, default="")
-	address = models.TextField(max_length=30, null=False, blank=False, unique=False, default="")
-	longitude = models.FloatField(null=True, blank=True, default=None)
-	latitude = models.FloatField(null=True, blank=True, default=None)
-
-	# Image of location
-	sport_location_img = models.ImageField(upload_to='images/', blank=True, default="static/teach/images/no_image_available.PNG")
-	img_url = models.TextField(max_length=100, null=False, blank=True, unique=False, default="")
-
+	name = models.TextField(max_length=30, null=False, blank=False, unique=False, default="")
+	number_of_problems = models.IntegerField(blank=False, default=0)
 	created = models.DateField(auto_now=True)
-	updated = models.DateField(auto_now=True)     # everytime the obj is saved, new time is saved
-	#is_my_location = models.BooleanField(default=False)
-	#is_visiting = models.BooleanField(default=False)
 
-class Sport_Location(models.Model):
-	def __str__(self):
-		return (self.address + self.zip)
-
+class Problem(models.Model):
 	# FK
 	teacher = models.ForeignKey(teacher, on_delete=models.CASCADE, null=True)
-	location = models.ForeignKey(Location, on_delete=models.CASCADE, null=True)
+	quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, null=True)
 
-	sport_location_img = models.ImageField(upload_to='images/')
+	question = models.TextField(max_length=100, null=False, blank=False, unique=False, default="")
+	answers = ArrayField(ArrayField(models.TextField(max_length=30, null=False, blank=False, unique=False, default=""), size=2,), 4,)
+	correct_answer = models.IntegerField(null=True, blank=False, unique=False, default=1)
 
-class Destination(models.Model):
-	def __str__(self):
-		return self.title
-
-	#FK
-	teacher = models.ForeignKey(teacher, on_delete=models.CASCADE, null=True)
-	location = models.ForeignKey(Location, on_delete=models.CASCADE, null=True)
-
-	address = models.TextField(max_length=30, null=False, blank=False, unique=False)
-	zip_code = models.TextField(max_length=10, null=False, blank=False, unique=False)
-	title = models.TextField(max_length=30, null=False, blank=False, unique=False)
-	description = models.TextField(max_length=30, null=False, blank=False, unique=False)
-
-	created = models.DateField(auto_now=True)
-	updated = models.DateField(auto_now=True)
 
 class Review(models.Model):
 	def __str__(self):
 		return self.title
 
 	#FK
-	destination = models.ForeignKey(Destination, on_delete=models.CASCADE, null=True)
 	teacher = models.ForeignKey(teacher, on_delete=models.CASCADE, null=True)
 
 	title = models.TextField(max_length=30, null=False, blank=False, unique=False)
@@ -128,8 +84,8 @@ class Review(models.Model):
 	created = models.DateField(auto_now=True)
 	updated = models.DateField(auto_now=True)
 
-	class Meta:
-		unique_together = (('teacher', 'destination'),)
+	#class Meta:
+		#unique_together = (('teacher', 'destination'),)
 
 class Comment(models.Model):
 	def __str__(self):
@@ -143,17 +99,17 @@ class Comment(models.Model):
 	created = models.DateField(auto_now=True)
 	updated = models.DateField(auto_now=True)
 
-@receiver(models.signals.post_delete, sender=Location)
+@receiver(models.signals.post_delete, sender=Lesson)
 def auto_delete_file_on_delete(sender, instance, **kwargs):
     """
     Deletes file from filesystem
     when corresponding `MediaFile` object is deleted.
     """
-    if instance.sport_location_img:
-        if os.path.isfile(instance.sport_location_img.path):
-            os.remove(instance.sport_location_img.path)
+    if instance.img:
+        if os.path.isfile(instance.img.path):
+            os.remove(instance.img.path)
 
-@receiver(models.signals.pre_save, sender=Location)
+@receiver(models.signals.pre_save, sender=Lesson)
 def auto_delete_file_on_change(sender, instance, **kwargs):
     """
     Deletes old file from filesystem
@@ -164,11 +120,41 @@ def auto_delete_file_on_change(sender, instance, **kwargs):
         return False
 
     try:
-        old_file = Location.objects.get(pk=instance.pk).sport_location_img
-    except Location.DoesNotExist:
+        old_file = Lesson.objects.get(pk=instance.pk).img
+    except Lesson.DoesNotExist:
         return False
 
-    new_file = instance.sport_location_img
+    new_file = instance.img
+    if not old_file == new_file:
+        if os.path.isfile(old_file.path):
+            os.remove(old_file.path)
+
+@receiver(models.signals.post_delete, sender=teacher)
+def auto_delete_file_on_delete(sender, instance, **kwargs):
+    """
+    Deletes file from filesystem
+    when corresponding `MediaFile` object is deleted.
+    """
+    if instance.img:
+        if os.path.isfile(instance.img.path):
+            os.remove(instance.img.path)
+
+@receiver(models.signals.pre_save, sender=teacher)
+def auto_delete_file_on_change(sender, instance, **kwargs):
+    """
+    Deletes old file from filesystem
+    when corresponding `MediaFile` object is updated
+    with new file.
+    """
+    if not instance.pk:
+        return False
+
+    try:
+        old_file = teacher.objects.get(pk=instance.pk).img
+    except Lesson.DoesNotExist:
+        return False
+
+    new_file = instance.img
     if not old_file == new_file:
         if os.path.isfile(old_file.path):
             os.remove(old_file.path)

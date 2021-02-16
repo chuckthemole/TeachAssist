@@ -1,0 +1,272 @@
+{% extends "teach/base.html" %}
+
+{% block content %}
+
+<head>
+  {% load static %}
+  <script type='text/javascript' src="{% static 'teach/js/google_map.js' %}"></script>
+  <link rel="stylesheet" type="text/css" href="{% static 'teach/bulma-0.8.0/css/stylesChuck.css' %}" />
+</head>
+
+<div style="margin: auto;">
+  <center>
+    <div class="box front-background tile is-8 is-vertical">
+      <div class="tile is-ancestor">
+        <div class="tile is-vertical has-text-centered alt-front-backgroud">
+          <h2 class="title is-3">
+            <span class="main-text-color">
+              {% if user %}
+              {{ user.username }},
+              {% endif %}
+            </span>
+            <span style="color:white;">
+              edit your lesson.
+            </span>
+          </h2>
+        </div>
+      </div>
+      <br><br><br>
+    </div>
+  </center>
+</div>
+
+<br><br><br>
+
+<form id="subject_class_dropdown" action="{% url 'lesson:update_lesson' lesson.id %}" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <center>
+    <div class="box front-background tile is-vertical is-8 is-centered">
+      <h1 class="title has-text-centered">
+        <span class="main-text-color">
+          {{ user.username }}
+          <br>
+        </span>
+      </h1>
+      <h4 class="title has-text-centered">
+        <span style="color:white;">
+          What subject? What lesson?
+        </span>
+      </h4>
+      {% if error %}
+      <h3 style="color: red">{{ error }}</h3>
+      {% endif %}
+
+
+      <fieldset>
+        <div align="left">
+          <div class="columns is-centered">
+            <div class="column is-one-third">
+              <legend>
+                <span>
+                  <label class="label" style="color:white;">Choose a subject:</label>
+                </span>
+              </legend>
+
+              {% if lesson.subject == "math" %}
+              <div class="select is-rounded is-small is-focused is-info">
+                <select name="subject" id="subject" value="{{lesson.subject}}">
+                  <option selected value="math">Math</option>
+                  <option value="science">Science</option>
+                  <option value="english">English</option>
+                  <option value="history">History</option>
+                </select>
+              </div>
+              {% endif %}
+              {% if lesson.subject == "science" %}
+              <div class="select is-rounded is-small is-focused is-info">
+                <select name="subject" id="subject" value="{{lesson.subject}}">
+                  <option selected value="science">Science</option>
+                  <option value="math">Math</option>
+                  <option value="english">English</option>
+                  <option value="history">History</option>
+                </select>
+              </div>
+              {% endif %}
+              {% if lesson.subject == "english" %}
+              <div class="select is-rounded is-small is-focused is-info">
+                <select name="subject" id="subject" value="{{lesson.subject}}">
+                  <option selected value="english">English</option>
+                  <option value="math">Math</option>
+                  <option value="science">Science</option>
+                  <option value="history">History</option>
+                </select>
+              </div>
+              {% endif %}
+              {% if lesson.subject == "history" %}
+              <div class="select is-rounded is-small is-focused is-info">
+                <select name="subject" id="subject" value="{{lesson.subject}}">
+                  <option value="history" selected>History</option>
+                  <option value="math">Math</option>
+                  <option value="science">Science</option>
+                  <option value="english">English</option>
+                </select>
+              </div>
+              {% endif %}
+              <!--
+          <div class="field has-addons is-small">
+            <div class="control">
+              <input class="input is-rounded is-small" type="text" placeholder="Add Subject">
+            </div>
+            <div class="control">
+              <button class="button is-info is-rounded is-small" onclick="addSubject()">
+                Add Subject
+              </button>
+            </div>
+          </div>
+          -->
+            </div>
+
+            <div class="column is-one-third">
+              <legend>
+                <span>
+                  <label class="label" style="color:white;">Choose a class:</label>
+                </span>
+              </legend>
+              <div class="select is-rounded is-small is-hovered is-info">
+                <select name="choices" id="choices">
+                  <!-- populated using JavaScript -->
+                </select>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!--
+          <div class="field has-addons is-small">
+            <div class="control">
+              <input class="input is-rounded is-small" id="add_class" type="text" placeholder="Add Class">
+            </div>
+            <div class="control">
+              <button class="button is-info is-rounded is-small" onclick="addClass(); return false;">
+                Add Class
+              </button>
+            </div>
+          </div>
+        -->
+      </fieldset>
+
+      <div class="columns">
+        <div class="column">
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="control">
+          <label class="label">
+            <span style="color:red;">*</span><span style="color:white;">
+              Lesson Name
+            </span>
+          </label>
+          <input class="input is-primary is-rounded" value="{{lesson.lesson_name}}" placeholder="The name of your lesson..." type="text" name="name">
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="control">
+          <label class="label">
+            <span style="color:red;">*</span><span style="color:white;">
+              Topic
+            </span>
+          </label>
+          <input class="input is-primary is-rounded" value="{{lesson.topic}}" placeholder="The topic of your lesson..." type="text" name="topic">
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="control">
+          <label class="label">
+            <span style="color:red;">*</span><span style="color:white;">
+              Link to game
+            </span>
+          </label>
+          <input class="input is-primary is-rounded" value="{{ lesson.game_link }}" type="text" name="game_link">
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="control">
+          <label class="label">
+            <span style="color:red;">*</span><span style="color:white;">
+              Lesson description
+            </span>
+          </label>
+          <textarea rows="3" cols="10" wrap="soft" class="textarea is-primary has-fixed-size" name="description">{{ lesson.description }}</textarea>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="control">
+          <label class="label">
+            <span style="color:red;">*</span><span style="color:white;">
+              Lesson instructions
+            </span>
+          </label>
+          <textarea rows="5" cols="10" wrap="soft" class="textarea is-primary is-rounded" name="instructions">{{ lesson.instructions }}</textarea>
+        </div>
+      </div>
+
+      <br>
+
+      <div align="left">
+        <div class="inline-child-block">
+          <p><input type="file" accept="image/*" name="image" id="file" onchange="loadFile(event)" style="display: none;"></p>
+          <p>
+            {{ form.as_p }}
+            <!--<label class="button is-small is-rounded" for="file" style="cursor: pointer;">
+                Upload Image
+              </label>-->
+          </p>
+        </div>
+        <div class="inline-child-block">
+          <img src="{{ lesson.img.url }}" id="output" width="100">
+        </div>
+      </div>
+
+      <script>
+        var loadFile = function(event) {
+          var image = document.getElementById('output');
+          image.src = URL.createObjectURL(event.target.files[0]);
+        };
+      </script>
+
+      <div class="field">
+        <div class="control">
+          <button class="button is-success is-rounded is-fullwidth is-outlined" type="submit" value="Publish">
+            Update
+          </button>&nbsp;
+        </div>
+      </div>
+    </div>
+  </center>
+</form>
+
+<br><br>
+
+<div style="margin: auto;">
+  <center>
+    <div class="box front-background tile is-8 is-vertical">
+      <div class="tile is-ancestor">
+        <div class="tile is-vertical has-text-centered alt-front-backgroud">
+          <h2 class="title is-3">
+            <span style="color:white;">
+              Delete your lesson
+            </span>
+          </h2>
+          <form action="{% url 'lesson:delete_lesson' lesson.id %}" method="post">
+            {% csrf_token %}
+            <button class="button is-danger is-rounded is-outlined is-fullwidth" type="submit" name="delete" value="Delete">
+              Delete
+            </button>&nbsp;
+          </form>
+        </div>
+      </div>
+      <br><br><br>
+    </div>
+  </center>
+</div>
+
+{% load static %}
+<script type='text/javascript' src="{% static 'teach/js/select_dynamic_options.js' %}"></script>
+
+{% endblock content %}

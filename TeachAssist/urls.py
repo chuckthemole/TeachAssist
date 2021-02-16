@@ -26,6 +26,7 @@ urlpatterns = [
     path('', include('teach.urls.comment', namespace='comment')),
     path('', include('teach.urls.destination', namespace='destination')),
     path('', include('teach.urls.lesson', namespace='lesson')),
+    path('', include('teach.urls.quiz', namespace='quiz')),
     path('', include('teach.urls.location', namespace='location')),
     path('', include('teach.urls.map', namespace='map')),
     path('', include('teach.urls.review', namespace='review')),

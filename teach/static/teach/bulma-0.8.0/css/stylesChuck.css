@@ -6,6 +6,29 @@ login {
   margin-left: 100px;
 }
 
+.collapsible {
+  background-color: #CA522f;
+  color: white;
+  cursor: pointer;
+  padding: 15px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 18px;
+}
+
+.active, .collapsible:hover {
+  background-color: #f44336;
+}
+
+.content {
+  padding: 10px 18px;
+  display: none;
+  overflow: hidden;
+  background-color: #f1f1f1;
+}
+
 .myButtons {
   background-color: #f44336;
   color: white;
@@ -31,15 +54,23 @@ login {
 }
 
 .main-background {
-  background-color:#9AE1EF;
+  background-color:#E8A87C;
 }
 
 .front-background {
-  background-color:#9AD1EF;
+  background-color:#E27D60;
 }
 
 .alt-front-background {
-  background-color:#52b8e1;
+  background-color:#CA522f;
+}
+
+.main-text-color {
+  color: #CA522f;
+}
+
+.alt-text-color {
+  color:#E27D60;
 }
 
 .map {

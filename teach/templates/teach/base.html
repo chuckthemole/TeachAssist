@@ -11,6 +11,7 @@
   <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
   <link rel="stylesheet" type="text/css" href="{% static 'teach/main.css' %}" />
   <script type='text/javascript' src="{% static 'teach/js/google_map.js' %}"></script>
+  <script type='text/javascript' src="{% static 'teach/js/constants.js' %}"></script>
 </head>
 
 <body class="main-background">
@@ -21,8 +22,11 @@
     <!-- brand is basketball -->
     <div class="navbar-brand">
       <a class="navbar-item" href="{% url 'collections:index' %}">
-        <img src="https://img.icons8.com/doodle/48/000000/basketball--v1.png" alt="{% static 'teach/images/basketball.PNG' %}" width="30" height="60">
+        <img src="" id="icon" alt="{% static 'teach/images/basketball.PNG' %}" width="30" height="60">
       </a>
+      <script type='text/javascript'>
+        document.getElementById("icon").src = SUBJECT_ICON;
+      </script>
 
       <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarData">
         <span aria-hidden="true"></span>
@@ -32,7 +36,7 @@
     </div>
 
     {% if is_base_visible != False %}
-    <div id="navbarData" class="navbar-menu is-active">
+    <div id="navbarData" class="navbar-menu is-primary">
       <!-- navbar-menu hidden in mobile devices -->
       <!-- is-actice makes id show in mobile devices -->
       <div class="navbar-start">
@@ -43,8 +47,8 @@
         </div>
 
         <!-- **************need to fix this dropdown *******************-->
-        <div class="navbar-link">
-          <div class="navbar-item has-dropdown">
+        <div class="navbar-link is-primary">
+          <div class="navbar-item has-dropdown is-primary">
             <a class="button is-primary">
               More
             </a>
@@ -55,32 +59,48 @@
           </div>
         </div>
       </div>
-
     </div>
     {% endif %}
 
     <div class="navbar-end">
+
+      {% if request.path != "/login" and request.path != "/loguser" and request.path != "/signup" and request.path != "/create" %}
+      <div class="navbar-item">
+        <a href="{% url 'collections:edit_settings' %}">
+          <article class="media container-img">
+            <figure class="image is-32x32">
+              {% load static %}
+              <img src="{{ user.teacher.img.url }}" class="is-rounded" style="object-fit: cover;" alt="Image not found" onerror="this.onerror=null;this.src='https://img.icons8.com/material-outlined/24/000000/user--v1.png';">
+            </figure>
+          </article>
+        </a>
+      </div>
+      {% endif %}
+
+
       <div class="navbar-item">
         <div class="buttons">
           {% if request.path == "/login" or request.path == "/loguser" %}
           <a class="button is-primary" href="{% url 'collections:signup' %}">
             Signup
           </a>
-          {% elif request.path == "/signup"  %}
+          {% elif request.path == "/signup" or request.path == "/create"  %}
           <a class="button is-primary" href="{% url 'collections:login' %}">
             Login
           </a>
-          {% else   %}
+          {% else %}
           <a class="button is-primary" href="{% url 'collections:logout' %}">
             Logout
           </a>
           {% endif %}
         </div>
       </div>
+
     </div>
+
   </nav>
 
-  <section class="section" style="background-color:#9AE1EF">
+  <section class="section main-backgroud">
     <div class="container">
       {% block content %}{% endblock content %}
     </div>
