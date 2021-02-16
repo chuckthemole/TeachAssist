@@ -82,16 +82,12 @@
       </div>
       {% endfor %}
 
+
       {% for problem in problems %}
       <script type="text/javascript">
         $('#delete_problem{{ problem.0 }}').click(function() {
           // Change affected problem numbers
-          var start = {
-            {
-              problem .0
-            }
-          } + 1 - deletedInitialProblems;
-          
+          var start = {{ problem.0 }} + 1 - deletedInitialProblems;
           for (var i = start; i <= initialProblems - deletedInitialProblems; i++) {
             var element = document.getElementById("problem_number" + i);
             element.innerHTML = "&nbsp;&nbsp;Question " + (i - 1);
@@ -100,8 +96,10 @@
           decrement_new_question_numbers();
           deletedInitialProblems++;
 
+
           // Remove problem and decrement
           document.getElementById("problem{{ problem.0 }}").remove();
+
 
           // Makes it so the button does not return http request
           $.post(
