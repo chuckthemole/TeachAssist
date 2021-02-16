@@ -161,11 +161,13 @@ def update_quiz(request, quiz_id):
         except:
             return render(request, "teach/quiz/edit_quiz.html", {"user":user, "lesson":lesson, "quiz":quiz, "problems":problems, "error":"Could not update!"})
 
-        i = 1
+        i = quiz.number_of_problems + 1
         while True:
             try:
                 question = request.POST["question" + str(i)]
+                print(str(i) + " Try **************************")
             except:
+                print(str(i) + " Except **************************")
                 question = None
                 """
             if not question and i == 1:
@@ -248,8 +250,8 @@ def delete_problem(request, problem_id):
         quiz = get_object_or_404(Quiz, pk=problem.quiz.id)
         Problem.objects.get(pk=problem_id).delete()
         problems = Problem.objects.filter(quiz=quiz)
-        number_of_problems = len(problems)
-        Quiz.objects.filter(pk=quiz.id).update(number_of_problems=number_of_problems)
+        #number_of_problems = len(problems)
+        #Quiz.objects.filter(pk=quiz.id).update(number_of_problems=number_of_problems) removed to help update_quiz method
         return HttpResponse(status=500)
     else:
         return HttpResponse(status=500)
