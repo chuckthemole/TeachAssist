@@ -38,7 +38,7 @@
               Quiz Name
             </span>
           </label>
-          <input class="input is-primary is-rounded" placeholder="The name of your quiz..." type="text" name="name">
+          <input class="input is-primary is-rounded" value="{{ quiz.name }}" type="text" name="name">
         </div>
       </div>
 
@@ -46,34 +46,29 @@
       <script type="text/javascript">
         var clicks = 0;
         var initialProblems = 0;
-
-        function increment() {
-          clicks++;
-        }
-
-        function decrement() {
-          if (clicks > 0) {
-            clicks--;
-          }
-        }
+        var deletedInitialProblems = 0;
 
         function countExistingProblems() {
           initialProblems++;
         }
+
+        function decrementInitialProblems() {
+          initialProblems--;
+        }
       </script>
 
-      {% for problem in problems %}
-
+      {% for p in problems %}
       <script type="text/javascript">
-        increment();
         countExistingProblems();
       </script>
+      {% endfor %}
 
+      {% for problem in problems %}
       <div class="columns" style="padding: 9px;" id="problem{{ problem.0 }}">
         <div class="column is-four-fifths">
           <button type="button" class="collapsible box column is-full">
             <img src="https://img.icons8.com/officexs/16/000000/drag-list-down.png" />
-            <small id="question_number{{ problem.0 }}">&nbsp;&nbsp;Question {{ problem.0 }}</small>
+            <small id="problem_number{{ problem.0 }}">&nbsp;&nbsp;Question {{ problem.0 }}</small>
           </button>
           <div class="content column is-full front-background main-text-color" style="text-align: left;">
             <b style="color: white;">{{problem.1.question}}</b> <br>
@@ -84,7 +79,7 @@
         </div>
 
         <div class="column is-one-fifth">
-          <button type="button" class="button is-danger is-outlined is-rounded is-fullwidth" onclick="decrement_question_numbers()" id="delete_problem{{ problem.0 }}">
+          <button type="button" class="button is-danger is-outlined is-rounded is-fullwidth" id="delete_problem{{ problem.0 }}">
             Delete question
           </button>
         </div>
@@ -92,16 +87,18 @@
 
       <script type="text/javascript">
         $('#delete_problem{{ problem.0 }}').click(function() {
-
           // Change affected problem numbers
-          for (var i = {{ problem.0 }} + 1; i <= initialProblems; i++) {
-            var element = document.getElementById("question_number" + i);
+          for (var i = {{ problem.0 }} + 1; i <= initialProblems - deletedInitialProblems; i++) {
+            var element = document.getElementById("problem_number" + i);
             element.innerHTML = "&nbsp;&nbsp;Question " + (i - 1);
+            //element.id = "problem_number" + (i - 1);
           }
+          deletedInitialProblems++;
+
+          decrement_question_numbers();
 
           // Remove problem and decrement
           document.getElementById("problem{{ problem.0 }}").remove();
-          decrement();
 
           // Makes it so the button does not return http request
           $.post(
@@ -137,6 +134,7 @@
         }
       </script>
 
+      <!-- This tag contains additional questions added -->
       <div id="questions"></div>
 
       <br>
@@ -189,22 +187,19 @@
     }
   }
 
+  // Called in existing questions
   function decrement_question_numbers() {
     if (clicks > 0) {
-      for (var i = 1; i <= clicks; i++) {
+      for (var i = initialProblems + 1; i <= clicks + initialProblems; i++) {
         var element = document.getElementById("question_number" + i);
         element.innerHTML = "&nbsp;&nbsp;Question " + (i - 1);
       }
-      clicks--;
-      //var element = document.getElementById("question_number" + clicks);
-      //element.innerHTML = "&nbsp;&nbsp;Question " + (clicks - 1);
-      //initialProblems--;
     }
   }
 
   $('#delete_question').click(function() {
     if (clicks > 0) {
-      document.getElementById("question" + (clicks - initialProblems)).remove();
+      document.getElementById("question_container" + (clicks + initialProblems)).remove();
       clicks--;
     }
   });
@@ -215,10 +210,11 @@
 
   function add() {
     clicks++;
-    $('#questions').append('<div id="question' + (clicks - initialProblems) + '"><br>' +
-      '<button type="button" id="collapsible' + (clicks - initialProblems) + '" class="collapsible box">' +
+    $('#questions').append('<div id="question_container' + (clicks + initialProblems) + '"><br>' +
+      '<button type="button" id="collapsible' + (clicks + initialProblems) + '" class="collapsible box">' +
       '<img src="https://img.icons8.com/officexs/16/000000/drag-list-down.png"/>' +
-      '<small id="question_number' + clicks + '">&nbsp;&nbsp;Question ' + clicks + '</small>' +
+      '<small id="question_number' + (clicks + initialProblems) + '">&nbsp;&nbsp;Question ' +
+        (clicks + initialProblems - deletedInitialProblems) + '</small>' +
       '</button>' +
       '<div class="content box main-background">' +
       '<div class="field">' +
@@ -229,7 +225,7 @@
       '</span>' +
       '</label>' +
       '<textarea rows="5" cols="10" wrap="soft" class="textarea is-primary is-rounded" ' +
-      'placeholder="What is the circumference of the sun?" name="question' + (clicks - initialProblems) + '"></textarea>' +
+      'placeholder="What is the circumference of the sun?" name="question' + (clicks + initialProblems) + '"></textarea>' +
       '</div>' +
       '</div>' +
 
@@ -240,7 +236,7 @@
       'Answer 1' +
       '</span>' +
       '</label>' +
-      '<input class="input is-primary is-rounded" placeholder="Three inches" type="text" name="question' + (clicks - initialProblems) + '_answer1">' +
+      '<input class="input is-primary is-rounded" placeholder="Three inches" type="text" name="question' + (clicks + initialProblems) + '_answer1">' +
       '</div>' +
       '</div>' +
 
@@ -251,7 +247,7 @@
       'Answer 2' +
       '</span>' +
       '</label>' +
-      '<input class="input is-primary is-rounded" placeholder="Nine light-years" type="text" name="question' + (clicks - initialProblems) + '_answer2">' +
+      '<input class="input is-primary is-rounded" placeholder="Nine light-years" type="text" name="question' + (clicks + initialProblems) + '_answer2">' +
       '</div>' +
       '</div>' +
 
@@ -262,7 +258,7 @@
       'Answer 3' +
       '</span>' +
       '</label>' +
-      '<input class="input is-primary is-rounded" placeholder="What is the sun?" type="text" name="question' + (clicks - initialProblems) + '_answer3">' +
+      '<input class="input is-primary is-rounded" placeholder="What is the sun?" type="text" name="question' + (clicks + initialProblems) + '_answer3">' +
       '</div>' +
       '</div>' +
 
@@ -273,13 +269,13 @@
       'Answer 4' +
       '</span>' +
       '</label>' +
-      '<input class="input is-primary is-rounded" placeholder="Who loves the sun?" type="text" name="question' + (clicks - initialProblems) + '_answer4">' +
+      '<input class="input is-primary is-rounded" placeholder="Who loves the sun?" type="text" name="question' + (clicks + initialProblems) + '_answer4">' +
       '</div>' +
       '</div>' +
       '</div>' +
       '</div><div>   </div>');
 
-    var coll = document.getElementById("collapsible" + (clicks - initialProblems));
+    var coll = document.getElementById("collapsible" + (clicks + initialProblems));
     var i;
 
     coll.addEventListener("click", function() {
