@@ -67,10 +67,23 @@
             <small id="problem_number{{ problem.0 }}">&nbsp;&nbsp;Question {{ problem.0 }}</small>
           </button>
           <div class="content column is-full front-background main-text-color" style="text-align: left;">
-            <b style="color: white;">{{problem.1.question}}</b> <br>
-            {% for answer in problem.1.answers %}
-            <b style="color: white;">{{answer.0}}.</b> {{answer.1}}&emsp;
-            {% endfor %}
+            <b class="is-capitalized is-size-5" style="color: white;">{{problem.1.question}}</b> <br>
+
+            <div class="columns is-centered is-multiline">
+              {% for answer in problem.1.answers %}
+              <div class="column is-half">
+                {% if answer.0 == problem.1.correct_answer %}
+                <b style="color: green;">&nbsp;&nbsp;{{answer.0}}.</b> <b style="color: green;">{{answer.1}}</b>&emsp;
+                {% endif %}
+                {% if answer.0 != problem.1.correct_answer %}
+                <b style="color: white;">&nbsp;&nbsp;{{answer.0}}.</b> {{answer.1}}
+                {% endif %}
+                <br>
+              </div>
+              {% endfor %}
+            </div>
+
+
           </div>
         </div>
 
@@ -87,7 +100,11 @@
       <script type="text/javascript">
         $('#delete_problem{{ problem.0 }}').click(function() {
           // Change affected problem numbers
-          var start = {{ problem.0 }} + 1 - deletedInitialProblems;
+          var start = {
+            {
+              problem .0
+            }
+          } + 1 - deletedInitialProblems;
           for (var i = start; i <= initialProblems - deletedInitialProblems; i++) {
             var element = document.getElementById("problem_number" + i);
             element.innerHTML = "&nbsp;&nbsp;Question " + (i - 1);
@@ -226,6 +243,37 @@
       '</label>' +
       '<textarea rows="5" cols="10" wrap="soft" class="textarea is-primary is-rounded" ' +
       'placeholder="What is the circumference of the sun?" name="question' + (clicks) + '"></textarea>' +
+      '</div>' +
+      '</div>' +
+
+      '<div class="columns is-centered is-multiline">' +
+      '<div class="column is-full" style="color:white;">' +
+      'Check correct answer:' +
+      '</div>' +
+
+      '<div class="control column is-half">' +
+      '<div class="columns">' +
+      '<div class="">' +
+      '</div>' +
+      '<label class="radio column box front-background is-one-quarter" style="color:white;">' +
+      '1&nbsp;&nbsp;&nbsp;&nbsp;' +
+      '<input type="radio" value="A" name="correct_answer' + clicks + '" checked>' +
+      '</label>' +
+      '<label class="radio column box front-background is-one-quarter" style="color:white;">' +
+      '2&nbsp;&nbsp;&nbsp;&nbsp;' +
+      '<input type="radio" value="B" name="correct_answer' + clicks + '">' +
+      '</label>' +
+      '<label class="radio column box front-background is-one-quarter" style="color:white;">' +
+      '3&nbsp;&nbsp;&nbsp;&nbsp;' +
+      '<input type="radio" value="C" name="correct_answer' + clicks + '">' +
+      '</label>' +
+      '<label class="radio column box front-background is-one-quarter" style="color:white;">' +
+      '4&nbsp;&nbsp;&nbsp;&nbsp;' +
+      '<input type="radio" value="D" name="correct_answer' + clicks + '">' +
+      '</label>' +
+      '<div class="">' +
+      '</div>' +
+      '</div>' +
       '</div>' +
       '</div>' +
 

@@ -71,7 +71,8 @@ def create_quiz(request, lesson_id):
                     except:
                         Quiz.objects.get(pk=quiz.id).delete()
                         return render(request, "teach/quiz/create_quiz.html", {"user":user, "lesson":lesson, "error":"Please choose answers for all questoins!"})
-                problem = Problem.objects.create(teacher = teacher, quiz = quiz, question = question, answers = answers)
+                correct_answer = request.POST["correct_answer" + str(i)]
+                problem = Problem.objects.create(teacher = teacher, quiz = quiz, question = question, answers = answers, correct_answer=correct_answer)
                 problem = get_object_or_404(Problem, pk=problem.id)
                 problem.save()
                 i += 1
@@ -207,7 +208,8 @@ def update_quiz(request, quiz_id):
                         answers.append(pair)
                     except:
                         return render(request, "teach/quiz/edit_quiz.html", {"user":user, "lesson":lesson, "quiz":quiz, "problems":problems, "error":"Create answers for all questions!"})
-                problem = Problem.objects.create(teacher = teacher, quiz = quiz, question = question, answers = answers)
+                correct_answer = request.POST["correct_answer" + str(i)]
+                problem = Problem.objects.create(teacher = teacher, quiz = quiz, question = question, answers = answers, correct_answer = correct_answer)
                 problem = get_object_or_404(Problem, pk=problem.id)
                 problem.save()
                 i += 1
