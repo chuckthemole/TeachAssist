@@ -56,6 +56,13 @@
       </div>
       {% endif %}
       <div class="column">
+        <form action="{% url 'quiz:take_quiz' quiz.id %}" method="get">
+          <button class="button is-primary is-fullwidth is-rounded">
+            Take this quiz
+          </button>
+        </form>
+      </div>
+      <div class="column">
         <form action="{% url 'quiz:show_all_quizzes' quiz.lesson.id %}" method="get">
           <button class="button is-primary is-fullwidth is-rounded">
             View all quizzes for this lesson
