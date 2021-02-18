@@ -67,7 +67,7 @@ class Problem(models.Model):
 
 	question = models.TextField(max_length=100, null=False, blank=False, unique=False, default="")
 	answers = ArrayField(ArrayField(models.TextField(max_length=30, null=False, blank=False, unique=False, default=""), size=2,), 4,)
-	correct_answer = models.IntegerField(null=True, blank=False, unique=False, default=1)
+	correct_answer = models.TextField(max_length=1, null=False, blank=False, unique=False, default="A")
 
 
 class Review(models.Model):
