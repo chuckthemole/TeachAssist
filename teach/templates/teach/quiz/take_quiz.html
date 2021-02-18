@@ -1,0 +1,98 @@
+<!-- show a lesson belonging to any user  -->
+{% extends "teach/base.html" %}
+
+{% block content %}
+
+{% load static %}
+
+<!--<div class="no-scroll">-->
+<br>
+<div style="margin: auto;">
+  <center>
+    <div class="tile is-8 is-vertical">
+      <div class="box front-background">
+        <h1 class="title is-2">
+          <div class="columns is-multiline">
+            <span class="column is-uppercase is-size-2 is-full main-text-color">
+              {{ lesson.subject }}
+            </span>
+            <span class="column is-capitalized is-size-4 is-full main-text-color">
+              {{ lesson.topic }}
+            </span>
+            <span class="column is-capitalized is-size-5 is-full main-text-color">
+              <a href="{% url 'lesson:show_lesson' lesson.id %}">
+                {{ lesson.lesson_name }}
+              </a>
+            </span>
+          </div>
+          <div class="columns">
+            <div class="column">
+              <div class="parent" style='width: 90%; height: 90%;'>
+                {% if lesson.game_link != None %}
+                <form action="{{ lesson.game_link }}" target="_blank" method="get">
+                  <button class="button is-fullwidth is-rounded is-info" rel="noopener noreferrer">
+                    Game Link
+                  </button>
+                </form>
+                {% endif %}
+                {% if lesson.game_link == None %}
+                No link to game!
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </h1>
+        <h2>
+          <span style="color:white;">
+            <small>
+              Created by {{ lesson.teacher.user.username }}
+            </small>
+          </span>
+          <br>
+        </h2>
+      </div>
+    </div>
+  </center>
+</div>
+
+<br><br>
+
+<form action="{% url 'quiz:submit_quiz' quiz.id %}" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="columns is-multiline is-centered">
+    {% for problem in problems %}
+    <div class="column box front-background is-full">
+      <b class="main-text-color">&nbsp;&nbsp;&nbsp;&nbsp;Question {{ problem.0 }}</b>
+      <div class="main-text-color" style="text-align: left;">
+        <b class="is-capitalized is-size-5" style="color: white;">{{problem.1.question}}</b> <br>
+
+        <div class="columns is-centered is-multiline">
+          {% for answer in problem.1.answers %}
+          <div class="column is-half control">
+            <b style="color: white;">&nbsp;&nbsp;{{ answer.0 }}.</b> {{ answer.1 }}
+            <label class="radio column is-one-quarter">
+              &nbsp;&nbsp;{{ answer.0 }}
+              <input type="radio" value="{{ answer.0 }}" name="submitted_answer{{ problem.0 }}">
+            </label>
+            <br>
+          </div>
+          {% endfor %}
+        </div>
+
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="field">
+    <div class="control">
+      <button class="button is-success is-outlined is-rounded is-fullwidth" type="submit" value="Publish">
+        Submit Quiz
+      </button>&nbsp;
+    </div>
+  </div>
+</form>
+
+
+
+{% endblock content %}
