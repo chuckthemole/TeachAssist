@@ -212,6 +212,28 @@ def update_quiz(request, quiz_id):
                 problem.save()
                 i += 1
 
+def take_quiz(request, quiz_id):
+    if request.method == "GET":
+        user = request.user
+        if not user.is_authenticated:
+            return redirect("collections:login")
+
+        quiz = get_object_or_404(Quiz, pk=quiz_id)
+
+        if quiz.teacher.user.id == request.user.id:
+            lesson = get_object_or_404(Lesson, pk=quiz.lesson.id)
+            p = Problem.objects.filter(quiz=quiz)
+            problems = []  # Problems with numbers attached
+            for i in range(len(p)):
+                item = []
+                item.append(i + 1)
+                item.append(p[i])
+                problems.append(item)
+            return render(request, "teach/quiz/take_quiz.html", {"user": user, "lesson": lesson, "quiz": quiz, "problems": problems})
+        else:
+            return render(request, "teach/index.html",
+                          {"error": "You can't take this quiz!"})
+
 def delete_quiz(request, quiz_id):
     if request.method == "POST":
         user = request.user
