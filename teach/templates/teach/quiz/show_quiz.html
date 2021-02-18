@@ -56,6 +56,13 @@
       </div>
       {% endif %}
       <div class="column">
+        <form action="{% url 'quiz:take_quiz' quiz.id %}" method="get">
+          <button class="button is-primary is-fullwidth is-rounded">
+            Take this quiz
+          </button>
+        </form>
+      </div>
+      <div class="column">
         <form action="{% url 'quiz:show_all_quizzes' quiz.lesson.id %}" method="get">
           <button class="button is-primary is-fullwidth is-rounded">
             View all quizzes for this lesson
@@ -85,11 +92,20 @@
     <div class="box front-background">
       <button type="button" class="collapsible">Question {{ problem.0 }}</button>
       <div class="content front-background main-text-color" style="text-align: left;">
-        <b style="color: white;">{{problem.1.question}}</b> <br>
+        <b class="is-capitalized is-size-5" style="color: white;">{{problem.1.question}}</b> <br>
+
         {% for answer in problem.1.answers %}
+
+        {% if answer.0 == problem.1.correct_answer %}
+        <b style="color: green;">{{answer.0}}.</b> <b style="color: green;">{{answer.1}}</b>
+        {% endif %}
+        {% if answer.0 != problem.1.correct_answer %}
         <b style="color: white;">{{answer.0}}.</b> {{answer.1}}
+        {% endif %}
         <br>
+
         {% endfor %}
+
       </div>
     </div>
     {% endfor %}
