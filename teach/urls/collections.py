@@ -13,4 +13,5 @@ urlpatterns = [
     path('settings', collections.edit_settings, name='edit_settings'),
     path('<int:teacher_id>/publish', collections.publish_settings, name='publish_settings'),
     path('filter', collections.index_filter, name='index_filter'),
+    path('code', collections.code, name='code'),
 ]

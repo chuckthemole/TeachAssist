@@ -63,28 +63,38 @@
     {% endif %}
 
     <div class="navbar-end">
-
-      {% if request.path != "/login" and request.path != "/loguser" and request.path != "/signup" and request.path != "/create" %}
-      <div class="navbar-item">
-        <a href="{% url 'collections:edit_settings' %}">
-          <article class="media container-img">
-            <figure class="image is-32x32">
-              {% load static %}
-              <img src="{{ user.teacher.img.url }}" class="is-rounded" style="object-fit: cover;" alt="Image not found" onerror="this.onerror=null;this.src='https://img.icons8.com/material-outlined/24/000000/user--v1.png';">
-            </figure>
-          </article>
-        </a>
-      </div>
-      {% endif %}
-
-
       <div class="navbar-item">
         <div class="buttons">
+
+          {% if request.path != "/login" and request.path != "/loguser" and request.path != "/signup" and request.path != "/create" and request.path != "/code" and request.path != "/lesson/find_lesson"%}
+          <div class="navbar-item">
+            <a href="{% url 'collections:edit_settings' %}">
+              <article class="media container-img">
+                <figure class="image is-32x32">
+                  {% load static %}
+                  <img src="{{ user.teacher.img.url }}" class="is-rounded" style="object-fit: cover;" alt="Image not found" onerror="this.onerror=null;this.src='https://img.icons8.com/material-outlined/24/000000/user--v1.png';">
+                </figure>
+              </article>
+            </a>
+          </div>
+          {% elif request.path != "/code" %}
+          <a class="button is-primary" href="{% url 'collections:code' %}">
+            Student
+          </a>
+          {% endif %}
+
           {% if request.path == "/login" or request.path == "/loguser" %}
           <a class="button is-primary" href="{% url 'collections:signup' %}">
             Signup
           </a>
-          {% elif request.path == "/signup" or request.path == "/create"  %}
+          {% elif request.path == "/signup" or request.path == "/create" %}
+          <a class="button is-primary" href="{% url 'collections:login' %}">
+            Login
+          </a>
+          {% elif request.path == "/code" %}
+          <a class="button is-primary" href="{% url 'collections:signup' %}">
+            Signup
+          </a>
           <a class="button is-primary" href="{% url 'collections:login' %}">
             Login
           </a>

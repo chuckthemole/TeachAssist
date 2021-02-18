@@ -303,6 +303,22 @@ def switch_public_private(request, lesson_id):
     else:
         return render(request, "teach/lesson/edit_lesson.html", {"lesson":lesson, "error":"Unable to make change!"})
 
+def find_lesson(request):
+    if request.method == "POST":
+        lesson_id = request.POST["code"]
+        try:
+            lesson = get_object_or_404(Lesson, pk=lesson_id)
+        except:
+            lesson = None
+        is_base_visible = False
+        if lesson:
+            if not lesson.is_public:
+                return render(request, "teach/student_login.html", {"is_base_visible":is_base_visible, "error":"Lesson is not public!"})
+            user = lesson.teacher
+            return render(request, "teach/lesson/show_lesson.html", {"user":user, "lesson":lesson})
+        else:
+            return render(request, "teach/student_login.html", {"is_base_visible":is_base_visible, "error":"No lesson with that code!"})
+
 def formaturl(url):
     if not re.match('(?:http|ftp|https)://', url):
         return 'http://www.{}'.format(url)
