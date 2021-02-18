@@ -149,6 +149,16 @@ def publish_settings(request, teacher_id):
         return redirect("collections:login")
     return render(request, "teach/dashboard.html", {"user":user, "my_lessons":my_lessons})
 
+def code(request):
+    if request.method == "GET":
+        if request.user.is_authenticated:
+            return redirect("collections:index")
+        else:
+            is_base_visible = False
+        return render(request, "teach/student_login.html", {"is_base_visible":is_base_visible})
+
+    else:
+        return HttpResponse(status=500)
 def testHTTP_request(request):
     # Testing http request object inside a view function
     print('********************************************')
