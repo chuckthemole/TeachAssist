@@ -276,7 +276,7 @@ def find_quiz(request):
                 problems.append(item)
             return render(request, "teach/quiz/take_quiz.html", {"user": user, "lesson": lesson, "quiz": quiz, "problems": problems})
         else:
-            return redirect("collections:code")
+            return redirect("collections:student")
 
 def delete_quiz(request, quiz_id):
     if request.method == "POST":

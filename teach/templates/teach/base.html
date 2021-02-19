@@ -66,7 +66,7 @@
       <div class="navbar-item">
         <div class="buttons">
 
-          {% if request.path != "/login" and request.path != "/loguser" and request.path != "/signup" and request.path != "/create" and request.path != "/code" and request.path != "/lesson/find_lesson"%}
+          {% if is_base_visible != False %}
           <div class="navbar-item">
             <a href="{% url 'collections:edit_settings' %}">
               <article class="media container-img">
@@ -77,12 +77,16 @@
               </article>
             </a>
           </div>
-          {% elif request.path != "/code" %}
-          <a class="button is-primary" href="{% url 'collections:code' %}">
+          <a class="button is-primary" href="{% url 'collections:logout' %}">
+            Logout
+          </a>
+
+          {% else %}
+          {% if request.path != "/student" %}
+          <a class="button is-primary" href="{% url 'collections:student' %}">
             Student
           </a>
           {% endif %}
-
           {% if request.path == "/login" or request.path == "/loguser" %}
           <a class="button is-primary" href="{% url 'collections:signup' %}">
             Signup
@@ -91,17 +95,15 @@
           <a class="button is-primary" href="{% url 'collections:login' %}">
             Login
           </a>
-          {% elif request.path == "/code" %}
+          {% elif request.path == "/student" %}
           <a class="button is-primary" href="{% url 'collections:signup' %}">
             Signup
           </a>
           <a class="button is-primary" href="{% url 'collections:login' %}">
             Login
           </a>
-          {% else %}
-          <a class="button is-primary" href="{% url 'collections:logout' %}">
-            Logout
-          </a>
+          {% endif %}
+
           {% endif %}
         </div>
       </div>

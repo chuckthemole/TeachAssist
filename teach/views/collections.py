@@ -149,7 +149,7 @@ def publish_settings(request, teacher_id):
         return redirect("collections:login")
     return render(request, "teach/dashboard.html", {"user":user, "my_lessons":my_lessons})
 
-def code(request):
+def student(request):
     if request.method == "GET":
         if request.user.is_authenticated:
             return redirect("collections:index")
