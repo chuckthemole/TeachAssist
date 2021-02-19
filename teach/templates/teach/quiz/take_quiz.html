@@ -39,8 +39,10 @@
                   </button>
                 </form>
                 {% endif %}
-                {% if lesson.game_link == None %}
-                No link to game!
+                {% if lesson.game_link == None and user != None %}
+                <div style="color:white;">
+                  No link to game!
+                </div>
                 {% endif %}
               </div>
             </div>

@@ -262,6 +262,16 @@ def find_quiz(request):
             user = None
             is_base_visible = False
         quiz_code = request.POST["code"]
+        student_name = request.POST["student_name"]
+        if not quiz_code and not student_name:
+            messages.error(request, 'Enter a name and valid quiz code!')
+            return redirect("collections:student")
+        if not quiz_code:
+            messages.error(request, 'Enter valid quiz code!')
+            return redirect("collections:student")
+        if not student_name:
+            messages.error(request, 'Enter a name!')
+            return redirect("collections:student")
         try:
             quizzes = Quiz.objects.filter(quiz_code=quiz_code)
             quiz = quizzes[0]
@@ -281,6 +291,7 @@ def find_quiz(request):
                 problems.append(item)
             return render(request, "teach/quiz/take_quiz.html", {"user": user, "lesson": lesson, "quiz": quiz, "problems": problems, "is_base_visible": is_base_visible})
         else:
+            messages.error(request, 'Quiz with code ' + quiz_code + ' not found!')
             return redirect("collections:student")
 
 def delete_quiz(request, quiz_id):
