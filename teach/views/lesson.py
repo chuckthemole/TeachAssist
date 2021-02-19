@@ -9,7 +9,7 @@ def publish_lesson(request):
     if request.method == "GET":
         user = request.user
         if not user.is_authenticated:
-            return redirect("teach:login")
+            return redirect("collections:login")
         else:
             form = Lesson_Form()
             return render(request, "teach/lesson/create_lesson.html", {"user":user, "form":form} )
@@ -18,7 +18,7 @@ def create_lesson(request):
     if request.method == "POST":
         user = request.user
         if not user.is_authenticated:
-            return redirect("teach:login")
+            return redirect("collections:login")
 
         teacher = user.teacher
         subject = request.POST["subject"]
@@ -128,7 +128,7 @@ def show_lesson(request, lesson_id):
     if request.method == "GET":
         user = request.user
         if not user.is_authenticated:
-            return redirect("teach:login")
+            return redirect("collections:login")
         else:
             lesson = get_object_or_404(Lesson, pk=lesson_id)
             if lesson.teacher.id != user.teacher.id:
@@ -141,7 +141,7 @@ def publish_image(request, location_id):
     if request.method == "GET":
         user = request.user
         if not user.is_authenticated:
-            return redirect("teach:login")
+            return redirect("collections:login")
         else:
             location = get_object_or_404(Lesson, pk=lesson_id)
             form = Sport_Location_Form()
@@ -151,7 +151,7 @@ def create_image(request, lesson_id):
     if request.method == "POST":
         user = request.user
         if not user.is_authenticated:
-            return redirect("teach:login")
+            return redirect("collections:login")
         else:
             try:
                 lesson = get_object_or_404(Lesson, pk=lesson_id)
@@ -174,13 +174,13 @@ def create_image(request, lesson_id):
             lesson = get_object_or_404(Lesson, pk=lesson_id)
             return render(request, "teach/lesson/show_lesson.html", {"user":user, "lesson":lesson})
         else:
-            return redirect("teach:login")
+            return redirect("collections:login")
 
 def show_image(request, lesson_id):
     if request.method == "GET":
         user = request.user
         if not user.is_authenticated:
-            return redirect("teach:login")
+            return redirect("collections:login")
         else:
             lesson = get_object_or_404(Lesson, pk=lesson_id)
             return render(request, "teach/lesson/show_image.html", {"user":user, "lesson":lesson})

@@ -4,7 +4,7 @@ def publish_quiz(request, lesson_id):
     if request.method == "GET":
         user = request.user
         if not user.is_authenticated:
-            return redirect("teach:login")
+            return redirect("collections:login")
         lesson = get_object_or_404(Lesson, pk=lesson_id)
         return render(request, "teach/quiz/create_quiz.html", {"user":user, "lesson":lesson})
 
@@ -12,7 +12,7 @@ def create_quiz(request, lesson_id):
     if request.method == "POST":
         user = request.user
         if not user.is_authenticated:
-            return redirect("teach:login")
+            return redirect("collections:login")
 
         teacher = user.teacher
         lesson = get_object_or_404(Lesson, pk=lesson_id)
@@ -81,7 +81,7 @@ def show_quiz(request, quiz_id):
     if request.method == "GET":
         user = request.user
         if not user.is_authenticated:
-            return redirect("teach:login")
+            return redirect("collections:login")
         else:
             quiz = get_object_or_404(Quiz, pk=quiz_id)
             if quiz:
@@ -93,13 +93,13 @@ def show_quiz(request, quiz_id):
                     item.append(p[i])
                     problems.append(item)
                 return render(request, "teach/quiz/show_quiz.html", {"user":user, "quiz":quiz, "problems":problems})
-        return redirect("teach:login")
+        return redirect("collections:login")
 
 def show_all_quizzes(request, lesson_id):
     if request.method == "GET":
         user = request.user
         if not user.is_authenticated:
-            return redirect("teach:login")
+            return redirect("collections:login")
         else:
             lesson = get_object_or_404(Lesson, pk=lesson_id)
             quizzes = Quiz.objects.filter(lesson=lesson)
@@ -143,7 +143,7 @@ def update_quiz(request, quiz_id):
     if request.method == "POST":
         user = request.user
         if not user.is_authenticated:
-            return redirect("teach:login")
+            return redirect("collections:login")
         teacher = user.teacher
         quiz = get_object_or_404(Quiz, pk=quiz_id)
         name = request.POST["name"]
@@ -240,10 +240,9 @@ def submit_quiz(request, quiz_id):
     if request.method == "POST":
         user = request.user
         if not user.is_authenticated:
-            return redirect("collections:login")
-
+            user = None
+            is_base_visible = False
         quiz = get_object_or_404(Quiz, pk=quiz_id)
-
         lesson = get_object_or_404(Lesson, pk=quiz.lesson.id)
         p = Problem.objects.filter(quiz=quiz)
         problems = []  # Problems with numbers attached
@@ -254,23 +253,24 @@ def submit_quiz(request, quiz_id):
             submitted_answer = request.POST["submitted_answer" + str(i + 1)]
             item.append(submitted_answer)
             problems.append(item)
-        return render(request, "teach/quiz/quiz_results.html", {"user": user, "lesson": lesson, "quiz": quiz, "problems": problems})
+        return render(request, "teach/quiz/quiz_results.html", {"user": user, "lesson": lesson, "quiz": quiz, "problems": problems, "is_base_visible": is_base_visible})
 
 def find_quiz(request):
     if request.method == "POST":
+        user = request.user
+        if not user.is_authenticated:
+            user = None
+            is_base_visible = False
         quiz_code = request.POST["code"]
         try:
-            print(quiz_code)
             quizzes = Quiz.objects.filter(quiz_code=quiz_code)
             quiz = quizzes[0]
-            print("*********** retrieved quiz  **************")
-            print(type(quizzes))
+            print(quiz_code)
+            print("Retrieved quiz")
         except:
-            print("*********** No quiz  **************")
+            print("No quiz found!")
             quiz = None
-        is_base_visible = False
         if quiz:
-            user = quiz.teacher
             lesson = get_object_or_404(Lesson, pk=quiz.lesson.id)
             p = Problem.objects.filter(quiz=quiz)
             problems = []  # Problems with numbers attached
@@ -279,7 +279,7 @@ def find_quiz(request):
                 item.append(i + 1)
                 item.append(p[i])
                 problems.append(item)
-            return render(request, "teach/quiz/take_quiz.html", {"user": user, "lesson": lesson, "quiz": quiz, "problems": problems})
+            return render(request, "teach/quiz/take_quiz.html", {"user": user, "lesson": lesson, "quiz": quiz, "problems": problems, "is_base_visible": is_base_visible})
         else:
             return redirect("collections:student")
 
