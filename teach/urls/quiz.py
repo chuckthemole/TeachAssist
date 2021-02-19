@@ -16,4 +16,5 @@ urlpatterns = [
     path('quiz/<int:quiz_id>/submit_quiz', quiz.submit_quiz, name='submit_quiz'),
     path('quiz/<int:quiz_id>/switch', quiz.switch_public_private, name='switch_public_private'),
     path('quiz/find_quiz', quiz.find_quiz, name='find_quiz'),
+    path('quiz/<int:quiz_id>/create_quiz_code', quiz.create_quiz_code, name='create_quiz_code'),
 ]
