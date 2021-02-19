@@ -39,6 +39,19 @@
 
 <br><br>
 
+<div class="columns is-centered">
+  <div class="column box front-background is-half">
+    <div class="main-text-color has-text-centered is-size-5">
+      You have {{ number_of_active_quizzes }} active quizzes
+    </div>
+    {% for quiz in active_quizzes %}
+
+    {% endfor %}
+  </div>
+</div>
+
+<br>
+
 {% if not no_lessons %}
 
 <!-- List all user's lessons -->
