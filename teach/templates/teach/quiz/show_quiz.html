@@ -5,6 +5,10 @@
 
 {% load static %}
 
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
 <!--<div class="no-scroll">-->
 <br>
 <div style="margin: auto;">
@@ -24,7 +28,7 @@
             Quiz code:
           </span>
           <span class="main-text-color">
-            {{ quiz.id }}
+            {{ quiz.quiz_code }}
           </span>
         </h2>
         <h3>
@@ -47,13 +51,19 @@
   </center>
 </div>
 
-<br><br>
-
-
+<br>
 
 <center>
   <div class="tile is-8 is-vertical">
-    <div class="columns is-centered">
+    <div class="columns is-centered is-multiline">
+      <div class="column is-full">
+        <form action="{% url 'quiz:create_quiz_code' quiz.id %}" method="post">
+          {% csrf_token %}
+          <button class="button is-info is-outlined is-rounded is-fullwidth">
+            Create Quiz Code
+          </button>
+        </form>
+      </div>
       {% if quiz.teacher.user.id == user.id %}
       <div class="column">
         <form action="{% url 'quiz:edit_quiz' quiz.id %}" method="get">

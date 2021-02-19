@@ -258,10 +258,15 @@ def submit_quiz(request, quiz_id):
 
 def find_quiz(request):
     if request.method == "POST":
-        quiz_id = request.POST["code"]
+        quiz_code = request.POST["code"]
         try:
-            quiz = get_object_or_404(Quiz, pk=quiz_id)
+            print(quiz_code)
+            quizzes = Quiz.objects.filter(quiz_code=quiz_code)
+            quiz = quizzes[0]
+            print("*********** retrieved quiz  **************")
+            print(type(quizzes))
         except:
+            print("*********** No quiz  **************")
             quiz = None
         is_base_visible = False
         if quiz:
@@ -315,6 +320,31 @@ def delete_problem(request, problem_id):
         return HttpResponse(status=500)
     else:
         return HttpResponse(status=500)
+
+def create_quiz_code(request, quiz_id):
+    if request.method == "POST":
+        user = request.user
+        if not user.is_authenticated:
+            return HttpResponse(status=500)
+        length = 6
+        #letters = string.ascii_lowercase
+        key = ''.join(random.choice(string.ascii_lowercase) for i in range(length))
+        print("Random key for quiz is: ", key)
+        quiz = get_object_or_404(Quiz, pk=quiz_id)
+        quiz.quiz_code = key
+        quiz.save()
+        quiz = get_object_or_404(Quiz, pk=quiz_id)
+        if quiz:
+            p = Problem.objects.filter(quiz=quiz)
+            problems = []
+            for i in range(len(p)):
+                item = []
+                item.append(i + 1)
+                item.append(p[i])
+                problems.append(item)
+            return render(request, "teach/quiz/show_quiz.html", {"user":user, "quiz":quiz, "problems":problems})
+    else:
+        return redirect("collections:login")
 
 def switch_public_private(request):
     pass
