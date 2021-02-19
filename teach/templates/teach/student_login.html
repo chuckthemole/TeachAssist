@@ -44,7 +44,7 @@
       </p>
 
       <div class="panel-block">
-        <form class="columns is-centered is-multiline" action="{% url 'lesson:find_lesson' %}" method="post">
+        <form class="columns is-centered is-multiline" action="{% url 'quiz:find_quiz' %}" method="post">
           {% csrf_token %}
           <div class="column is-full">
             <span style="color:red;">

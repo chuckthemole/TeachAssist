@@ -256,6 +256,28 @@ def submit_quiz(request, quiz_id):
             problems.append(item)
         return render(request, "teach/quiz/quiz_results.html", {"user": user, "lesson": lesson, "quiz": quiz, "problems": problems})
 
+def find_quiz(request):
+    if request.method == "POST":
+        quiz_id = request.POST["code"]
+        try:
+            quiz = get_object_or_404(Quiz, pk=quiz_id)
+        except:
+            quiz = None
+        is_base_visible = False
+        if quiz:
+            user = quiz.teacher
+            lesson = get_object_or_404(Lesson, pk=quiz.lesson.id)
+            p = Problem.objects.filter(quiz=quiz)
+            problems = []  # Problems with numbers attached
+            for i in range(len(p)):
+                item = []
+                item.append(i + 1)
+                item.append(p[i])
+                problems.append(item)
+            return render(request, "teach/quiz/take_quiz.html", {"user": user, "lesson": lesson, "quiz": quiz, "problems": problems})
+        else:
+            return redirect("collections:code")
+
 def delete_quiz(request, quiz_id):
     if request.method == "POST":
         user = request.user
