@@ -317,7 +317,7 @@ def find_lesson(request):
             user = lesson.teacher
             return render(request, "teach/lesson/show_lesson.html", {"user":user, "lesson":lesson})
         else:
-            return render(request, "teach/student_login.html", {"is_base_visible":is_base_visible, "error":"No lesson with that code!"})
+            return redirect("collections:code")
 
 def formaturl(url):
     if not re.match('(?:http|ftp|https)://', url):
