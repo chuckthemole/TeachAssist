@@ -54,6 +54,7 @@
 <center>
   <div class="tile is-8 is-vertical">
     {% for quiz in quizzes %}
+    {% if not quiz.is_active %}
     <div class="box alt-front-background">
       <button type="button" class="collapsible">
         Quiz: {{quiz.name}}
@@ -90,6 +91,7 @@
         </div>
       </div>
     </div>
+    {% endif %}
     {% endfor %}
   </div>
 </center>

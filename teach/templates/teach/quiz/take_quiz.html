@@ -61,7 +61,21 @@
   </center>
 </div>
 
-<br><br>
+<br>
+{% if user == None %}
+<div class="columns is-centered" style="color:white;">
+  Welcome {{ student_name }}!
+</div>
+{% endif %}
+<br>
+
+{% if error %}
+<div class="columns is-centered">
+  <span style="color:red;">
+    {{error}}
+  </span>
+</div>
+{% endif %}
 
 <form action="{% url 'quiz:submit_quiz' quiz.id %}" method="post" enctype="multipart/form-data">
   {% csrf_token %}
