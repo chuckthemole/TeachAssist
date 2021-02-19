@@ -8,7 +8,7 @@ def publish_comment(request, review_id):
     if request.method == "GET":
         user = request.user
         if not user.is_authenticated:
-            return redirect("teach:login")
+            return redirect("collections:login")
         else:
             review = get_object_or_404(Review, pk=review_id)
             return render(request, "teach/comment/create_comment.html", {"user":user, "review":review} )
@@ -17,7 +17,7 @@ def create_comment(request, review_id):
     if request.method == "POST":
         user = request.user
         if not user.is_authenticated:
-            return redirect("teach:login")
+            return redirect("collections:login")
 
         review = get_object_or_404(Review, pk=review_id)
 
@@ -46,7 +46,7 @@ def show_comment(request, review_id):
     if request.method == "GET":
         user = request.user
         if not user.is_authenticated:
-            return redirect("teach:login")
+            return redirect("collections:login")
         else:
             # make sure to import the fucntion get_object_or_404 from  django.shortcuts
             review = get_object_or_404(Review, pk=review_id)
@@ -64,7 +64,7 @@ def delete_comment(request, review_id):
     if request.method == "POST":
         user = request.user
         if not user.is_authenticated:
-            return redirect("teach:login")
+            return redirect("collections:login")
 
         review = get_object_or_404(Review, pk=review_id)
 

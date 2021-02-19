@@ -5,7 +5,7 @@ def publish_destination(request, location_id):
     if request.method == "GET":
         user = request.user
         if not user.is_authenticated:
-            return redirect("teach:login")
+            return redirect("collections:login")
         else:
             location = get_object_or_404(Location, pk=location_id)
             return render(request, "teach/destination/create_destination.html", {"user":user, "location":location} )
@@ -14,7 +14,7 @@ def create_destination(request, location_id):
     if request.method == "POST":
         user = request.user
         if not user.is_authenticated:
-            return redirect("teach:login")
+            return redirect("collections:login")
 
         location = get_object_or_404(Location, pk=location_id)
 
@@ -51,7 +51,7 @@ def show_destination(request, destination_id):
     if request.method == "GET":
         user = request.user
         if not user.is_authenticated:
-            return redirect("teach:login")
+            return redirect("collections:login")
         else:
             # make sure to import the fucntion get_object_or_404 from  django.shortcuts
             destination = get_object_or_404(Destination, pk=destination_id)

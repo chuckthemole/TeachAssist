@@ -16,7 +16,7 @@ def publish_image(request, location_id):
     if request.method == "GET":
         user = request.user
         if not user.is_authenticated:
-            return redirect("teach:login")
+            return redirect("collections:login")
         else:
             location = get_object_or_404(Location, pk=location_id)
             form = Sport_Location_Form(request.POST, request.FILES, instance=location)
@@ -39,7 +39,7 @@ def location_to_image(request, location_id):
     if request.method == "GET":
         user = request.user
         if not user.is_authenticated:
-            return redirect("teach:login")
+            return redirect("collections:login")
         else:
             location = get_object_or_404(Location, pk=location_id)
             return render(request, "teach/image/create_image.html",{"user":user, "location":location})
@@ -53,7 +53,7 @@ def publish_sport_location(request, sport_id):
 
             return render(request, "teach/index.html", {"user":user, "all_locations": all_locations})
         else:
-            return redirect("teach:login")
+            return redirect("collections:login")
     else:
         return HttpResponse(status=500)
 
