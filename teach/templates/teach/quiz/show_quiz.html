@@ -19,7 +19,15 @@
             {{ quiz.teacher.user.username }}
           </span>
         </h1>
-        <h2>
+        <h2 class="title is-2">
+          <span style="color:white;">
+            Quiz code:
+          </span>
+          <span class="main-text-color">
+            {{ quiz.id }}
+          </span>
+        </h2>
+        <h3>
           <span style="color:white;">
             <a href="{% url 'lesson:show_lesson' quiz.lesson.id %}">
               <u>Lesson</u>:
@@ -33,7 +41,7 @@
             </small>
           </span>
           <br>
-        </h2>
+        </h3>
       </div>
     </div>
   </center>

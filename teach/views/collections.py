@@ -156,9 +156,9 @@ def code(request):
         else:
             is_base_visible = False
         return render(request, "teach/student_login.html", {"is_base_visible":is_base_visible})
-
     else:
         return HttpResponse(status=500)
+
 def testHTTP_request(request):
     # Testing http request object inside a view function
     print('********************************************')
