@@ -245,7 +245,7 @@ def take_quiz(request, quiz_id):
             return render(request, "teach/index.html",
                           {"error": "You can't take this quiz!"})
 
-def submit_quiz(request, quiz_id):
+def submit_quiz(request, student_id):
     if request.method == "POST":
         user = request.user
         if not user.is_authenticated:
@@ -253,7 +253,8 @@ def submit_quiz(request, quiz_id):
             is_base_visible = False
         else:
             is_base_visible = True
-        quiz = get_object_or_404(Quiz, pk=quiz_id)
+        student = get_object_or_404(Student, pk=student_id)
+        quiz = get_object_or_404(Quiz, pk=student.quiz.id)
         lesson = get_object_or_404(Lesson, pk=quiz.lesson.id)
         p = Problem.objects.filter(quiz=quiz)
         problems = []  # Problems with numbers attached
@@ -264,13 +265,13 @@ def submit_quiz(request, quiz_id):
             item.append(p[i])
             try:
                 submitted_answer = request.POST["submitted_answer" + str(i + 1)]
+                item.append(submitted_answer)
             except:
                 answered_all_questions = False
-            item.append(submitted_answer)
             problems.append(item)
         if answered_all_questions:
             return render(request, "teach/quiz/quiz_results.html", {"user": user, "lesson": lesson, "quiz": quiz, "problems": problems, "is_base_visible": is_base_visible})
-        return render(request, "teach/quiz/take_quiz.html", {"user": user, "lesson": lesson, "quiz": quiz, "problems": problems, "error": "Answer all questions!"})
+        return render(request, "teach/quiz/take_quiz.html", {"user": user, "student": student, "lesson": lesson, "quiz": quiz, "problems": problems, "error": "Answer all questions!"})
 
 def find_quiz(request):
     if request.method == "POST":
@@ -291,14 +292,17 @@ def find_quiz(request):
                 messages.error(request, 'Enter a name!')
             return redirect("collections:student")
         try:
-            quizzes = Quiz.objects.filter(quiz_code=quiz_code)
-            quiz = quizzes[0]
+            quiz = Quiz.objects.filter(quiz_code=quiz_code)
+            quiz = quiz[0]
             print(quiz_code)
             print("Retrieved quiz")
+            student = Student.objects.create(teacher = quiz.teacher, name = student_name, quiz = quiz)
+            student = get_object_or_404(Student, pk=student.id)
+            student.save()
         except:
             print("No quiz found!")
             quiz = None
-        if quiz:
+        if quiz and not quiz.is_stopped:
             lesson = get_object_or_404(Lesson, pk=quiz.lesson.id)
             p = Problem.objects.filter(quiz=quiz)
             problems = []  # Problems with numbers attached
@@ -307,7 +311,7 @@ def find_quiz(request):
                 item.append(i + 1)
                 item.append(p[i])
                 problems.append(item)
-            return render(request, "teach/quiz/take_quiz.html", {"user": user, "lesson": lesson, "quiz": quiz, "problems": problems, "student_name": student_name, "is_base_visible": is_base_visible})
+            return render(request, "teach/quiz/take_quiz.html", {"user": user, "lesson": lesson, "quiz": quiz, "problems": problems, "student": student, "is_base_visible": is_base_visible})
         else:
             messages.error(request, 'Quiz with code ' + quiz_code + ' not found!')
             return redirect("collections:student")
@@ -388,13 +392,33 @@ def create_quiz_code(request, quiz_id):
     return redirect("collections:login")
 
 def restart_quiz(request, quiz_id):
-    pass
+    user = if_request_is_get(request)
+    quiz = get_object_or_404(Quiz, pk=quiz_id)
+    quiz.is_stopped = False
+    quiz.save()
+    quizzes = Quiz.objects.filter(teacher=user.teacher, is_active=True)
+    return render(request, "teach/quiz/show_active_quizzes.html", {"user":user, "quizzes":quizzes})
 
 def stop_quiz(request, quiz_id):
-    pass
+    user = if_request_is_get(request)
+    quiz = get_object_or_404(Quiz, pk=quiz_id)
+    quiz.is_stopped = True
+    quiz.save()
+    quizzes = Quiz.objects.filter(teacher=user.teacher, is_active=True)
+    return render(request, "teach/quiz/show_active_quizzes.html", {"user":user, "quizzes":quizzes})
 
 def show_quiz_results(request, quiz_id):
-    pass
+    user = if_request_is_get(request)
+
 
 def switch_public_private(request):
     pass
+
+def if_request_is_get(request):
+    if request.method == "GET":
+        user = request.user
+        if not user.is_authenticated:
+            return redirect("collections:login")
+    else:
+        return redirect("collections:login")
+    return user
