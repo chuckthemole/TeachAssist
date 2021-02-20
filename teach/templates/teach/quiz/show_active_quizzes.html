@@ -1,0 +1,101 @@
+{% extends "teach/base.html" %}
+
+{% block content %}
+
+{% load static %}
+
+<!--<div class="no-scroll">-->
+<br>
+<div class="has-text-centered tile is-ancestor is-8" style="margin: auto">
+  <div class="tile is-child box front-background">
+    <h1 class="title is-2">
+      <span class="main-text-color">
+        {{ user.username }}
+      </span><br>
+      <span style="color:white;">
+        Active quizzes
+      </span>
+    </h1>
+  </div>
+</div>
+
+<div class="columns is-centered">
+  <div class="column is-half">
+
+  </div>
+</div>
+
+<br><br>
+
+<center>
+  <div class="tile is-8 is-vertical">
+    {% for quiz in quizzes %}
+    {% if quiz.is_active %}
+    <div class="box alt-front-background">
+      <button type="button" class="collapsible">
+        Quiz: {{quiz.name}}
+      </button>
+      <div class="content alt-front-background main-text-color" style="text-align: left;">
+        <div class="columns is-centered is-multiline">
+          {% if quiz.teacher.user.id == user.id %}
+          <div class="column is-one-third">
+            {% if quiz.is_stopped %}
+            <form action="{% url 'quiz:restart_quiz' quiz.id %}" method="get">
+              <button class="button is-primary is-outlined is-fullwidth is-rounded">
+                <div style="color:white;">Restart Quiz</div>
+              </button>
+            </form>
+            {% else %}
+            <form action="{% url 'quiz:stop_quiz' quiz.id %}" method="get">
+              <button class="button is-primary is-outlined is-fullwidth is-rounded">
+                <div style="color:white;">Stop Quiz</div>
+              </button>
+            </form>
+            {% endif %}
+          </div>
+          {% endif %}
+          <div class="column is-one-third">
+            <form action="{% url 'quiz:delete_quiz' quiz.id %}" method="post">
+              {% csrf_token %}
+              <button class="button is-danger is-outlined is-fullwidth is-rounded">
+                <div style="color:white;">Delete Quiz</div>
+              </button>&nbsp;
+            </form>
+          </div>
+          <div class="column is-one-third">
+            <form action="{% url 'quiz:show_quiz_results' quiz.id %}" method="get">
+              <button class="button is-success is-outlined is-fullwidth is-rounded">
+                <div style="color:white;">View Results</div>
+              </button>
+            </form>
+          </div>
+          <div class="column is-fullwidth has-text-centered" style="color:white;">
+            This quiz has {{quiz.number_of_problems}} problems.<br>
+            Quiz code: {{ quiz.quiz_code }}
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+</center>
+
+<script>
+  var coll = document.getElementsByClassName("collapsible");
+  var i;
+
+  for (i = 0; i < coll.length; i++) {
+    coll[i].addEventListener("click", function() {
+      this.classList.toggle("active");
+      var content = this.nextElementSibling;
+      if (content.style.display === "block") {
+        content.style.display = "none";
+      } else {
+        content.style.display = "block";
+      }
+    });
+  }
+</script>
+
+{% endblock content %}

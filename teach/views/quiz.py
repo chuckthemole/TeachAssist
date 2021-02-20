@@ -106,6 +106,15 @@ def show_all_quizzes(request, lesson_id):
             number_of_quizzes = lesson.number_of_quizzes
             return render(request, "teach/quiz/show_all_quizzes.html", {"user":user, "lesson":lesson, "quizzes":quizzes, "number_of_quizzes":number_of_quizzes})
 
+def show_active_quizzes(request):
+    if request.method == "GET":
+        user = request.user
+        if not user.is_authenticated:
+            return redirect("collections:login")
+        else:
+            quizzes = Quiz.objects.filter(teacher=user.teacher, is_active=True)
+            return render(request, "teach/quiz/show_active_quizzes.html", {"user":user, "quizzes":quizzes})
+
 def show_quiz_with_numbered_problems(request, quiz):
     user = quiz.teacher.user
     p = Problem.objects.filter(quiz=quiz)
@@ -358,6 +367,7 @@ def create_quiz_code(request, quiz_id):
             quiz.teacher = user.teacher
             quiz.quiz_code = key
             quiz.is_active = True
+            quiz.is_stopped = False
             quiz.save()
             quiz = get_object_or_404(Quiz, pk=quiz.id)
             p = Problem.objects.filter(quiz=primary_quiz)
@@ -376,6 +386,15 @@ def create_quiz_code(request, quiz_id):
             return render(request, "teach/quiz/show_quiz.html", {"user":user, "quiz":quiz, "problems":problems})
         return redirect("collections:login")
     return redirect("collections:login")
+
+def restart_quiz(request, quiz_id):
+    pass
+
+def stop_quiz(request, quiz_id):
+    pass
+
+def show_quiz_results(request, quiz_id):
+    pass
 
 def switch_public_private(request):
     pass
