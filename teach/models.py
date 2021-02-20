@@ -60,6 +60,7 @@ class Quiz(models.Model):
 	number_of_problems = models.IntegerField(blank=False, default=0)
 	quiz_code = models.TextField(max_length=6, null=True, blank=True, unique=True, default="")
 	is_active = models.BooleanField(null=True, blank=True, default=False, unique=False)
+	is_stopped = models.BooleanField(null=True, blank=True, default=True, unique=False)
 	created = models.DateField(auto_now=True)
 
 class Problem(models.Model):

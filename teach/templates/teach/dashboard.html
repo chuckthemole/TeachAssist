@@ -44,9 +44,11 @@
     <div class="main-text-color has-text-centered is-size-5">
       You have {{ number_of_active_quizzes }} active quizzes
     </div>
-    {% for quiz in active_quizzes %}
-
-    {% endfor %}
+    <form action="{% url 'quiz:show_active_quizzes' %}" method="get">
+      <button class="button is-primary is-fullwidth is-rounded">
+        View active quizzes
+      </button>
+    </form>
   </div>
 </div>
 
