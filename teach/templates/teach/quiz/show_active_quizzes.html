@@ -1,4 +1,3 @@
-<!-- show a lesson belonging to any user  -->
 {% extends "teach/base.html" %}
 
 {% block content %}
@@ -7,45 +6,22 @@
 
 <!--<div class="no-scroll">-->
 <br>
-<div style="margin: auto;">
-  <center>
-    <div class="tile is-8 is-vertical">
-      <div class="box front-background">
-        <h1 class="title is-2">
-          <span style="color:white;">
-            Lesson
-          </span>
-          <span class="main-text-color">
-            <a href="{% url 'lesson:show_lesson' lesson.id %}">
-              {{ lesson.lesson_name }}
-            </a>
-          </span>
-          <span style="color:white;">
-            has {{ number_of_quizzes }} quizzes.
-          </span>
-        </h1>
-        <h2>
-          <span style="color:white;">
-            <small>
-              Created by {{ lesson.teacher.user.username }}
-            </small>
-          </span>
-          <br>
-        </h2>
-      </div>
-    </div>
-  </center>
+<div class="has-text-centered tile is-ancestor is-8" style="margin: auto">
+  <div class="tile is-child box front-background">
+    <h1 class="title is-2">
+      <span class="main-text-color">
+        {{ user.username }}
+      </span><br>
+      <span style="color:white;">
+        Active quizzes
+      </span>
+    </h1>
+  </div>
 </div>
-
-<br><br>
 
 <div class="columns is-centered">
   <div class="column is-half">
-    <form action="{% url 'quiz:publish_quiz' lesson.id %}" method="get">
-      <button class="button is-info is-fullwidth is-rounded">
-        Create a quiz for this lesson
-      </button>
-    </form>
+
   </div>
 </div>
 
@@ -54,7 +30,7 @@
 <center>
   <div class="tile is-8 is-vertical">
     {% for quiz in quizzes %}
-    {% if not quiz.is_active %}
+    {% if quiz.is_active %}
     <div class="box alt-front-background">
       <button type="button" class="collapsible">
         Quiz: {{quiz.name}}
@@ -63,11 +39,19 @@
         <div class="columns is-centered is-multiline">
           {% if quiz.teacher.user.id == user.id %}
           <div class="column is-one-third">
-            <form action="{% url 'quiz:edit_quiz' quiz.id %}" method="get">
+            {% if quiz.is_stopped %}
+            <form action="{% url 'quiz:restart_quiz' quiz.id %}" method="get">
               <button class="button is-primary is-outlined is-fullwidth is-rounded">
-                <div style="color:white;">Edit Quiz</div>
+                <div style="color:white;">Restart Quiz</div>
               </button>
             </form>
+            {% else %}
+            <form action="{% url 'quiz:stop_quiz' quiz.id %}" method="get">
+              <button class="button is-primary is-outlined is-fullwidth is-rounded">
+                <div style="color:white;">Stop Quiz</div>
+              </button>
+            </form>
+            {% endif %}
           </div>
           {% endif %}
           <div class="column is-one-third">
@@ -79,14 +63,15 @@
             </form>
           </div>
           <div class="column is-one-third">
-            <form action="{% url 'quiz:show_quiz' quiz.id %}" method="get">
+            <form action="{% url 'quiz:show_quiz_results' quiz.id %}" method="get">
               <button class="button is-success is-outlined is-fullwidth is-rounded">
-                <div style="color:white;">View Quiz</div>
+                <div style="color:white;">View Results</div>
               </button>
             </form>
           </div>
           <div class="column is-fullwidth has-text-centered" style="color:white;">
-            This quiz has {{quiz.number_of_problems}} problems.
+            This quiz has {{quiz.number_of_problems}} problems.<br>
+            Quiz code: {{ quiz.quiz_code }}
           </div>
         </div>
       </div>

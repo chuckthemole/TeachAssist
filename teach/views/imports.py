@@ -11,3 +11,4 @@ from django.contrib.auth.models import User # import User model
 from teach.static.teach.images import * # Import all images
 import random
 import string
+from django.contrib import messages

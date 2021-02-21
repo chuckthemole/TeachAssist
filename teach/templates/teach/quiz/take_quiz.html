@@ -20,9 +20,13 @@
               {{ lesson.topic }}
             </span>
             <span class="column is-capitalized is-size-5 is-full main-text-color">
+              {% if user != None %}
               <a href="{% url 'lesson:show_lesson' lesson.id %}">
                 {{ lesson.lesson_name }}
               </a>
+              {% else %}
+              {{ lesson.lesson_name }}
+              {% endif %}
             </span>
           </div>
           <div class="columns">
@@ -35,8 +39,10 @@
                   </button>
                 </form>
                 {% endif %}
-                {% if lesson.game_link == None %}
-                No link to game!
+                {% if lesson.game_link == None and user != None %}
+                <div style="color:white;">
+                  No link to game!
+                </div>
                 {% endif %}
               </div>
             </div>
@@ -55,9 +61,23 @@
   </center>
 </div>
 
-<br><br>
+<br>
+{% if user == None %}
+<div class="columns is-centered" style="color:white;">
+  Welcome {{ student.name }}!
+</div>
+{% endif %}
+<br>
 
-<form action="{% url 'quiz:submit_quiz' quiz.id %}" method="post" enctype="multipart/form-data">
+{% if error %}
+<div class="columns is-centered">
+  <span style="color:red;">
+    {{error}}
+  </span>
+</div>
+{% endif %}
+
+<form action="{% url 'quiz:submit_quiz' student.id %}" method="post" enctype="multipart/form-data">
   {% csrf_token %}
   <div class="columns is-multiline is-centered">
     {% for problem in problems %}

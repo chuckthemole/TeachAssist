@@ -41,12 +41,18 @@ def dashboard(request):
         else:
             try:
                 my_lessons = Lesson.objects.filter(teacher=user.teacher.id)
+                my_quizzes = Quiz.objects.filter(teacher=user.teacher.id)
+                active_quizzes = []
+                for quiz in my_quizzes:
+                    if quiz.is_active:
+                        active_quizzes.append(quiz)
+                number_of_active_quizzes = len(active_quizzes)
             except:
                 return redirect("collections:login")
             no_lessons = True
             if len(my_lessons) != 0:
                 no_lessons = False
-            return render(request, "teach/dashboard.html", {"user":user, "my_lessons": my_lessons, "no_lessons": no_lessons})
+            return render(request, "teach/dashboard.html", {"user":user, "my_lessons": my_lessons, "no_lessons": no_lessons, "active_quizzes": active_quizzes, "number_of_active_quizzes": number_of_active_quizzes})
 
 def create(request):
     if request.method == "POST":
@@ -126,7 +132,7 @@ def edit_settings(request):
     if request.method == "GET":
         user = request.user
         if not user.is_authenticated:
-            return redirect("teach:login")
+            return redirect("collections:login")
         else:
             form = Teacher_Form()
             return render(request, "teach/edit_profile.html", {"user":user, "form":form} )
@@ -135,7 +141,7 @@ def publish_settings(request, teacher_id):
     if request.method == "POST":
         user = request.user
         if not user.is_authenticated:
-            return redirect("teach:login")
+            return redirect("collections:login")
     teach = get_object_or_404(teacher, pk=user.teacher.id)
     form = Teacher_Form(request.POST, request.FILES, instance=teach)
     if form.is_valid():

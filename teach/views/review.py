@@ -8,7 +8,7 @@ def publish_review(request, destination_id):
     if request.method == "GET":
         user = request.user
         if not user.is_authenticated:
-            return redirect("teach:login")
+            return redirect("collections:login")
         else:
             destination = get_object_or_404(Destination, pk=destination_id)
             return render(request, "teach/review/create_review.html", {"user":user, "destination":destination} )
@@ -17,7 +17,7 @@ def create_review(request, destination_id):
     if request.method == "POST":
         user = request.user
         if not user.is_authenticated:
-            return redirect("teach:login")
+            return redirect("collections:login")
 
         destination = get_object_or_404(Destination, pk=destination_id)
 
@@ -49,7 +49,7 @@ def show_review(request, review_id):
     if request.method == "GET":
         user = request.user
         if not user.is_authenticated:
-            return redirect("teach:login")
+            return redirect("collections:login")
         else:
             # make sure to import the fucntion get_object_or_404 from  django.shortcuts
             review = get_object_or_404(Review, pk=review_id)

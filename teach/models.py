@@ -58,7 +58,9 @@ class Quiz(models.Model):
 
 	name = models.TextField(max_length=30, null=False, blank=False, unique=False, default="")
 	number_of_problems = models.IntegerField(blank=False, default=0)
-	quiz_code = models.TextField(max_length=6, null=True, blank=True, unique=True, default="")
+	quiz_code = models.TextField(max_length=6, null=True, blank=True, unique=True, default=None)
+	is_active = models.BooleanField(null=True, blank=True, default=False, unique=False)
+	is_stopped = models.BooleanField(null=True, blank=True, default=True, unique=False)
 	created = models.DateField(auto_now=True)
 
 class Problem(models.Model):
@@ -70,6 +72,21 @@ class Problem(models.Model):
 	answers = ArrayField(ArrayField(models.TextField(max_length=30, null=False, blank=False, unique=False, default=""), size=2,), 4,)
 	correct_answer = models.TextField(max_length=1, null=False, blank=False, unique=False, default="A")
 
+class Student(models.Model):
+	# FK
+	teacher = models.ForeignKey(teacher, on_delete=models.CASCADE, null=True)
+	quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, null=True)
+
+	name = models.TextField(max_length=30, null=False, blank=False, unique=False, default="")
+
+class Submitted_Problem(models.Model):
+	# FK
+	teacher = models.ForeignKey(teacher, on_delete=models.CASCADE, null=True)
+	student = models.ForeignKey(Student, on_delete=models.CASCADE, null=True)
+	quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, null=True)
+	problem = models.ForeignKey(Problem, on_delete=models.CASCADE, null=True)
+
+	submitted_answer = models.TextField(max_length=1, null=False, blank=False, unique=False, default="")
 
 class Review(models.Model):
 	def __str__(self):

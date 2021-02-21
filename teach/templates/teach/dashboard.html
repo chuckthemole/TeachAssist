@@ -39,6 +39,21 @@
 
 <br><br>
 
+<div class="columns is-centered">
+  <div class="column box front-background is-half">
+    <div class="main-text-color has-text-centered is-size-5">
+      You have {{ number_of_active_quizzes }} active quizzes
+    </div>
+    <form action="{% url 'quiz:show_active_quizzes' %}" method="get">
+      <button class="button is-primary is-fullwidth is-rounded">
+        View active quizzes
+      </button>
+    </form>
+  </div>
+</div>
+
+<br>
+
 {% if not no_lessons %}
 
 <!-- List all user's lessons -->

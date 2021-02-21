@@ -23,6 +23,7 @@
             {{ quiz.teacher.user.username }}
           </span>
         </h1>
+        {% if quiz.quiz_code %}
         <h2 class="title is-2">
           <span style="color:white;">
             Quiz code:
@@ -31,6 +32,7 @@
             {{ quiz.quiz_code }}
           </span>
         </h2>
+        {% endif %}
         <h3>
           <span style="color:white;">
             <a href="{% url 'lesson:show_lesson' quiz.lesson.id %}">
@@ -53,6 +55,7 @@
 
 <br>
 
+{% if not quiz.quiz_code %}
 <center>
   <div class="tile is-8 is-vertical">
     <div class="columns is-centered is-multiline">
@@ -90,6 +93,7 @@
     </div>
   </div>
 </center>
+{% endif %}
 
 <br>
 <center>

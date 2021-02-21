@@ -1,3 +1,4 @@
+<!-- show a lesson belonging to any user  -->
 {% extends "teach/base.html" %}
 
 {% block content %}
@@ -38,7 +39,7 @@
                   </button>
                 </form>
                 {% endif %}
-                {% if lesson.game_link == None %}
+                {% if lesson.game_link == None and user != None %}
                 <div style="color:white;">
                   No link to game!
                 </div>
@@ -60,39 +61,57 @@
   </center>
 </div>
 
-<br><br>
+<br>
+{% if user == None %}
+<div class="columns is-centered" style="color:white;">
+  Welcome {{ student.name }}!
+</div>
+{% endif %}
+<br>
 
-<div class="columns is-multiline is-centered">
-  {% for problem in problems %}
-  <div class="column box front-background is-full">
-    <div class="columns">
-      <b class="main-text-color column is-half">&nbsp;&nbsp;&nbsp;&nbsp;Question {{ problem.0 }}</b>
-      <b class="column is-half">
-        {% if problem.1.correct_answer == problem.2 %}
-        <div style="color:green;">Correct</div>
-        {% endif %}
-        {% if problem.1.correct_answer != problem.2 %}
-        <div style="color:red;">Incorrect</div>
-        {% endif %}
-      </b>
-    </div>
-    <div class="main-text-color" style="text-align: left;">
-      <b class="is-capitalized is-size-5" style="color: white;">&nbsp;&nbsp;{{problem.1.question}}</b> <br>
+{% if error %}
+<div class="columns is-centered">
+  <span style="color:red;">
+    {{error}}
+  </span>
+</div>
+{% endif %}
 
-      <div class="columns is-centered is-multiline">
-        {% for answer in problem.1.answers %}
-        <div class="column is-half">
-          <b style="color: white;">&nbsp;&nbsp;{{ answer.0 }}.</b> {{ answer.1 }}
-          <br>
+<form action="{% url 'quiz:teacher_submit_quiz' quiz.id %}" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="columns is-multiline is-centered">
+    {% for problem in problems %}
+    <div class="column box front-background is-full">
+      <b class="main-text-color">&nbsp;&nbsp;&nbsp;&nbsp;Question {{ problem.0 }}</b>
+      <div class="main-text-color" style="text-align: left;">
+        <b class="is-capitalized is-size-5" style="color: white;">{{problem.1.question}}</b> <br>
+
+        <div class="columns is-centered is-multiline">
+          {% for answer in problem.1.answers %}
+          <div class="column is-half control">
+            <b style="color: white;">&nbsp;&nbsp;{{ answer.0 }}.</b> {{ answer.1 }}
+            <label class="radio column is-one-quarter">
+              &nbsp;&nbsp;{{ answer.0 }}
+              <input type="radio" value="{{ answer.0 }}" name="submitted_answer{{ problem.0 }}">
+            </label>
+            <br>
+          </div>
+          {% endfor %}
         </div>
-        {% endfor %}
-      </div>
 
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div class="field">
+    <div class="control">
+      <button class="button is-success is-outlined is-rounded is-fullwidth" type="submit" value="Publish">
+        Submit Quiz
+      </button>&nbsp;
     </div>
   </div>
-  {% endfor %}
-</div>
-
+</form>
 
 
 

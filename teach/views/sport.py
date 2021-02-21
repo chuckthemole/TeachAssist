@@ -7,7 +7,7 @@ def publish_create_sport(request):
     if request.method == "GET":
         user = request.user
         if not user.is_authenticated:
-            return redirect("teach:login")
+            return redirect("collections:login")
         else:
             form = Sport_Location_Form(request.POST, request.FILES)
 
@@ -20,7 +20,7 @@ def create_sport(request):
     if request.method == "POST":
         user = request.user
         if not user.is_authenticated:
-            return redirect("teach:login")
+            return redirect("collections:login")
 
         teacher = user.teacher
         choice = request.POST["sports"]

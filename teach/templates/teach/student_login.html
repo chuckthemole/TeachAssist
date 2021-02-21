@@ -31,14 +31,14 @@
 
 <br><br><br>
 
-<div class="columns is-centered">
+<div class="columns is-centered is-multiline">
   <div class="column is-one-fifth">
     <nav class="panel front-background">
 
       <p class="panel-heading alt-front-background" style="text-align:center">
         <span><strong>
             <span style="color:white;">
-              Code
+              Find Quiz
             </span>
           </strong></span>
       </p>
@@ -46,14 +46,35 @@
       <div class="panel-block">
         <form class="columns is-centered is-multiline" action="{% url 'quiz:find_quiz' %}" method="post">
           {% csrf_token %}
-          <div class="column is-full">
-            <span style="color:red;">
-              {{error}}
-            </span>
-          </div>
+
           <div class="field column is-full">
-            <div class="control">
-              <input class="input is-success" type="text" placeholder="Enter Code" name="code">
+            <label class="label">
+              <span style="color:white;">
+                Enter Name
+              </span>
+            </label>
+            <div class="control has-icons-left has-icons-right">
+              <input class="input is-success" type="text" placeholder="Name" name="student_name">
+              <span class="icon is-small is-left">
+                <i class="fas fa-user"></i>
+              </span>
+              <span class="icon is-small is-right">
+                <i class="fas fa-check"></i>
+              </span>
+            </div>
+          </div>
+
+          <div class="field column is-full">
+            <label class="label">
+              <span style="color:white;">
+                Quiz Code
+              </span>
+            </label>
+            <div class="control has-icons-left">
+              <input class="input" name="code" placeholder="Quiz code" type="text">
+              <span class="icon is-small is-left">
+                <i class="fas fa-lock"></i>
+              </span>
             </div>
           </div>
 
@@ -69,6 +90,17 @@
 
     </nav>
   </div>
+
+  {% if messages %}
+  <ul class="messages column is-full">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }} columns is-centered" {% endif %} style="color:red;">
+      {{ message }}
+      </li>
+      {% endfor %}
+  </ul>
+  {% endif %}
+
 </div>
 
 {% endblock content %}

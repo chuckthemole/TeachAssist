@@ -5,7 +5,7 @@ def publish_location(request):
     if request.method == "GET":
         user = request.user
         if not user.is_authenticated:
-            return redirect("teach:login")
+            return redirect("collections:login")
         else:
             return render(request, "teach/location/create_location.html", {"user":user} )
 
@@ -13,7 +13,7 @@ def create_location(request):
     if request.method == "POST":
         user = request.user
         if not user.is_authenticated:
-            return redirect("teach:login")
+            return redirect("collections:login")
 
         teacher = user.teacher
         sport = request.POST["sports"]
@@ -80,7 +80,7 @@ def show_location(request, location_id):
     if request.method == "GET":
         user = request.user
         if not user.is_authenticated:
-            return redirect("teach:login")
+            return redirect("collections:login")
         else:
             # make sure to import the fucntion get_object_or_404 from  django.shortcuts
             location = get_object_or_404(Location, pk=location_id)
@@ -92,7 +92,7 @@ def publish_image(request, location_id):
     if request.method == "GET":
         user = request.user
         if not user.is_authenticated:
-            return redirect("teach:login")
+            return redirect("collections:login")
         else:
             location = get_object_or_404(Location, pk=location_id)
             form = Sport_Location_Form()
@@ -102,7 +102,7 @@ def create_image(request, location_id):
     if request.method == "POST":
         user = request.user
         if not user.is_authenticated:
-            return redirect("teach:login")
+            return redirect("collections:login")
         else:
             try:
                 location = get_object_or_404(Location, pk=location_id)
@@ -125,13 +125,13 @@ def create_image(request, location_id):
             location = get_object_or_404(Location, pk=location_id)
             return render(request, "teach/location/show_location.html", {"user":user, "location":location})
         else:
-            return redirect("teach:login")
+            return redirect("collections:login")
 
 def show_image(request, location_id):
     if request.method == "GET":
         user = request.user
         if not user.is_authenticated:
-            return redirect("teach:login")
+            return redirect("collections:login")
         else:
             location = get_object_or_404(Location, pk=location_id)
             return render(request, "teach/location/show_image.html", {"user":user, "location":location})
