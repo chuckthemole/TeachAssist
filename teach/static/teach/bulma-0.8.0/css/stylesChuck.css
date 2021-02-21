@@ -6,6 +6,10 @@ login {
   margin-left: 100px;
 }
 
+.index-column {
+  display: flex;
+}
+
 .collapsible {
   background-color: #CA522f;
   color: white;
