@@ -12,3 +12,4 @@ from teach.static.teach.images import * # Import all images
 import random
 import string
 from django.contrib import messages
+from django.db.models import Q

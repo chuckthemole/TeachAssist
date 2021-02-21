@@ -17,7 +17,7 @@
 <body class="main-background">
 
   <!--   https://bulma.io/documentation/components/navbar/  for responsive sites-->
-  <nav class="navbar is-transparent alt-front-background" role="navigation" aria-label="main navigation" style="height: 50px; width:100%;">
+  <nav class="navbar-menu is-transparent alt-front-background" role="navigation" aria-label="main navigation" style="height: 50px; width:100%;">
 
     <!-- brand is basketball -->
     <div class="navbar-brand">
@@ -46,18 +46,31 @@
           </a>
         </div>
 
-        <!-- **************need to fix this dropdown *******************-->
-        <div class="navbar-link is-primary">
-          <div class="navbar-item has-dropdown is-primary">
-            <a class="button is-primary">
-              More
+
+        <div class="navbar-item has-dropdown is-hoverable is-primary">
+          <a class="navbar-link is-primary" href="{% url 'collections:index' %}">
+            More
+          </a>
+
+          <div class="navbar-dropdown is-primary">
+            <a class="navbar-item is-primary">
+              About
+            </a>
+            <a class="navbar-item">
+              Jobs
+            </a>
+            <a class="navbar-item">
+              Contact
+            </a>
+            <hr class="navbar-divider">
+            <a class="navbar-item">
+              Report an issue
             </a>
           </div>
-          <div class="navbar-dropdown">
-            <a>More items later</a>
-            <a> More items later</a>
-          </div>
         </div>
+
+
+
       </div>
     </div>
     {% endif %}

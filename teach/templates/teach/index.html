@@ -45,7 +45,7 @@
 
 <div class="columns is-centered">
   <div class="column is-three-quarters">
-    <div class="columns is-centered">
+    <div class="columns is-centered is-multiline">
 
       <div class="column is-one-fifth">
         <div class="box front-background">
@@ -114,6 +114,15 @@
           </center>
         </div>
       </div>
+
+      <form class="column is-one-fifth" action="{% url 'collections:search' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="field">
+          <div class="control">
+            <input class="input is-rounded" type="text" placeholder="Search Lessons" value="{{ search }}" name="search">
+          </div>
+        </div>
+      </form>
 
     </div>
   </div>

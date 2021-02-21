@@ -165,6 +165,29 @@ def student(request):
     else:
         return HttpResponse(status=500)
 
+def search(request):
+    if request.user.is_authenticated:
+        if request.method == "POST":
+            search = request.POST["search"]
+        user = request.user
+
+        # icontains : substring
+        query = Q(subject__icontains=search.lower())
+        query.add(Q(topic__icontains=search), Q.OR)
+        query.add(Q(subject_class__icontains=search), Q.OR)
+        query.add(Q(lesson_name__icontains=search), Q.OR)
+        query.add(Q(teacher__user__username__icontains=search), Q.OR)
+        query.add(Q(is_public=True), Q.AND)
+        all_lessons = Lesson.objects.filter(query)
+
+        all_icons = [MATH_ICON, SCIENCE_ICON, ENGLISH_ICON, HISTORY_ICON]
+        no_lessons = True
+        if len(all_lessons) != 0:
+            no_lessons = False
+        return render(request, "teach/index.html", {"user":user, "all_lessons": all_lessons, "all_icons": all_icons, "no_lessons": no_lessons, "search": search})
+    else:
+        return HttpResponse(status=500)
+
 def testHTTP_request(request):
     # Testing http request object inside a view function
     print('********************************************')
