@@ -118,6 +118,20 @@ def login_user(request):
     else:
         return redirect("collections:index")
 
+def login_guest(request):
+    if request.method == "POST":
+        user = User.objects.get(username='guest')
+        all_lessons = Lesson.objects.all()
+        is_base_visible = False
+        #user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect("collections:index")
+        else:
+            return render(request, "teach/login.html", {"error":"Wrong username or password", "all_lessons":all_lessons, "is_base_visible":is_base_visible})
+    else:
+        return redirect("collections:index")
+
 def login_view(request):
     if request.user.is_authenticated:
         return redirect("collections:index")

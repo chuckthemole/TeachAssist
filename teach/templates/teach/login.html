@@ -96,4 +96,17 @@
   </div>
 </div>
 
+<br><br><br>
+
+<form class="columns is-centered" action="{% url 'collections:guest' %}" method="post">
+  {% csrf_token %}
+  <div class="field column is-one-fifth">
+    <div class="control">
+      <button class="button is-success is-rounded is-outlined is-fullwidth" type="submit" value="Login">
+        Log in as guest
+      </button>&nbsp;
+    </div>
+  </div>
+</form>
+
 {% endblock content %}

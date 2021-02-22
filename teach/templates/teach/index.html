@@ -43,6 +43,15 @@
 
 <br><br>
 
+{% if user.username == 'guest' %}
+<div class="columns is-centered">
+  <div class="column is-one-fifth" style="color:red;">
+    To use all functionality of Teach Assist you must log out and create a user!
+  </div>
+</div>
+<br><br>
+{% endif %}
+
 <div class="columns is-centered">
   <div class="column is-four-fifths">
     <div class="columns is-centered is-multiline">

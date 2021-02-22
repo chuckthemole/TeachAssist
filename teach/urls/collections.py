@@ -9,6 +9,7 @@ urlpatterns = [
     path('create', collections.create, name='create'),
     path('loguser', collections.login_user, name='loguser'),
     path('login', collections.login_view, name='login'),
+    path('guest', collections.login_guest, name='guest'),
     path('logout', collections.logout_view, name='logout'),
     path('signup', collections.signup, name='signup'),
     path('settings', collections.edit_settings, name='edit_settings'),

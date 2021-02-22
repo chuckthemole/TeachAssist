@@ -46,6 +46,7 @@
 
 <br>
 
+{% if user.username != 'guest' %}
 <div class="columns is-centered">
   <div class="column">
     <form action="{% url 'quiz:publish_quiz' lesson.id %}" method="get">
@@ -67,6 +68,13 @@
     </form>
   </div>
 </div>
+{% else %}
+<div class="columns is-centered">
+  <div class="column is-one-fifth" style="color:red;">
+    To use all functionality of Teach Assist you must create a user!
+  </div>
+</div>
+{% endif %}
 
 <center>
   <div class="parent columns">
