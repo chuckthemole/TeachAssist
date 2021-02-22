@@ -3,11 +3,11 @@
 </p>
 <h1>Teach Assist</h1>
 
-<h2 href="http://assist-env.eba-ntsdfena.us-west-1.elasticbeanstalk.com/">Link to application</h2>
+[Teach Assist Link](http://assist-env.eba-ntsdfena.us-west-1.elasticbeanstalk.com/)
 
-<h3>Application for helping teachers</h3>
+<h2>Application for helping teachers</h2>
 
-<h4>Written by Charles Thomas</h4>
+<h3>Written by Charles Thomas</h3>
 <p align="center">
   <img src="https://img.icons8.com/dusk/64/000000/math.png">
   <img src="https://img.icons8.com/dusk/64/000000/bunsen-burner.png">
