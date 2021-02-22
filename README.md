@@ -5,7 +5,7 @@
 ## Written by Charles Thomas
 
 <p align="center">
-  <img width="460" height="300" src="https://img.icons8.com/dusk/50/000000/book-and-pencil.png">
+  <img width="100" height="75" src="https://img.icons8.com/dusk/50/000000/book-and-pencil.png">
 </p>
 ![No image available!](https://img.icons8.com/dusk/64/000000/math.png "This is a sample image.")
 ![No image available!](https://img.icons8.com/dusk/64/000000/bunsen-burner.png "This is a sample image.")
