@@ -84,14 +84,14 @@
     <div class="column box front-background is-full">
       <b class="main-text-color">&nbsp;&nbsp;&nbsp;&nbsp;Question {{ problem.0 }}</b>
       <div class="main-text-color" style="text-align: left;">
-        <b class="is-capitalized is-size-5" style="color: white;">{{problem.1.question}}</b> <br>
+        <b class="is-size-5" style="color: white;">{{problem.1.question}}</b> <br><br><br>
 
         <div class="columns is-centered is-multiline">
           {% for answer in problem.1.answers %}
           <div class="column is-half control">
             <b style="color: white;">&nbsp;&nbsp;{{ answer.0 }}.</b> {{ answer.1 }}
             <label class="radio column is-one-quarter">
-              &nbsp;&nbsp;{{ answer.0 }}
+              &nbsp;&nbsp;
               <input type="radio" value="{{ answer.0 }}" name="submitted_answer{{ problem.0 }}">
             </label>
             <br>

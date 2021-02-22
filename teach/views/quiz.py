@@ -283,6 +283,11 @@ def submit_quiz(request, student_id):
         quiz = get_object_or_404(Quiz, pk=student.quiz.id)
         lesson = get_object_or_404(Lesson, pk=quiz.lesson.id)
         p = Problem.objects.filter(quiz=quiz)
+
+        if Submitted_Problem.objects.filter(student=student, problem=p[0]).count() > 0:
+            messages.error(request, 'You have already submitted this quiz!')
+            return redirect("collections:student")
+
         problems = []  # Problems with numbers attached
         answered_all_questions = True
         for i in range(len(p)):

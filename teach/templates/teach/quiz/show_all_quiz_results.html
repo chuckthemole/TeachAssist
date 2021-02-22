@@ -74,7 +74,7 @@
       {% for problem in problems %}
       <div class="column box front-background is-full">
         <div class="columns">
-          <b class="main-text-color column is-half">&nbsp;&nbsp;&nbsp;&nbsp;Question {{ problem.0 }}</b>
+          <b class="main-text-color column is-half">&nbsp;&nbsp;&nbsp;&nbsp;Question {{ forloop.counter }}</b>
           <b class="column is-half">
             {% if problem.problem.correct_answer == problem.submitted_answer %}
             <div style="color:green;">Correct</div>
@@ -107,6 +107,7 @@
         </div>
       </div>
       {% endfor %}
+
     </div>
   </div>
 </div><br><br>
