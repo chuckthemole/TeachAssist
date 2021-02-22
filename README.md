@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="100" height="75" src="https://img.icons8.com/dusk/50/000000/book-and-pencil.png">
+  <img width="90" height="75" src="https://img.icons8.com/dusk/50/000000/book-and-pencil.png">
 </p>
 # TeachAssist
 
@@ -7,10 +7,10 @@
 
 ## Written by Charles Thomas
 <p align="center">
-  <img width="100" height="75" src="https://img.icons8.com/dusk/64/000000/math.png">
-  <img width="100" height="75" src="https://img.icons8.com/dusk/64/000000/bunsen-burner.png">
-  <img width="100" height="75" src="https://img.icons8.com/dusk/64/000000/class.png">
-  <img width="100" height="75" src="https://img.icons8.com/dusk/64/000000/archeology.png">
+  <img src="https://img.icons8.com/dusk/64/000000/math.png">
+  <img src="https://img.icons8.com/dusk/64/000000/bunsen-burner.png">
+  <img src="https://img.icons8.com/dusk/64/000000/class.png">
+  <img src="https://img.icons8.com/dusk/64/000000/archeology.png">
 </p>
 
 TeachAssist is an application to help teachers. Teachers are able to add, delete, and share
