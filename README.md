@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="90" height="75" src="https://img.icons8.com/dusk/50/000000/book-and-pencil.png">
+  <img src="https://img.icons8.com/dusk/50/000000/book-and-pencil.png">
 </p>
 # TeachAssist
 
