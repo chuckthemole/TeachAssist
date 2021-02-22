@@ -5,6 +5,7 @@ app_name = 'teach'
 urlpatterns = [
     path('',collections.index, name='index'),
     path('dashboard', collections.dashboard, name='dashboard'),
+    path('about', collections.about, name='about'),
     path('create', collections.create, name='create'),
     path('loguser', collections.login_user, name='loguser'),
     path('login', collections.login_view, name='login'),

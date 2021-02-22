@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" class="main-background">
+<!-- index renders a list of all the teach locations in the DB -->
+<!-- should implement a search button at some point -->
+{% extends "teach/base.html" %}
+
+{% block content %}
+
+<head>
+  {% load static %}
+  <script type='text/javascript' src="{% static 'teach/js/google_map.js' %}"></script>
+  <link rel="stylesheet" type="text/css" href="{% static 'teach/bulma-0.8.0/css/stylesChuck.css' %}" />
+</head>
+
+<br><br><br>
+<div style="margin: auto;">
+  <center>
+    <div class="box front-background tile is-8 is-vertical">
+      <div class="tile is-ancestor">
+        <div class="tile is-vertical has-text-centered alt-front-backgroud">
+          <h1 class="title is-3">
+            <span style="color:white;">
+              About TeachAssist.
+            </span>
+          </h1>
+        </div>
+      </div>
+      <br><br><br>
+    </div>
+  </center>
+</div>
+
+<br><br>
+
+<div class="columns is-centered">
+  <div class="column is-four-fifths">
+    <div class="columns is-centered is-multiline">
+
+      <div class="column is-one-fifth">
+        <div class="box front-background">
+          <center>
+            <small style='color:white;'><b>Math</b></small>
+            <img class="icon" src='{{ all_icons.0 }}'>
+          </center>
+        </div>
+      </div>
+
+      <div class="column is-one-fifth">
+        <div class="box front-background">
+          <center>
+            <small style='color:white;'><b>Science</b></small>
+            <img class="icon" src='{{ all_icons.1 }}'>
+          </center>
+        </div>
+      </div>
+
+      <div class="column is-one-fifth">
+        <div class="box front-background">
+          <center>
+            <small style='color:white;'><b>English</b></small>
+            <img class="icon" src='{{ all_icons.2 }}'>
+          </center>
+        </div>
+      </div>
+
+      <div class="column is-one-fifth">
+        <div class="box front-background">
+          <center>
+            <small style='color:white;'><b>History</b></small>
+            <img class="icon" src='{{ all_icons.3 }}'>
+          </center>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<br>
+
+<div class="columns is-centered is-two-fifths">
+  <span style="color:white;">
+    Teach Assist is an application to help teachers with their classrooms.
+  </span>
+</div>
+
+{% endblock content %}
+
+</html>

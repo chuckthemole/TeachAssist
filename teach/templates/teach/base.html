@@ -53,18 +53,18 @@
           </a>
 
           <div class="navbar-dropdown is-primary">
-            <a class="navbar-item is-primary">
+            <a class="navbar-item" href="{% url 'collections:index' %}">
+              Home
+            </a>
+            <a class="navbar-item is-primary" href="{% url 'collections:about' %}">
               About
             </a>
-            <a class="navbar-item">
-              Jobs
-            </a>
-            <a class="navbar-item">
-              Contact
+            <a class="navbar-item" href="{% url 'collections:edit_settings' %}">
+              Settings
             </a>
             <hr class="navbar-divider">
-            <a class="navbar-item">
-              Report an issue
+            <a class="navbar-item" href="{% url 'collections:logout' %}">
+              Log out
             </a>
           </div>
         </div>

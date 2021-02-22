@@ -33,6 +33,17 @@ def index_filter(request):
     else:
         return HttpResponse(status=500)
 
+def about(request):
+    if request.method == "GET":
+        if request.user.is_authenticated:
+            user = request.user
+            all_icons = [MATH_ICON, SCIENCE_ICON, ENGLISH_ICON, HISTORY_ICON]
+            return render(request, "teach/about.html", {"user":user, "all_icons": all_icons})
+        else:
+            return redirect("collections:login")
+    else:
+        return HttpResponse(status=500)
+
 def dashboard(request):
     if request.method == "GET":
         user = request.user
