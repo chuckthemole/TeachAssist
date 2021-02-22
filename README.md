@@ -1,7 +1,7 @@
 <p align="center">
   <img src="https://img.icons8.com/dusk/50/000000/book-and-pencil.png">
 </p>
-<h1>TeachAssist</h1>
+<h1>Teach Assist</h1>
 
 <h2>Application for helping teachers</h2>
 
@@ -13,9 +13,7 @@
   <img src="https://img.icons8.com/dusk/64/000000/archeology.png">
 </p>
 
-TeachAssist is an application to help teachers. Teachers are able to add, delete, and share
-lesson plans. Teachers can communicate with others
-and comment on the various locations.
+Teach Assist is an application to help teachers find interesting games or activities for their classrooms. Teachers are able to add, delete, and share games. Along with the games teachers can create companion quizzes. Students can enter the code for a quiz, given by a teacher, and take a quiz.
 
 <h4>Features</h4>
 
@@ -23,4 +21,4 @@ and comment on the various locations.
 -   Create companion quizzes to go along with lessons.
 -   Check out other teacher's games.
 
-<h5>Thanks for checking out TeachAssist!</h5>
+<h5>Thanks for checking out Teach Assist!</h5>
