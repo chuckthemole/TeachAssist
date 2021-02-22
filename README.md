@@ -3,8 +3,6 @@
 </p>
 <h1>Teach Assist</h1>
 
-[Teach Assist Link](http://assist-env.eba-ntsdfena.us-west-1.elasticbeanstalk.com/)
-
 <h2>Application for helping teachers</h2>
 
 <h3>Written by Charles Thomas</h3>
