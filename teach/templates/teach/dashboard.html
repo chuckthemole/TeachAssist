@@ -40,7 +40,7 @@
 <br><br>
 
 <div class="columns is-centered">
-  <div class="column box front-background is-half">
+  <div class="column is-half">
     <div class="main-text-color has-text-centered is-size-5">
       You have {{ number_of_active_quizzes }} active quizzes
     </div>
@@ -57,7 +57,7 @@
 {% if not no_lessons %}
 
 <!-- List all user's lessons -->
-<div class="columns box front-background is-centered is-10">
+<div class="columns is-centered is-10">
   <div class="column is-10 is-centered">
     <div class="columns is-multiline is-mobile">
       {% for lesson in my_lessons %}
