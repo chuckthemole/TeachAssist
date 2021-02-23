@@ -64,9 +64,9 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-#HOST1 = config('HOST1')
+HOST1 = config('HOST1')
 HOST2 = config('HOST2')
-ALLOWED_HOSTS = [HOST2]
+ALLOWED_HOSTS = [HOST2,HOST1]
 #ALLOWED_HOSTS = ["*"]
 
 # Application definition
