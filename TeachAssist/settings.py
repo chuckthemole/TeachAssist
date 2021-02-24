@@ -62,11 +62,11 @@ STATICFILES_DIRS = (
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-HOST = config('HOST')
-ALLOWED_HOSTS = [HOST,'teach-assist.com','www.teach-assist.com']
-#ALLOWED_HOSTS = ["*"]
+#HOST = config('HOST')
+#ALLOWED_HOSTS = [HOST,'teach-assist.com','www.teach-assist.com']
+ALLOWED_HOSTS = ["*"]
 
 # Application definition
 
